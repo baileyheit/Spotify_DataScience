@@ -1,12 +1,16 @@
 ---
-title: "PROJECT TITLE"
-author: "NAME HERE"
-date: "TODAY'S DATE"
+title: "Project Proposal: What Makes a Song Popular on Spotify?"
+author: "CCBK"
+date: "3/21/18"
 output: github_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(infer)
+library(broom)
+songs <- read_csv("/cloud/project/data/SpotifyFeatures.csv")
 ```
 
 Your project goes here! Before you submit, make sure your chunks are turned off with `echo = FALSE`. 

@@ -1,9 +1,20 @@
 ---
-title: "PROJECT TITLE"
-author: "NAME HERE"
-date: "TODAY'S DATE"
+title: "Project Proposal: What Makes a Song Popular on Spotify?"
+author: "CCBK"
+date: "3/21/19"
 output: github_document
 ---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(infer)
+library(broom)
+songs <- read_csv("/cloud/project/data/SpotifyFeatures.csv")
+```
+
+```{r glimpse}
+glimpse(songs)
+```
 
 ## Section 1. Introduction
 
