@@ -6,43 +6,44 @@ CCBK
 ## Section 1. Introduction
 
 The goal of our project is to determine the qualities of a song that
-influence popularity on Spotify. The data for the project is derived
-from the Spotify Web API, which uses internal Spotify metrics, such as
-stream counts, to determine the parameters of the dataset. For
-subjective variables such as danceability and instrumentalness, the
-Spotify Web API utilizes algorithms by Echo Nest, a music intelligence
-company.
+influence popularity on Spotify. The dataset was retrieved online at
+<https://www.kaggle.com/edalrami/19000-spotify-songs>. The data is
+derived from the Spotify Web API, which uses internal Spotify metrics to
+determine the parameters of the dataset. For subjective variables such
+as danceability and instrumentalness, the Spotify Web API utilizes Echo
+Nest algorithms. The dataset curator retrieved data for 19,000 songs and
+aggregated this information into the dataset.
 
-The variables for this data set are: Song\_name - The name of the track.
-Song\_popularity - The popularity of the track from 0 to 100 based on
-recent stream counts from when the data was pulled from the API.
-Song\_duration\_ms - The duration of the track in milliseconds.
+The variables for this data set are: \* Song\_name - The name of the
+track. \* Song\_popularity - The popularity of the track from 0 to 100
+based on recent stream counts from when the data was pulled. \*
+Song\_duration\_ms - The duration of the track in milliseconds. \*
 Acousticness - A confidence measure from 0 to 1.0 of whether the song is
-acoustic. Danceability - How suitable a song is for dancing from 0 to
+acoustic. \* Danceability - How suitable a song is for dancing from 0 to
 1.0 based on tempo, rhythmic stability, beat strength, and overall
-regularity. Energy - A measure of a song’s energy from 0.0 to 1.0 and
-represents a perceptual measure of intensity and activity including
+regularity. \* Energy - A song’s energy from 0.0 to 1.0 considering
 dynamic range, perceived loudness, timbre, onset rate, and general
-entropy. Instrumentalness - A prediction from 0 to 1.0 on whether a
-track is majorly instrumental. Values above 0.5 represent an
+entropy. \* Instrumentalness - A confidence measure from 0 to 1.0 on
+whether a track is majorly instrumental. Values above 0.5 represent an
 instrumental track, but the closer the index is to 1.0 the more
-confident the prediction. Key - The key of the track based on the Pitch
-Class notation. Liveness - The likelihood that the track was performed
-live from 0 to 1.0 Loudness - The overall loudness of the track in
-decibels. Audio\_mode - The modality of the track, 1 for major, 0 for
-minor. Speechiness - A measure of how exclusively speech-like the track
-is from 0 to 1.0. Values above 0.66 describe tracks that are probably
-made entirely of spoken words. Values between 0.33 and 0.66 describe
-tracks that may contain both music and speech, either in sections or
-layered, including such cases as rap music. Values below 0.33 most
-likely represent music and other non-speech-like tracks. Tempo - The
-overall estimate beats per minute of the track. Time\_signature - An
-estimated overall time signature of a track. The time signature (meter)
-is a notational convention to specify how many beats are in each bar (or
-measure). Audio\_valence - A measure from 0.0 to 1.0 describing the
-musical positiveness conveyed by a track. Tracks with high valence sound
-more positive (e.g. happy, cheerful, euphoric), while tracks with low
-valence sound more negative (e.g. sad, depressed, angry).
+confident the prediction. \* Key - The key of the track based on the
+Pitch Class notation. \* Liveness - The likelihood that the track was
+performed live from 0 to 1.0 \* Loudness - The overall loudness of the
+track in decibels. \* Audio\_mode - The modality of the track, 1 for
+major, 0 for minor. \* Speechiness - A measure of how exclusively
+speech-like the track is from 0 to 1.0. Values above 0.66 describe
+tracks that are probably made entirely of spoken words. Values between
+0.33 and 0.66 describe tracks that may contain both music and speech,
+either in sections or layered, including such cases as rap music. Values
+below 0.33 most likely represent music and other non-speech-like tracks.
+\* Tempo - The overall estimate beats per minute of the track. \*
+Time\_signature - An estimated overall time signature of a track. The
+time signature (meter) is a notational convention to specify how many
+beats are in each bar (or measure). \* Audio\_valence - A measure from
+0.0 to 1.0 describing the musical positiveness conveyed by a track.
+Tracks with high valence sound more positive (e.g. happy, cheerful,
+euphoric), while tracks with low valence sound more negative (e.g. sad,
+depressed, angry).
 
 ## Section 2. Data analysis plan
 
