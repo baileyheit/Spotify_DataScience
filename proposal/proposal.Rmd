@@ -12,31 +12,28 @@ library(broom)
 songs <- read_csv("/cloud/project/data/SpotifyFeatures.csv")
 ```
 
-
 ## Section 1. Introduction
 
-The goal of our project is to determine the qualities of a song that influence popularity on Spotify. The dataset was retrieved online at https://www.kaggle.com/edalrami/19000-spotify-songs. The data is derived from the Spotify Web API, which uses internal Spotify metrics to determine the parameters of the dataset. For subjective variables such as danceability and instrumentalness, the Spotify Web API utilizes Echo Nest algorithms. The dataset curator retrieved data for 19,000 songs and aggregated this information into the dataset.  
+The goal of our project is to determine the qualities of a song that influence popularity on Spotify. The dataset was retrieved online at https://www.kaggle.com/edalrami/19000-spotify-songs. The data is derived from the Spotify Web API, which uses internal Spotify metrics to determine the parameters of the dataset. For subjective variables such as danceability and instrumentalness, the Spotify Web API utilizes Echo Nest algorithms. The dataset curator retrieved data for 19,000 songs at random and aggregated this information into the dataset. Below is a brief description explaining the 18 variables that are within the chosen dataset. 
  
-The variables for this data set are: 
-* Song_name - The name of the track.
-* Song_popularity - The popularity of the track from 0 to 100 based on recent stream counts from when the data was pulled.
-* Song_duration_ms - The duration of the track in milliseconds.
-* Acousticness - A confidence measure from 0 to 1.0 of whether the song is acoustic.
-* Danceability - How suitable a song is for dancing from 0 to 1.0 based on tempo, rhythmic stability, beat strength, and overall regularity.
-* Energy - A song’s energy from 0.0 to 1.0 considering dynamic range, perceived loudness, timbre, onset rate, and general entropy.
-* Instrumentalness - A confidence measure from 0 to 1.0 on whether a track is majorly instrumental. Values above 0.5 represent an instrumental track, but the closer the index is to 1.0 the more confident the prediction. 
-* Key - The key of the track based on the Pitch Class notation.
-* Liveness - The likelihood that the track was performed live from 0 to 1.0
-* Loudness - The overall loudness of the track in decibels.
-* Audio_mode - The modality of the track, 1 for major, 0 for minor.
-* Speechiness - A measure of how exclusively speech-like the track is from 0 to 1.0. Values above 0.66 describe tracks that are probably made entirely of spoken words. Values between 0.33 and 0.66 describe tracks that may contain both music and speech, either in sections or layered, including such cases as rap music. Values below 0.33 most likely represent music and other non-speech-like tracks.
-* Tempo - The overall estimate beats per minute of the track.
-* Time_signature - An estimated overall time signature of a track. The time signature (meter) is a notational convention to specify how many beats are in each bar (or measure).
-* Audio_valence - A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative (e.g. sad, depressed, angry).
++ Categorical Variables:
+Genre, artist_name, track_name, track_id, mode, time_signature (An estimated overall time signature of a track), key.
+
++ Continuous Numerical Variables:
+duration_ms (Duration of song in miliseconds), loudness (The overall loudness of the track in decibels), tempo (The overall estimate beats per minute of the track).
+
++ Discrete Numerical Variables:
+popularity (The popularity of the track from 0 to 100 based on recent stream counts),
+acousticness (A confidence measure from 0 to 1.0 of whether the song is acoustic),
+danceability (How suitable a song is for dancing from 0 to 1.0), liveness (The likelihood that the track was performed live from 0 to 1.0), valence (A measure from 0.0 to 1.0 describing the musical positiveness), instrumentalness (A confidence measure from 0 to 1.0 on whether song is instrumental), energy (A song’s energy from 0.0 to 1.0 considering various factors), speechiness (A measure of how exclusively speech-like the track is from 0 to 1.0).
 
 ## Section 2. Data analysis plan
 
-This project will analyze the variables of a song that correlate with song popularity. To find this, we will assign song popularity as our dependent response variable and the other variables such as danceability, energy, key, etc as our predictor variables. In addition to looking at individual songs, we intend to group songs by genres/playlists. After grouping, we will explore the difference in population means within certain genres. For example, if the genres rap and pop each have 100 songs within the data set, we will perform simulations on small samples from both genres to determine mean popularity within each population. Then we will look at the difference in means to see if there is significant variation. Visualizations can be used to determine skewness of the data set using single predictors models and backwards selection using multiple predictors models. This will help us determine whether mean/SD or median/IQR is more fitting to describe the data set. We will be interested in looking at the distribution of different variables.The goal is to have a representative sample of the entirety of spotify, with a range of different popularities, keys, liveliness, etc. A skew will indicate that the songs tend towards a certain type of sound. To support our hypothesized answer, we want to look at what variables are better predictors of popularity (higher R^2 value for single predictors model or a higher adjusted R^2 value for multiple predictors), 95% confidence intervals for the difference in popularity score means or medians (depending on skewness of data) between different variables, and interpretations of visualizations in order to determine skewness of data.
+This project will analyze the variables of a song that correlate with a higher song popularity. To find this, we will assign song popularity as our dependent response variable and the other variables such as danceability, energy, and key as our predictor variables. Using single predictors models and backwards selection using multiple predictors models, we can determine which variables are the best predictors of a song's popularity score. Higher R^2 value for single predictors model or a higher adjusted R^2 value for multiple predictors can help us determine this. 
+
+In addition to looking at individual songs, we intend to group songs by genres or playlists. After grouping, we will explore the difference in popularity means/medians within certain genres. For example, if the genres rap and pop each have 100 songs within the data set, we will perform simulations on samples with replacement from both genres to create a distribution of the difference in means. In this case, popularity score would be the response variable and the genre would be the explanatory variable. Then we will look at the p-value (p-value < 0.05 for proving dependence) to determine if there is a significant difference. 95% confidence intervals for the difference in popularity score means or medians can also be used to make conclusions about the difference in populations. 
+
+Visualizations can be used to determine skewness of the data set. This will help us determine whether mean/SD or median/IQR is more fitting to describe the certain variables or groupings. We will be interested in looking at the distribution of different variables. A skew will indicate that the songs tend towards a certain type of sound. The goal is to have a representative sample of the entirety of spotify, with a range of different popularities, keys, liveliness, and more.  
 
 ## Section 3. Data
 
