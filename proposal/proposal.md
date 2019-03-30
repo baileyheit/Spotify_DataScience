@@ -112,7 +112,10 @@ difference in the sample popularity means of Pop and Rap genres is 6.06.
 
 A p-value of 0 \< 0.05 indicates that we can reject the null hypothesis
 in favor of the alternate hypothesis, and that the observed difference
-was not due to chance.
+was not due to chance. Results such as this can help us recognize
+statistically significant differences between popularity scores between
+different populations, and ultimately help us determine what constitutes
+a popular song.
 
 Visualizations can be used to determine skewness of the data set. This
 will help us determine whether mean/SD or median/IQR is more fitting to
