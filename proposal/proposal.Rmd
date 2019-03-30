@@ -31,9 +31,58 @@ danceability (How suitable a song is for dancing from 0 to 1.0), liveness (The l
 
 This project will analyze the variables of a song that correlate with a higher song popularity. To find this, we will assign song popularity as our dependent response variable and the other variables such as danceability, energy, and key as our predictor variables. Using single predictors models and backwards selection using multiple predictors models, we can determine which variables are the best predictors of a song's popularity score. Higher R^2 value for single predictors model or a higher adjusted R^2 value for multiple predictors can help us determine this. 
 
-In addition to looking at individual songs, we intend to group songs by genres or playlists. After grouping, we will explore the difference in popularity means/medians within certain genres. For example, if the genres rap and pop each have 100 songs within the data set, we will perform simulations on samples with replacement from both genres to create a distribution of the difference in means. In this case, popularity score would be the response variable and the genre would be the explanatory variable. Then we will look at the p-value (p-value < 0.05 for proving dependence) to determine if there is a significant difference. 95% confidence intervals for the difference in popularity score means or medians can also be used to make conclusions about the difference in populations. 
+R^2 value for liveness as a predictor of popularity:
+```{r example1_1}
+one <- lm(popularity ~ liveness, data = songs)
+glance(one)$r.squared
+```
+R^2 value for energy as a predictor of popularity:
+```{r example1_2}
+two <- lm(popularity ~ energy, data = songs)
+glance(two)$r.squared
+```
+From the r-squared values, we can see that energy is a better predictor of popularity compared with liveness. However, variation in energy only accounts for 7.7% of the variability in song popularity score. 
+
+In addition to looking at individual songs, we intend to group songs by genres or playlists. After grouping, we will explore the difference in popularity means/medians within certain genres. For example, if the genres rap and pop each have 100 songs within the data set, we will perform simulations on samples with replacement from both genres to create a distribution of the difference in means. In this case, popularity score would be the response variable and the genre would be the explanatory variable. Then we will look at the p-value (p-value < 0.05 for proving dependence) to determine if there is a significant difference. 95% confidence intervals for the difference in popularity score means or medians can also be used to make conclusions about this kind of data. 
+
+Average population scores by genre:
+```{r example0}
+songs %>%
+  group_by(genre) %>%
+  summarise(average = mean(popularity)) %>%
+  arrange(-average)
+```
+Pop and Rap genres have the highest average population scores. The difference in the sample popularity means of Pop and Rap genres is 6.06.  
+
++ Null Hypothesis: Pop and Rap genres have the same average song popularity scores.
++ Alternate Hypothesis: Pop and Rap genres have different average song popularity scores. 
+
+```{r example2_contd}
+songs_gen <- songs %>%
+  filter(genre == "Rap"|genre == "Pop")
+
+perm_gen <- songs_gen %>%
+   specify(response = popularity, explanatory = genre) %>%
+   hypothesize(null = "independence") %>%
+   generate(reps = 100, type = "permute") %>%
+   calculate(stat = "diff in means", order = c("Pop", "Rap"))
+
+ggplot(data = perm_gen, mapping = aes(stat)) + geom_histogram() + labs(title = "Distribution of Difference in Popularity Score Means between Pop and Rap Genres", x = "Difference in Means")
+
+perm_gen %>%
+  filter(stat >= 6.06) %>%
+  summarise(p_value = n()/nrow(perm_gen))
+```
+A p-value of 0 < 0.05 indicates that we can reject the null hypothesis in favor of the alternate hypothesis, and that the observed difference was not due to chance. 
 
 Visualizations can be used to determine skewness of the data set. This will help us determine whether mean/SD or median/IQR is more fitting to describe the certain variables or groupings. We will be interested in looking at the distribution of different variables. A skew will indicate that the songs tend towards a certain type of sound. The goal is to have a representative sample of the entirety of spotify, with a range of different popularities, keys, liveliness, and more.  
+
+```{r example3}
+ggplot(data = songs, mapping = aes(x = popularity)) + geom_histogram()+ labs(title = "Distribution of Popularity Scores", x = "Popularity Score")
+
+```
+
+The distribution of popularity scores is skewed slightly left skewed. Because there is a skew in the data, the median is likely a better indicator of the center. 
 
 ## Section 3. Data
 

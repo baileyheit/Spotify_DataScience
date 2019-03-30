@@ -48,6 +48,18 @@ song’s popularity score. Higher R^2 value for single predictors model or
 a higher adjusted R^2 value for multiple predictors can help us
 determine this.
 
+R^2 value for liveness as a predictor of popularity:
+
+    ## [1] 0.04126875
+
+R^2 value for energy as a predictor of popularity:
+
+    ## [1] 0.07709083
+
+From the r-squared values, we can see that energy is a better predictor
+of popularity compared with liveness. However, variation in energy only
+accounts for 7.7% of the variability in song popularity score.
+
 In addition to looking at individual songs, we intend to group songs by
 genres or playlists. After grouping, we will explore the difference in
 popularity means/medians within certain genres. For example, if the
@@ -58,8 +70,49 @@ popularity score would be the response variable and the genre would be
 the explanatory variable. Then we will look at the p-value (p-value \<
 0.05 for proving dependence) to determine if there is a significant
 difference. 95% confidence intervals for the difference in popularity
-score means or medians can also be used to make conclusions about the
-difference in populations.
+score means or medians can also be used to make conclusions about this
+kind of data.
+
+Average population scores by genre:
+
+    ## # A tibble: 26 x 2
+    ##    genre            average
+    ##    <chr>              <dbl>
+    ##  1 Pop                 66.6
+    ##  2 Rap                 60.5
+    ##  3 Rock                59.6
+    ##  4 Hip-Hop             58.4
+    ##  5 Dance               57.3
+    ##  6 Indie               54.7
+    ##  7 Alternative         54.7
+    ##  8 Anime               54.7
+    ##  9 Blues               54.7
+    ## 10 Children’s Music    54.7
+    ## # … with 16 more rows
+
+Pop and Rap genres have the highest average population scores. The
+difference in the sample popularity means of Pop and Rap genres is 6.06.
+
+  - Null Hypothesis: Pop and Rap genres have the same average song
+    popularity scores.
+  - Alternate Hypothesis: Pop and Rap genres have different average song
+    popularity
+    scores.
+
+<!-- end list -->
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+![](proposal_files/figure-gfm/example2_contd-1.png)<!-- -->
+
+    ## # A tibble: 1 x 1
+    ##   p_value
+    ##     <dbl>
+    ## 1       0
+
+A p-value of 0 \< 0.05 indicates that we can reject the null hypothesis
+in favor of the alternate hypothesis, and that the observed difference
+was not due to chance.
 
 Visualizations can be used to determine skewness of the data set. This
 will help us determine whether mean/SD or median/IQR is more fitting to
@@ -67,7 +120,16 @@ describe the certain variables or groupings. We will be interested in
 looking at the distribution of different variables. A skew will indicate
 that the songs tend towards a certain type of sound. The goal is to have
 a representative sample of the entirety of spotify, with a range of
-different popularities, keys, liveliness, and more.
+different popularities, keys, liveliness, and
+    more.
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+![](proposal_files/figure-gfm/example3-1.png)<!-- -->
+
+The distribution of popularity scores is skewed slightly left skewed.
+Because there is a skew in the data, the median is likely a better
+indicator of the center.
 
 ## Section 3. Data
 
