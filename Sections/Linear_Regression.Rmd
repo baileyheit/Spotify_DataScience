@@ -1,0 +1,52 @@
+---
+title: "Linear Regression"
+output: github_document
+---
+
+
+```{r setup, include=FALSE}
+#knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(infer)
+library(broom)
+library(forcats)
+songs <- read_csv("/cloud/project/data/SpotifyFeatures.csv")
+
+glimpse(songs)
+```
+
+```{r full-model}
+
+full_model = lm(popularity ~ acousticness +
+                  danceability +
+                  energy +
+                  instrumentalness +
+                  liveness +
+                  loudness +
+                  speechiness + 
+                  tempo + 
+                  valence +
+                  energy * danceability,
+                data = songs)
+
+full_model
+
+glance(full_model)$r.squared
+glance(full_model)$adj.r.squared
+```
+
+
+```{r selected-model}
+
+selected_model <- step(full_model, direction = "backward")
+
+selected_model
+
+glance(selected_model)$r.squared
+glance(selected_model)$adj.r.squared
+```
+
+score_hat = 54.92 + -11.24 * acousticness + 16.22 * danceability - 8.11 * energy - 3.61 * instrumentalness + -10.06 * liveness + 0.71 * loudness + -9.89 * speechiness + 0.018 * tempo + -8.90 * valence + -13.36 * danceability:energy
+
+The adjusted R squared value for this model is 0.28, which means that roughly 28.2% of the variabilit 
+he R squared value for this model is 0.042, which means that roughly 4.2% of the variability in a Professor’s score can be explained by their class credits. This aligns with our suspicions, because this percentage is quite low, which suggests that class credits cannot very accurately predict score.
