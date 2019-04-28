@@ -28,16 +28,16 @@ CCBK
     ## # A tibble: 5,000 x 18
     ##    genre artist_name track_name track_id popularity acousticness
     ##    <chr> <chr>       <chr>      <chr>         <dbl>        <dbl>
-    ##  1 Pop   Fifth Harm… Worth It   41Fflg7…         76    0.063    
-    ##  2 Coun… Lori McKen… People Ge… 2Tm7nXW…         44    0.216    
-    ##  3 Jazz  Montefiori… Conversaz… 5DwEJRx…         46    0.141    
-    ##  4 Rock  Neil Diamo… Forever I… 1K1nzhb…         61    0.0221   
-    ##  5 Movie Emmanuel M… Et si on … 3CV62vV…         34    0.0473   
-    ##  6 Come… Mo Mandel   Hand Jobs… 37DtjmD…         11    0.856    
-    ##  7 Folk  Elvis Cost… Veronica   5zHgT1i…         49    0.128    
-    ##  8 Anime Nirvana     Serve The… 3w5Ekq9…         53    0.0000136
-    ##  9 R&B   D'Angelo    The Root   2Qmkg3J…         44    0.498    
-    ## 10 Alte… DRAMA       Missing    5tcuzbA…         51    0.0392   
+    ##  1 Rap   Future      SOME MORE  5sT2yQr…         55       0.493 
+    ##  2 Regg… Lunay       Si Te Vas… 43vTR8i…         62       0.488 
+    ##  3 Alte… BANNERS     Start A R… 3cpOqFZ…         59       0.0135
+    ##  4 Come… Tim Wilson  It Was Am… 5HIWweV…         14       0.697 
+    ##  5 Alte… Eric Belli… Repeat     06Ygqg0…         44       0.256 
+    ##  6 Movie Cerise Cal… "L’amour … 4fqHESw…         32       0.306 
+    ##  7 Come… Tommy John… Humorous … 0YiG40a…         30       0.829 
+    ##  8 Pop   Logic       Wassup     5KVciTE…         64       0.0822
+    ##  9 Rock  Cake        Short Ski… 3OOFEF2…         64       0.0028
+    ## 10 World Dean Evens… Mending Y… 6tIFO8z…         42       0.967 
     ## # … with 4,990 more rows, and 12 more variables: danceability <dbl>,
     ## #   duration_ms <dbl>, energy <dbl>, instrumentalness <dbl>, key <chr>,
     ## #   liveness <dbl>, loudness <dbl>, mode <chr>, speechiness <dbl>,
@@ -59,53 +59,67 @@ CCBK
     ## 
     ## Coefficients:
     ##       (Intercept)       acousticness       danceability  
-    ##          55.10788          -13.03446           16.67457  
+    ##         57.395025         -10.394532          16.976497  
     ##            energy   instrumentalness           liveness  
-    ##          -7.09103           -5.16912           -2.59013  
+    ##         -7.282225          -3.750035           0.649082  
     ##          loudness        speechiness              tempo  
-    ##           0.49316           -6.42511            0.01177  
+    ##          0.727135         -10.775193          -0.002083  
     ##           valence  liveness:loudness  
-    ##          -8.09749            1.08062
+    ##         -8.474525           1.068332
 
-    ## [1] 0.2962603
+    ## [1] 0.2987758
 
-    ## [1] 0.2948497
+    ## [1] 0.2973702
 
-    ## Start:  AIC=26716.81
+    ## Start:  AIC=26680.94
     ## popularity ~ acousticness + danceability + energy + instrumentalness + 
     ##     liveness + loudness + speechiness + tempo + valence + loudness * 
     ##     liveness
     ## 
     ##                     Df Sum of Sq     RSS   AIC
-    ## <none>                           1041483 26717
-    ## - tempo              1       601 1042083 26718
-    ## - energy             1      3480 1044962 26732
-    ## - speechiness        1      3785 1045268 26733
-    ## - liveness:loudness  1      6351 1047834 26745
-    ## - instrumentalness   1      7359 1048842 26750
-    ## - valence            1     12519 1054001 26775
-    ## - danceability       1     24517 1065999 26831
-    ## - acousticness       1     37419 1078902 26891
+    ## - tempo              1      18.7 1034057 26679
+    ## <none>                           1034038 26681
+    ## - instrumentalness   1    3744.3 1037782 26697
+    ## - energy             1    3765.7 1037804 26697
+    ## - liveness:loudness  1    5761.1 1039799 26707
+    ## - speechiness        1   11246.2 1045284 26733
+    ## - valence            1   14222.1 1048260 26747
+    ## - acousticness       1   23538.2 1057576 26792
+    ## - danceability       1   27100.1 1061138 26808
+    ## 
+    ## Step:  AIC=26679.03
+    ## popularity ~ acousticness + danceability + energy + instrumentalness + 
+    ##     liveness + loudness + speechiness + valence + liveness:loudness
+    ## 
+    ##                     Df Sum of Sq     RSS   AIC
+    ## <none>                           1034057 26679
+    ## - instrumentalness   1    3748.2 1037805 26695
+    ## - energy             1    3788.7 1037845 26695
+    ## - liveness:loudness  1    5745.5 1039802 26705
+    ## - speechiness        1   11249.4 1045306 26731
+    ## - valence            1   14442.2 1048499 26746
+    ## - acousticness       1   23560.8 1057617 26790
+    ## - danceability       1   27770.3 1061827 26810
 
     ## 
     ## Call:
     ## lm(formula = popularity ~ acousticness + danceability + energy + 
-    ##     instrumentalness + liveness + loudness + speechiness + tempo + 
-    ##     valence + loudness * liveness, data = songs)
+    ##     instrumentalness + liveness + loudness + speechiness + valence + 
+    ##     liveness:loudness, data = songs)
     ## 
     ## Coefficients:
     ##       (Intercept)       acousticness       danceability  
-    ##          55.10788          -13.03446           16.67457  
+    ##           57.1178           -10.3741            17.0352  
     ##            energy   instrumentalness           liveness  
-    ##          -7.09103           -5.16912           -2.59013  
-    ##          loudness        speechiness              tempo  
-    ##           0.49316           -6.42511            0.01177  
-    ##           valence  liveness:loudness  
-    ##          -8.09749            1.08062
+    ##           -7.3000            -3.7519             0.6526  
+    ##          loudness        speechiness            valence  
+    ##            0.7259           -10.7767            -8.5030  
+    ## liveness:loudness  
+    ##            1.0663
 
-    ## [1] 0.2962603
+    ## [1] 0.2987631
 
-    ## [1] 0.2948497
+    ## [1] 0.2974984
 
 score\_hat = 56.20 + -11.30 \* acousticness + 17.19 \* danceability -
 5.933 \* energy - 4.11 \* instrumentalness + -6.40 \* liveness + 0.60 \*
@@ -134,9 +148,9 @@ song.
     ## 
     ## Coefficients:
     ## (Intercept)    modeMinor  
-    ##      43.979        1.746
+    ##      44.151        1.125
 
-    ## [1] 0.002316003
+    ## [1] 0.0009816861
 
 score\_hat = 43.77 + 2.007 \* mode\_minor
 
@@ -155,9 +169,9 @@ compared to the major key.
     ## 
     ## Coefficients:
     ## (Intercept)       energy  
-    ##       33.36        19.31
+    ##       33.38        18.98
 
-    ## [1] 0.08528234
+    ## [1] 0.08253054
 
     ## 
     ## Call:
@@ -165,19 +179,9 @@ compared to the major key.
     ## 
     ## Coefficients:
     ##  (Intercept)  danceability  
-    ##        28.56         28.92
+    ##        29.34         27.38
 
-    ## [1] 0.0921327
-
-    ## 
-    ## Call:
-    ## lm(formula = popularity ~ liveness, data = songs)
-    ## 
-    ## Coefficients:
-    ## (Intercept)     liveness  
-    ##       48.85       -20.04
-
-    ## [1] 0.05174895
+    ## [1] 0.08609871
 
     ## 
     ## Call:
@@ -185,9 +189,19 @@ compared to the major key.
     ## 
     ## Coefficients:
     ## (Intercept)     liveness  
-    ##       48.85       -20.04
+    ##       48.31       -17.62
 
-    ## [1] 0.05174895
+    ## [1] 0.03979683
+
+    ## 
+    ## Call:
+    ## lm(formula = popularity ~ liveness, data = songs)
+    ## 
+    ## Coefficients:
+    ## (Intercept)     liveness  
+    ##       48.31       -17.62
+
+    ## [1] 0.03979683
 
 ### Bootstrapping
 
