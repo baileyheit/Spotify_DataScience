@@ -217,6 +217,248 @@ glance(genre_model)$r.squared
 ```
 
 ### Bootstrapping
+```{r nrep}
+nrep <- 1000
+```
+
+
+### Permutation Analysis
+#### Popularity Difference Between Pop and Rap 
+
+From the visualization of the popularity of songs with different genres, it was determined that Pop and Rap were the genres with the most popularity. As a result, we wanted to see if the difference in popularity between these two genres is significant. 
+
+Null Hypothesis: There is not a difference between the mean popularities of songs that are pop and songs that are rap. 
+Alternative Hypothesis: There is a difference between the mean popularities of songs that are pop and songs that are rap.
+
+```{r observed-difference-pop}
+songs_poprap <- songs%>%
+  filter(genre=="Pop" | genre == "Rap")
+mean_poprap <- songs_poprap %>%
+  group_by(genre) %>%  
+  summarise(samp_mean = mean(popularity)) %>%
+  summarise(diff(samp_mean)) %>%
+  pull()
+mean_poprap
+```
+
+The observed difference between the mean popoularity of Pop and the mean popularity of Rap is 6.15. 
+
+```{r null-dist-pop}
+null_dist_poprap <- songs_poprap %>%
+  specify(response = popularity, explanatory = genre) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = nrep, type = "permute") %>%
+  calculate(stat = "diff in means", order = c("Pop", "Rap"))
+ggplot(data = null_dist_poprap, aes(x = stat)) +
+  geom_histogram(binwidth=.2) +
+  geom_vline(xintercept = mean_poprap, color = "red") +
+  geom_vline(xintercept = -1 * mean_poprap, color = "red") +
+  labs(title = "Null distribution of differences in popularity means for pop or rap songs")
+```
+
+```{r p-value-pop}
+null_dist_poprap %>%
+  filter(stat <= mean_poprap) %>%
+  summarise(pvalue = 2 * (n() / nrep))
+```
+
+The p-value of the difference between pop and rap songs is 0, which mean we can reject the null hypothesis that there is not a difference between the mean popularities of songs that are pop versus rap. The data provides convincing evidence that there is a difference in mean popularities of songs that in the pop genre versus the rap genre. 
+
+#### Popularity Difference Between High Energy and Low Energy
+From the visualizations, we saw that songs with more energy were more likely to have a greater popularity. We wanted to see if the difference in popularity between sonogs with high and low energy (defined as songs with energy at or above .5 and energy below .5 respectively) was significant. 
+
+Null Hypothesis: There is not a difference between the mean popularities of songs that have high energy and low energy.
+Alternative Hypothesis: There is a difference between the mean popularities of songs that have high energy and low energy.
+
+```{r observed-difference-energy}
+songs <- songs%>%
+  mutate(energyLevel = case_when(
+    energy >= .5 ~ "High",
+    energy < .5 ~ "Low"
+  ))
+mean_energy <- songs %>%
+  group_by(energyLevel) %>%  
+  summarise(samp_mean = mean(popularity)) %>%
+  summarise(diff(samp_mean)) %>%
+  pull()
+mean_energy
+```
+The observed mean popularity difference between songs with high and low energyy is 9.688. 
+
+```{r null-dist-energy}
+null_dist_energy <- songs %>%
+  specify(response = popularity, explanatory = energyLevel) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = nrep, type = "permute") %>%
+  calculate(stat = "diff in means", order = c("High", "Low"))
+ggplot(data = null_dist_energy, aes(x = stat)) +
+  geom_histogram(binwidth=.2) +
+  geom_vline(xintercept = mean_energy, color = "red") +
+  geom_vline(xintercept = -1 * mean_energy, color = "red") +
+  labs(title = "Null distribution of differences in popularity means based on energy")
+```
+
+```{r p-value-energy}
+null_dist_energy %>%
+  filter(stat <= mean_energy) %>%
+  summarise(pvalue = 2 * (n() / nrep))
+```
+The p-value of the difference between high and low energy is 0, which mean we can reject the null hypothesis that there is not a difference between the mean popularities of songs that have high energy and low energy. The data provides convincing evidence that there is a difference in mean popularities of songs that have high energy versus low energy. 
+
+#### Popularity Difference Between High Danceability and Low Danceabililty
+From the visualizations, we saw that songs with more danceability were more likely to have a greater popularity. We wanted to see if the difference in popularity between sonogs with high and low danceability (defined as songs with danceabililty at or above .5 and danceability below .5 respectively) was significant. 
+
+Null Hypothesis: There is not a difference between the mean popularities of songs that have high danceability and low danceability
+Alternative Hypothesis: There is a difference between the mean popularities of songs that have high danceability and low danceability
+
+```{r observed-difference-dance}
+songs <- songs%>%
+  mutate(danceLevel = case_when(
+    danceability >= .5 ~ "High",
+    danceability < .5 ~ "Low"
+  ))
+mean_dance <- songs %>%
+  group_by(danceLevel) %>%  
+  summarise(samp_mean = mean(popularity)) %>%
+  summarise(diff(samp_mean)) %>%
+  pull()
+mean_dance
+```
+The observed mean popularity difference between songs with high and low danceabiliity is 8.56. 
+
+```{r null-dist-dance}
+null_dist_dance <- songs %>%
+  specify(response = popularity, explanatory = danceLevel) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = nrep, type = "permute") %>%
+  calculate(stat = "diff in means", order = c("High", "Low"))
+ggplot(data = null_dist_dance, aes(x = stat)) +
+  geom_histogram(binwidth=.2) +
+  geom_vline(xintercept = mean_dance, color = "red") +
+  geom_vline(xintercept = -1 * mean_dance, color = "red") +
+  labs(title = "Null distribution of differences in popularity means based on danceability")
+```
+
+```{r p-value-dance}
+null_dist_dance %>%
+  filter(stat <= mean_dance) %>%
+  summarise(pvalue = 2 * (n() / nrep))
+```
+
+The p-value of the difference between high and low danceability is 0, which means we can reject the null hypothesis that there is not a difference between the mean popularities of songs that have high danceability and low danceability The data provides convincing evidence that there is a difference in mean popularities of songs that have high danceability versus low danceability 
+
+#### Popularity Difference Between High Speechiness and Low Speechiness
+From the visualizations, we saw that songs with more speechiness were more likely to have a greater popularity. We wanted to see if the difference in popularity between sonogs with high and low speechiness (defined as songs with speechiness at or above .5 and speechiness below .5 respectively) was significant. 
+
+Null Hypothesis: There is not a difference between the mean popularities of songs that have high speechiness and low speechiness
+Alternative Hypothesis: There is a difference between the mean popularities of songs that have high speechiness and low speechiness
+
+```{r observed-difference-speech}
+songs <- songs%>%
+  mutate(speechLevel = case_when(
+    speechiness >= .5 ~ "High",
+    speechiness < .5 ~ "Low"
+  ))
+mean_speech <- songs %>%
+  group_by(speechLevel) %>%  
+  summarise(samp_mean = mean(popularity)) %>%
+  summarise(diff(samp_mean)) %>%
+  pull()
+mean_speech
+```
+The observed mean popularity difference between songs with high and low speechiness is 23.09. 
+```{r null-dist-speech}
+null_dist_speech <- songs %>%
+  specify(response = popularity, explanatory = speechLevel) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = nrep, type = "permute") %>%
+  calculate(stat = "diff in means", order = c("High", "Low"))
+ggplot(data = null_dist_speech, aes(x = stat)) +
+  geom_histogram(binwidth=.2) +
+  geom_vline(xintercept = mean_speech, color = "red") +
+  geom_vline(xintercept = -1 * mean_speech, color = "red") +
+  labs(title = "Null distribution of differences in popularity means based on speechiness")
+```
+
+The p-value of the difference between high and low speechiness is 0, which means we can reject the null hypothesis that there is not a difference between the mean popularities of songs that have high speechiness and low speechiness The data provides convincing evidence that there is a difference in mean popularities of songs that have high speechiness versus low speechiness. 
+
+#### Popularity Difference Between High Valence and Low Valence
+From the linear model, we saw that songs with less valence were more likely to have a greater popularity. We wanted to see if the difference in popularity between songs with high and low valence (defined as songs with valence at or above .5 and valence below .5 respectively) was significant. 
+
+Null Hypothesis: There is not a difference between the mean popularities of songs that have high valence and low valence
+Alternative Hypothesis: There is a difference between the mean popularities of songs that have high valence and low valence
+
+```{r observed-difference-valence}
+songs <- songs%>%
+  mutate(valenceLevel = case_when(
+    valence >= .5 ~ "High",
+    valence < .5 ~ "Low"
+  ))
+mean_valence <- songs %>%
+  group_by(valenceLevel) %>%  
+  summarise(samp_mean = mean(popularity)) %>%
+  summarise(diff(samp_mean)) %>%
+  pull()
+mean_valence
+```
+The observed difference in mean popularity between songs with high and low valence is 2.12. 
+
+```{r null-dist-valence}
+null_dist_valence <- songs %>%
+  specify(response = popularity, explanatory = valenceLevel) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = nrep, type = "permute") %>%
+  calculate(stat = "diff in means", order = c("High", "Low"))
+ggplot(data = null_dist_valence, aes(x = stat)) +
+  geom_histogram(binwidth=.2) +
+  geom_vline(xintercept = mean_valence, color = "red") +
+  geom_vline(xintercept = -1 * mean_valence, color = "red") +
+  labs(title = "Null distribution of differences in popularity means based on speechiness")
+```
+
+```{r p-value-valence}
+null_dist_valence %>%
+  filter(stat <= mean_valence) %>%
+  summarise(pvalue = 2 * (n() / nrep))
+```
+
+The p-value of the difference between high and low valence is 0, which means we can reject the null hypothesis that there is not a difference between the mean popularities of songs that have high valence and low valence. The data provides convincing evidence that there is a difference in mean popularities of songs that have high valence versus low valence. 
+
+#### Popularity Difference Between Major and Minor
+We wanted to see if the difference in popularity between songs in a major or minor mode was significant. 
+
+Null Hypothesis: There is not a difference between the mean popularities of songs that are in a major mode versus minor mode.
+Alternative Hypothesis: There is a difference between the mean popularities of songs that are in a major mode versus minor mode.
+
+```{r observed-difference-mode}
+mean_mode <- songs %>%
+  group_by(mode) %>%  
+  summarise(samp_mean = mean(popularity)) %>%
+  summarise(diff(samp_mean)) %>%
+  pull()
+mean_mode
+```
+The observed mean popularity difference between major and minor songs is 2.03.
+```{r null-dist-mode}
+null_dist_mode <- songs %>%
+  specify(response = popularity, explanatory = mode) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = nrep, type = "permute") %>%
+  calculate(stat = "diff in means", order = c("Major", "Minor"))
+ggplot(data = null_dist_mode, aes(x = stat)) +
+  geom_histogram(binwidth=.2) +
+  geom_vline(xintercept = mean_mode, color = "red") +
+  geom_vline(xintercept = -1 * mean_mode, color = "red") +
+  labs(title = "Null distribution of differences in popularity means based on mode")
+```
+
+```{r p-value-mode}
+null_dist_mode %>%
+  filter(stat >= mean_mode) %>%
+  summarise(pvalue = 2 * (n() / nrep))
+```
+
+The p-value of the difference between major and minor is 0, which means we can reject the null hypothesis that there is not a difference between the mean popularities of songs that are in a major or minor mode. The data provides convincing evidence that there is a difference in mean popularities of songs that are in a major mode versus a minor mode.  
 
 ### Conclusion
 
