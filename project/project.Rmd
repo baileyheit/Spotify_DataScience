@@ -26,7 +26,7 @@ songs
 Relationship Between Different Variables and Song Popularity
 
 ```{r plot-genre-popularity, fig.width=15, fig.width=15}
-ggplot(data = songs, mapping = aes(x = genre, y = popularity)) +
+ggplot(data = songs, mapping = aes(x = fct_reorder(genre, -popularity), y = popularity)) +
   geom_boxplot() +
   labs(title = "Genre v. Popularity of Songs", x = "Genre", y = "Popularity")
 ```
