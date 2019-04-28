@@ -13,7 +13,10 @@ songs <- read_csv("/cloud/project/data/songs.csv")
 nrep <- 1000
 ```
 
-### Popularity Difference Between Pop and Rap 
+### Permutation Analysis Between Variables
+#### Popularity Difference Between Pop and Rap 
+
+From the visualization of the popularity of songs with different genres, it was determined that Pop and Rap were the genres with the most popularity. As a result, we wanted to see if the difference in popularity between these two genres is significant. 
 
 Null Hypothesis: There is not a difference between the mean popularities of songs that are pop and songs that are rap. 
 Alternative Hypothesis: There is a difference between the mean popularities of songs that are pop and songs that are rap.
@@ -28,6 +31,8 @@ mean_poprap <- songs_poprap %>%
   pull()
 mean_poprap
 ```
+
+The observed difference between the mean popoularity of Pop and the mean popularity of Rap is 6.15. 
 
 ```{r null-dist-pop}
 null_dist_poprap <- songs_poprap %>%
@@ -50,7 +55,9 @@ null_dist_poprap %>%
 
 The p-value of the difference between pop and rap songs is 0, which mean we can reject the null hypothesis that there is not a difference between the mean popularities of songs that are pop versus rap. The data provides convincing evidence that there is a difference in mean popularities of songs that in the pop genre versus the rap genre. 
 
-### Popularity Difference Between High Energy and Low Energy
+#### Popularity Difference Between High Energy and Low Energy
+From the visualizations, we saw that songs with more energy were more likely to have a greater popularity. We wanted to see if the difference in popularity between sonogs with high and low energy (defined as songs with energy at or above .5 and energy below .5 respectively) was significant. 
+
 Null Hypothesis: There is not a difference between the mean popularities of songs that have high energy and low energy.
 Alternative Hypothesis: There is a difference between the mean popularities of songs that have high energy and low energy.
 
@@ -67,6 +74,7 @@ mean_energy <- songs %>%
   pull()
 mean_energy
 ```
+The observed mean popularity difference between songs with high and low energyy is 9.688. 
 
 ```{r null-dist-energy}
 null_dist_energy <- songs %>%
@@ -88,7 +96,9 @@ null_dist_energy %>%
 ```
 The p-value of the difference between high and low energy is 0, which mean we can reject the null hypothesis that there is not a difference between the mean popularities of songs that have high energy and low energy. The data provides convincing evidence that there is a difference in mean popularities of songs that have high energy versus low energy. 
 
-### Popularity Difference Between High Danceability and Low Danceabililty
+#### Popularity Difference Between High Danceability and Low Danceabililty
+From the visualizations, we saw that songs with more danceability were more likely to have a greater popularity. We wanted to see if the difference in popularity between sonogs with high and low danceability (defined as songs with danceabililty at or above .5 and danceability below .5 respectively) was significant. 
+
 Null Hypothesis: There is not a difference between the mean popularities of songs that have high danceability and low danceability
 Alternative Hypothesis: There is a difference between the mean popularities of songs that have high danceability and low danceability
 
@@ -105,6 +115,7 @@ mean_dance <- songs %>%
   pull()
 mean_dance
 ```
+The observed mean popularity difference between songs with high and low danceabiliity is 8.56. 
 
 ```{r null-dist-dance}
 null_dist_dance <- songs %>%
@@ -127,7 +138,9 @@ null_dist_dance %>%
 
 The p-value of the difference between high and low danceability is 0, which means we can reject the null hypothesis that there is not a difference between the mean popularities of songs that have high danceability and low danceability The data provides convincing evidence that there is a difference in mean popularities of songs that have high danceability versus low danceability 
 
-### Popularity Difference Between High Speechiness and Low Speechiness
+#### Popularity Difference Between High Speechiness and Low Speechiness
+From the visualizations, we saw that songs with more speechiness were more likely to have a greater popularity. We wanted to see if the difference in popularity between sonogs with high and low speechiness (defined as songs with speechiness at or above .5 and speechiness below .5 respectively) was significant. 
+
 Null Hypothesis: There is not a difference between the mean popularities of songs that have high speechiness and low speechiness
 Alternative Hypothesis: There is a difference between the mean popularities of songs that have high speechiness and low speechiness
 
@@ -144,7 +157,7 @@ mean_speech <- songs %>%
   pull()
 mean_speech
 ```
-
+The observed mean popularity difference between songs with high and low speechiness is 23.09. 
 ```{r null-dist-speech}
 null_dist_speech <- songs %>%
   specify(response = popularity, explanatory = speechLevel) %>%
@@ -160,7 +173,9 @@ ggplot(data = null_dist_speech, aes(x = stat)) +
 
 The p-value of the difference between high and low speechiness is 0, which means we can reject the null hypothesis that there is not a difference between the mean popularities of songs that have high speechiness and low speechiness The data provides convincing evidence that there is a difference in mean popularities of songs that have high speechiness versus low speechiness. 
 
-### Popularity Difference Between High Valence and Low Valence
+#### Popularity Difference Between High Valence and Low Valence
+From the linear model, we saw that songs with less valence were more likely to have a greater popularity. We wanted to see if the difference in popularity between songs with high and low valence (defined as songs with valence at or above .5 and valence below .5 respectively) was significant. 
+
 Null Hypothesis: There is not a difference between the mean popularities of songs that have high valence and low valence
 Alternative Hypothesis: There is a difference between the mean popularities of songs that have high valence and low valence
 
@@ -177,6 +192,7 @@ mean_valence <- songs %>%
   pull()
 mean_valence
 ```
+The observed difference in mean popularity between songs with high and low valence is 2.12. 
 
 ```{r null-dist-valence}
 null_dist_valence <- songs %>%
@@ -199,7 +215,9 @@ null_dist_valence %>%
 
 The p-value of the difference between high and low valence is 0, which means we can reject the null hypothesis that there is not a difference between the mean popularities of songs that have high valence and low valence. The data provides convincing evidence that there is a difference in mean popularities of songs that have high valence versus low valence. 
 
-### Popularity Difference Between Major and Minor
+#### Popularity Difference Between Major and Minor
+We wanted to see if the difference in popularity between songs in a major or minor mode was significant. 
+
 Null Hypothesis: There is not a difference between the mean popularities of songs that are in a major mode versus minor mode.
 Alternative Hypothesis: There is a difference between the mean popularities of songs that are in a major mode versus minor mode.
 
@@ -211,7 +229,7 @@ mean_mode <- songs %>%
   pull()
 mean_mode
 ```
-
+The observed mean popularity difference between major and minor songs is 2.03.
 ```{r null-dist-mode}
 null_dist_mode <- songs %>%
   specify(response = popularity, explanatory = mode) %>%
