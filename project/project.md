@@ -29,10 +29,24 @@ CCBK
 
 ### Visualization
 
-Relationship Between Different Variables and Song
-    Popularity
+Relationship Between Different Variables and Song Popularity
 
-![](project_files/figure-gfm/plot-genre-popularity-1.png)<!-- -->
+    ## # A tibble: 26 x 2
+    ##    genre            medianpop
+    ##    <chr>                <dbl>
+    ##  1 Pop                     67
+    ##  2 Rap                     60
+    ##  3 Rock                    58
+    ##  4 Hip-Hop                 57
+    ##  5 Dance                   56
+    ##  6 Anime                   54
+    ##  7 Indie                   54
+    ##  8 Alternative             53
+    ##  9 Blues                   53
+    ## 10 Children’s Music        53
+    ## # … with 16 more rows
+
+![](project_files/figure-gfm/plot-selectedgenres-popularity-1.png)<!-- -->
 
     ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
 
