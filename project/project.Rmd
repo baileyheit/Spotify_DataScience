@@ -10,8 +10,17 @@ knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(infer)
 library(broom)
-songs <- read_csv("/cloud/project/data/SpotifyFeatures.csv")
+songs_complete <- read_csv("/cloud/project/data/SpotifyFeatures.csv")
 ```
+
+```{r songs-less}
+
+songs <- sample_n(songs_complete, 5000, replace = FALSE)
+
+songs
+```
+
+
 
 Your project goes here! Before you submit, make sure your chunks are turned off with `echo = FALSE`. 
 
