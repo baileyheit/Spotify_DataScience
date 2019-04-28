@@ -49,7 +49,11 @@ ggplot(data = songs, mapping = aes(x = danceability, y = popularity, alpha = 0.0
 ```
 
 ```{r plotg-duration-popularity}
-ggplot(data = songs, mapping = aes(x = duration_ms, y = popularity, alpha = 0.0005)) +
+songs_duration <- songs %>%
+  mutate(duration_s = duration_ms/1000) %>%
+  filter(duration_s <= 800)
+
+ggplot(data = songs_duration, mapping = aes(x = duration_s, y = popularity, alpha = 0.0005)) +
   geom_point() + 
   geom_smooth() +
   labs(title = "Duration v. Popularity of Songs", x = "Duration", y = "Popularity")
@@ -78,7 +82,10 @@ ggplot(data = songs, mapping = aes(x = liveness, y = popularity, alpha = 0.0005)
 ```
 
 ```{r plot-loudness-popularity}
-ggplot(data = songs, mapping = aes(x = loudness, y = popularity, alpha = 0.0005)) +
+songs_loudness <- songs %>%
+  filter(loudness >= -30)
+
+ggplot(data = songs_loudness, mapping = aes(x = loudness, y = popularity, alpha = 0.0005)) +
   geom_point() + 
   geom_smooth() +
   labs(title = "Loudness v. Popularity of Songs", x = "Loudness", y = "Popularity")
