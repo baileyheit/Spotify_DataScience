@@ -16,6 +16,8 @@ songs <- sample_n(songs_complete, 5000, replace = FALSE)
 set.seed(1234)
 ```
 
+### Genre 
+
 ```{r rap_pop}
 
 songs_gen <- songs %>%
@@ -36,38 +38,46 @@ boot_rap_pop %>%
 ```
 We are 95% certain that the difference in means between the popularity score of the rap and pop genre is between 5.83 and 6.26. 
 
-```{r mode}
+### Time Signature
+
+```{r time_signature_p}
 songs %>%
-   group_by(mode) %>%
+   count(time_signature)
+```
+
+```{r time_signature_new}
+   
+time_signature_songs <- songs %>%
+   mutate(time_signatureHL = case_when(
+    time_signature == "4/4" ~ "4/4",
+    TRUE ~ "Not 4/4")) %>%
+   filter(! is.na(time_signatureHL))
+
+time_signature_songs %>%
+   group_by(time_signatureHL) %>%
    summarise(average = mean(popularity))
 ```
 
-```{r major_minor}
+```{r time_signature_boot}
 
-boot_mode <- songs %>%
-   specify(response = popularity, explanatory = mode) %>%
+boot_time_signature <- time_signature_songs %>%
+   specify(response = popularity, explanatory = time_signatureHL) %>%
    generate(reps = 1000, type = "bootstrap") %>%
-   calculate(stat = "diff in means", order = c("Minor", "Major"))
+   calculate(stat = "diff in means", order = c("4/4", "Not 4/4"))
 
+ggplot(data = boot_time_signature, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "4/4 - Not 4/4", x = "Difference in Popularity")
 ```
 
-``` {r gg}
-ggplot(data = boot_mode, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "Minor - Major", x = "Difference in Popularity")
-```
-
-```{r conf_mode}
-boot_mode %>%
+```{r conf_time_signature}
+boot_time_signature %>%
   summarize(lower_bound = quantile(stat, 0.025),
             upper_bound = quantile(stat, 0.975))
 ```
-We are 95% certain that the difference in means between the popularity score of the rap and pop genre is between 1.77 and 2.08. 
+We are 95% certain that the difference between the songs with higher (>= 1st quartile) time_signature and the lower (<= 3rd quartile) time_signature is between 10.89 and 13.91.
+
+### Danceability
 
 ```{r danceability}
-
-ggplot(data = songs, mapping = aes(x = danceability)) +
-  geom_histogram() +
-  labs(title = "Distribution of Pulse", x = "Is Active?", y = "Pulse")
-
 songs %>%
    summarise(max = max(danceability), min = min(danceability), q1 = quantile(danceability, probs = 0.25), q3 = quantile(danceability, probs = 0.75))
 
@@ -79,9 +89,6 @@ dance_songs <- songs %>%
     danceability >= 0.437 ~ "High",
     danceability <= 0.69 ~ "Low"))
 
-```
-
-```{r dance}
 dance_songs %>%
    group_by(danceHL) %>%
    summarise(average = mean(popularity))
@@ -94,9 +101,6 @@ boot_dance <- dance_songs %>%
    generate(reps = 1000, type = "bootstrap") %>%
    calculate(stat = "diff in means", order = c("High", "Low"))
 
-```
-
-``` {r gg_dance}
 ggplot(data = boot_dance, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "High - Low", x = "Difference in Popularity")
 ```
 
@@ -107,12 +111,9 @@ boot_dance %>%
 ```
 We are 95% certain that the difference between the songs with higher (>= 1st quartile) danceability and the lower (<= 3rd quartile) danceability is between 10.30 and 10.61.
 
-```{r energy_plot}
+### Energy 
 
-ggplot(data = songs, mapping = aes(x = energy)) +
-  geom_histogram() +
-  labs(title = "Distribution of Pulse", x = "Is Active?", y = "Pulse")
-
+```{r energy_p}
 songs %>%
    summarise(max = max(energy), min = min(energy), q1 = quantile(energy, probs = 0.25), q3 = quantile(energy, probs = 0.75))
 
@@ -126,9 +127,6 @@ energy_songs <- songs %>%
     energy <= 0.405 ~ "Low")) %>%
    filter(! is.na(energyHL))
 
-```
-
-```{r energy}
 energy_songs %>%
    group_by(energyHL) %>%
    summarise(average = mean(popularity))
@@ -141,9 +139,6 @@ boot_energy <- energy_songs %>%
    generate(reps = 1000, type = "bootstrap") %>%
    calculate(stat = "diff in means", order = c("High", "Low"))
 
-```
-
-``` {r gg_energy}
 ggplot(data = boot_energy, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "High - Low", x = "Difference in Popularity")
 ```
 
@@ -154,4 +149,116 @@ boot_energy %>%
 ```
 We are 95% certain that the difference between the songs with higher (>= 1st quartile) energy and the lower (<= 3rd quartile) energy is between 10.91 and 11.32.
 
+### Liveness
 
+```{r liveness_p}
+songs %>%
+   summarise(max = max(liveness), min = min(liveness), q1 = quantile(liveness, probs = 0.25), q3 = quantile(liveness, probs = 0.75))
+
+```
+
+```{r liveness_new}
+   
+liveness_songs <- songs %>%
+   mutate(livenessHL = case_when(
+    liveness >= 0.266 ~ "High",
+    liveness <= 0.098 ~ "Low")) %>%
+   filter(! is.na(livenessHL))
+
+liveness_songs %>%
+   group_by(livenessHL) %>%
+   summarise(average = mean(popularity))
+```
+
+```{r liveness_boot}
+
+boot_liveness <- liveness_songs %>%
+   specify(response = popularity, explanatory = livenessHL) %>%
+   generate(reps = 1000, type = "bootstrap") %>%
+   calculate(stat = "diff in means", order = c("High", "Low"))
+
+ggplot(data = boot_liveness, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "High Liveness - Low Liveness", x = "Difference in Popularity")
+```
+
+```{r conf_liveness}
+boot_liveness %>%
+  summarize(lower_bound = quantile(stat, 0.025),
+            upper_bound = quantile(stat, 0.975))
+```
+We are 95% certain that the difference between the songs with higher (>= 1st quartile) liveness and the lower (<= 3rd quartile) liveness is between -6.81 and -4.101.
+
+### Loudness 
+
+```{r loudness_p}
+songs %>%
+   summarise(max = max(loudness), min = min(loudness), q1 = quantile(loudness, probs = 0.25), q3 = quantile(loudness, probs = 0.75))
+
+```
+
+```{r loudness_new}
+   
+loudness_songs <- songs %>%
+   mutate(loudnessHL = case_when(
+    loudness >= -5.36 ~ "High",
+    loudness <= -11.34 ~ "Low")) %>%
+   filter(! is.na(loudnessHL))
+
+loudness_songs %>%
+   group_by(loudnessHL) %>%
+   summarise(average = mean(popularity))
+```
+
+```{r loudness_boot}
+
+boot_loudness <- loudness_songs %>%
+   specify(response = popularity, explanatory = loudnessHL) %>%
+   generate(reps = 1000, type = "bootstrap") %>%
+   calculate(stat = "diff in means", order = c("High", "Low"))
+
+ggplot(data = boot_loudness, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "High Loudness - Low Loudness", x = "Difference in Popularity")
+```
+
+```{r conf_loudness}
+boot_loudness %>%
+  summarize(lower_bound = quantile(stat, 0.025),
+            upper_bound = quantile(stat, 0.975))
+```
+We are 95% certain that the difference between the songs with higher (>= 1st quartile) loudness and the lower (<= 3rd quartile) loudness is between 16.837 and 19.333.
+
+### Acousticness 
+
+```{r acousticness_p}
+songs %>%
+   summarise(max = max(acousticness), min = min(acousticness), q1 = quantile(acousticness, probs = 0.25), q3 = quantile(acousticness, probs = 0.75))
+
+```
+
+```{r acousticness_new}
+   
+acousticness_songs <- songs %>%
+   mutate(acousticnessHL = case_when(
+    acousticness >= 0.703 ~ "High",
+    acousticness <= 0.0303 ~ "Low")) %>%
+   filter(! is.na(acousticnessHL))
+
+acousticness_songs %>%
+   group_by(acousticnessHL) %>%
+   summarise(average = mean(popularity))
+```
+
+```{r acousticness_boot}
+
+boot_acousticness <- acousticness_songs %>%
+   specify(response = popularity, explanatory = acousticnessHL) %>%
+   generate(reps = 1000, type = "bootstrap") %>%
+   calculate(stat = "diff in means", order = c("High", "Low"))
+
+ggplot(data = boot_acousticness, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "High Acousticness - Low Acousticness", x = "Difference in Popularity")
+```
+
+```{r conf_acousticness}
+boot_acousticness %>%
+  summarize(lower_bound = quantile(stat, 0.025),
+            upper_bound = quantile(stat, 0.975))
+```
+We are 95% certain that the difference between the songs with higher (>= 1st quartile) acousticness and the lower (<= 3rd quartile) acousticness is between -19.48 and -17.00.
