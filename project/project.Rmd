@@ -147,7 +147,33 @@ ggplot(data = songs, mapping = aes(x = valence, y = popularity, alpha = 0.0005))
 
 ### Data Wrangling
 ### Linear Regression
-```{r full-model}
+
+### Linear Regression
+
+This is the selected multiple linear regression model using backwards selection. It looks at the relationship between popularity and different variables. Genre is not included in this model.
+```{r selected-model-nogenre, echo = FALSE}
+
+full_model_nogenre = lm(popularity ~ acousticness +
+                  danceability +
+                  energy +
+                  instrumentalness +
+                  liveness +
+                  loudness +
+                  speechiness + 
+                  tempo + 
+                  valence,
+                data = songs)
+
+nogenre_model <- step(full_model_nogenre, direction = "backward")
+
+nogenre_model 
+
+glance(nogenre_model)$r.squared
+glance(nogenre_model)$adj.r.squared
+```
+
+This is the selected multiple linear regression model using backwards selection. It looks at the relationship between popularity and different variables. Genre is included in this model.
+```{r selected-model, echo = FALSE}
 
 full_model = lm(popularity ~ acousticness +
                   danceability +
@@ -157,18 +183,9 @@ full_model = lm(popularity ~ acousticness +
                   loudness +
                   speechiness + 
                   tempo + 
-                  valence +
-                  loudness * liveness,
+                  genre +
+                  valence,
                 data = songs)
-
-full_model
-
-glance(full_model)$r.squared
-glance(full_model)$adj.r.squared
-```
-
-
-```{r selected-model}
 
 selected_model <- step(full_model, direction = "backward")
 
@@ -178,43 +195,13 @@ glance(selected_model)$r.squared
 glance(selected_model)$adj.r.squared
 ```
 
-score_hat = 56.20 + -11.30 * acousticness + 17.19 * danceability - 5.933 * energy - 4.11 * instrumentalness + -6.40 * liveness + 0.60 * loudness + -10.36 * speechiness + -8.25 * valence + 0.62 * liveness:loudness
+score_hat = 9.15 + 3.28 * danceability + 0.12 * loudness - 2.055 * speechiness - 1.32 * valence + 44.97 * alternative + 44.67 * anime + 45.81 * Blues + 45.82 * children's music + 24.01 * classical + 13.65 * comedy + 37.92 * country + 47.85 * dance + 28.50 * electronic + 40.34 * folk + 49.09 * hip-hop + 45.57 * indie + 31.07 * jazz + 1.94 * movie + 4.96 * opera + 56.81 * pop + 42.54 * R&B + 51.31 * rap + 26.72 * reggae + 27.86 * reggaeton + 49.95 * rock + 19.29 * Ska + 37.95 * soul + 25.83 * soundtrack + 27.13 * world 
 
-When all variables have a value of 0, then it is expected that a song's populariy is 56.20 One example of how a variable influences the popularity is with acousticness. If a song's acoustic score increases by 1 then popularity will on average decrease by 11.30 points, all else held constant. There is also an apparent interaction between danceability and energy. When the interaction increases by one on average the popularity decreases by 12.96 points, all else held constant. 
+Through experimenting with different multiple regression models, it is found that genre is the most influential predictor of popularity. Without genre as a part of this model, no variables are removed using backwards selection. When genre is a part of the model, most of the variables are selected out the model. For the ones that do remain (danceability, loudness, speechiness, and valence) their coefficients are small which shows that they do not heavily influence popularity. 
 
-The adjusted R squared value for this model is 0.289, which means that roughly 28.9% of the variability in a song's popularity can be explained by the different variables in the multiple regression model. This indicates that there is a weak to moderate positive overall realtionship between a song's popularity and the different variables related to a song.
+When all variables have a value of 0, then it is expected that a song's populariy is 9.15. One example of how a variable influences the popularity is danceabiliy If a song's acoustic score increases by 1 then popularity will increases by 3.28 points. It can be seen that popularity is increased most when the genre is either pop or rap. Popularity is, on average, higher by 56.81 if a song is under the rap genre than any of the other genres, all else held constant. Popularity is, on average, 51.31 points higher if the song is a rap song as opposed to any other song, all else held constant. This makes sense because the two most popular genres are rap and pop. This is in contras to the movie genre where popularity is only 1.94 points higher on average if it is under the movie genre compared to any other genre, all else held constant. It is interesting to note that no genres cause the popularity to decrease. 
 
-
-```{r mode-model}
-
-mode_model = lm(popularity ~ mode, data = songs)
-
-mode_model
-
-glance(mode_model)$r.squared
-```
-
-score_hat = 43.77 + 2.007 * mode_minor
-
-Minor equation: 
-score_hat = 43.77 + 2.007 * 1 
-          = 45.77
-
-Major equestion:
-score_hat = 43.77 + 2.007 * 0
-          = 43.77
-          
-  Songs that are in the major mode tent to have higher popularity scores than songs in a minor key. All else held constant, theere is an expected popularity score increase of 2.007 if the song is in the minor key compared to the major key. 
-
-
-```{r genre-model}
-
-genre_model = lm(popularity ~ genre, data = songs)
-
-genre_model
-
-glance(genre_model)$r.squared
-```
+The adjusted R squared value for this model is 0.71, which means that roughly 71.0% of the variability in a song's popularity can be explained by the different variables in the multiple regression model. This indicates that there is a strong positive overall realtionship between a song's popularity and the different variables related to a song. When looking at individual r-value models, it can be seen that genre is the variable that contributes to the high r-value. Without it, the selected model r-value is .30. 
 
 ### Bootstrapping
 ```{r nrep}
