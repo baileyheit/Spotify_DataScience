@@ -159,7 +159,7 @@ ggplot(data = songs, mapping = aes(x = valence, y = popularity, alpha = 0.0005))
   labs(title = "Valence v. Popularity of Songs", x = "Valence", y = "Popularity", alpha = "Transparency")
 ```
 
-
+From this exploratory analyses, it appears that genre, energy, danceability, loudness, and speechiness had the largest relationships with song popularity. 
 
 ### Data Wrangling
 ### Linear Regression
