@@ -23,9 +23,10 @@ speechiness - A measure of how exclusively speech-like the track is from 0 to 1.
 tempo - The overall estimate beats per minute of the track.
 time_signature - An estimated overall time signature of a track. The time signature (meter) is a notational convention to specify how many beats are in each bar (or measure).
 valence - A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative (e.g. sad, depressed, angry).
+genre - genre of each song
 
 Categorical Variables:
-artist_name, track_name, track_id, mode, time_signature (An estimated overall time signature of a track), key
+artist_name, track_name, track_id, mode, time_signature (An estimated overall time signature of a track), key, genre
 
 Continuous Numerical:
 $ duration_ms      Duration of song in miliseconds

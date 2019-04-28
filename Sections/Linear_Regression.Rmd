@@ -73,3 +73,12 @@ score_hat = 43.517 + 1.947 * 0
           = 43.517
           
   Songs that are in the major mode tent to have higher popularity scores than songs in a minor key. All else held constant, theere is an expected popularity score increase of 1.947 if the song is in the minor key compared to the major key. 
+
+```{r energy-model}
+
+energy_model = lm(popularity ~ energy, data = songs)
+
+energy_model
+
+glance(energy_model)$r.squared
+```
