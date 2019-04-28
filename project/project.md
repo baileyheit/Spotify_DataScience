@@ -25,27 +25,60 @@ CCBK
     ##   valence = col_double()
     ## )
 
-    ## # A tibble: 5,000 x 18
-    ##    genre artist_name track_name track_id popularity acousticness
-    ##    <chr> <chr>       <chr>      <chr>         <dbl>        <dbl>
-    ##  1 Rap   Future      SOME MORE  5sT2yQr…         55       0.493 
-    ##  2 Regg… Lunay       Si Te Vas… 43vTR8i…         62       0.488 
-    ##  3 Alte… BANNERS     Start A R… 3cpOqFZ…         59       0.0135
-    ##  4 Come… Tim Wilson  It Was Am… 5HIWweV…         14       0.697 
-    ##  5 Alte… Eric Belli… Repeat     06Ygqg0…         44       0.256 
-    ##  6 Movie Cerise Cal… "L’amour … 4fqHESw…         32       0.306 
-    ##  7 Come… Tommy John… Humorous … 0YiG40a…         30       0.829 
-    ##  8 Pop   Logic       Wassup     5KVciTE…         64       0.0822
-    ##  9 Rock  Cake        Short Ski… 3OOFEF2…         64       0.0028
-    ## 10 World Dean Evens… Mending Y… 6tIFO8z…         42       0.967 
-    ## # … with 4,990 more rows, and 12 more variables: danceability <dbl>,
-    ## #   duration_ms <dbl>, energy <dbl>, instrumentalness <dbl>, key <chr>,
-    ## #   liveness <dbl>, loudness <dbl>, mode <chr>, speechiness <dbl>,
-    ## #   tempo <dbl>, time_signature <chr>, valence <dbl>
-
 ### Introduction
 
 ### Visualization
+
+Relationship Between Different Variables and Song
+    Popularity
+
+![](project_files/figure-gfm/plot-genre-popularity-1.png)<!-- -->
+
+    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+
+![](project_files/figure-gfm/plot-acousticness-popularity-1.png)<!-- -->
+
+    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+
+![](project_files/figure-gfm/plot-energy-popularity-1.png)<!-- -->
+
+    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+
+![](project_files/figure-gfm/plot-danceability-popularity-1.png)<!-- -->
+
+    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+
+![](project_files/figure-gfm/plotg-duration-popularity-1.png)<!-- -->
+
+    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+
+![](project_files/figure-gfm/plot-instrumentalness-popularity-1.png)<!-- -->
+
+![](project_files/figure-gfm/plot-key-popularity-1.png)<!-- -->
+
+    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+
+![](project_files/figure-gfm/plot-liveness-popularity-1.png)<!-- -->
+
+    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+
+![](project_files/figure-gfm/plot-loudness-popularity-1.png)<!-- -->
+
+![](project_files/figure-gfm/plot-mode-popularity-1.png)<!-- -->
+
+    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+
+![](project_files/figure-gfm/plot-speechiness-popularity-1.png)<!-- -->
+
+    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+
+![](project_files/figure-gfm/plot-tempo-popularity-1.png)<!-- -->
+
+![](project_files/figure-gfm/timesignature-popularity-1.png)<!-- -->
+
+    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+
+![](project_files/figure-gfm/plot-valence-popularity-1.png)<!-- -->
 
 ### Data Wrangling
 
@@ -59,67 +92,53 @@ CCBK
     ## 
     ## Coefficients:
     ##       (Intercept)       acousticness       danceability  
-    ##         57.395025         -10.394532          16.976497  
+    ##          57.27147          -11.83038           16.70482  
     ##            energy   instrumentalness           liveness  
-    ##         -7.282225          -3.750035           0.649082  
+    ##          -9.93363           -4.25321           -2.46628  
     ##          loudness        speechiness              tempo  
-    ##          0.727135         -10.775193          -0.002083  
+    ##           0.81221           -8.40820            0.02311  
     ##           valence  liveness:loudness  
-    ##         -8.474525           1.068332
+    ##          -9.36277            0.80716
 
-    ## [1] 0.2987758
+    ## [1] 0.2986424
 
-    ## [1] 0.2973702
+    ## [1] 0.2972366
 
-    ## Start:  AIC=26680.94
+    ## Start:  AIC=26810.05
     ## popularity ~ acousticness + danceability + energy + instrumentalness + 
     ##     liveness + loudness + speechiness + tempo + valence + loudness * 
     ##     liveness
     ## 
     ##                     Df Sum of Sq     RSS   AIC
-    ## - tempo              1      18.7 1034057 26679
-    ## <none>                           1034038 26681
-    ## - instrumentalness   1    3744.3 1037782 26697
-    ## - energy             1    3765.7 1037804 26697
-    ## - liveness:loudness  1    5761.1 1039799 26707
-    ## - speechiness        1   11246.2 1045284 26733
-    ## - valence            1   14222.1 1048260 26747
-    ## - acousticness       1   23538.2 1057576 26792
-    ## - danceability       1   27100.1 1061138 26808
-    ## 
-    ## Step:  AIC=26679.03
-    ## popularity ~ acousticness + danceability + energy + instrumentalness + 
-    ##     liveness + loudness + speechiness + valence + liveness:loudness
-    ## 
-    ##                     Df Sum of Sq     RSS   AIC
-    ## <none>                           1034057 26679
-    ## - instrumentalness   1    3748.2 1037805 26695
-    ## - energy             1    3788.7 1037845 26695
-    ## - liveness:loudness  1    5745.5 1039802 26705
-    ## - speechiness        1   11249.4 1045306 26731
-    ## - valence            1   14442.2 1048499 26746
-    ## - acousticness       1   23560.8 1057617 26790
-    ## - danceability       1   27770.3 1061827 26810
+    ## <none>                           1061086 26810
+    ## - tempo              1    2250.5 1063336 26819
+    ## - liveness:loudness  1    3172.3 1064258 26823
+    ## - instrumentalness   1    5061.5 1066147 26832
+    ## - speechiness        1    6420.0 1067506 26838
+    ## - energy             1    6518.9 1067605 26839
+    ## - valence            1   16694.5 1077780 26886
+    ## - danceability       1   24551.0 1085637 26922
+    ## - acousticness       1   30380.1 1091466 26949
 
     ## 
     ## Call:
     ## lm(formula = popularity ~ acousticness + danceability + energy + 
-    ##     instrumentalness + liveness + loudness + speechiness + valence + 
-    ##     liveness:loudness, data = songs)
+    ##     instrumentalness + liveness + loudness + speechiness + tempo + 
+    ##     valence + loudness * liveness, data = songs)
     ## 
     ## Coefficients:
     ##       (Intercept)       acousticness       danceability  
-    ##           57.1178           -10.3741            17.0352  
+    ##          57.27147          -11.83038           16.70482  
     ##            energy   instrumentalness           liveness  
-    ##           -7.3000            -3.7519             0.6526  
-    ##          loudness        speechiness            valence  
-    ##            0.7259           -10.7767            -8.5030  
-    ## liveness:loudness  
-    ##            1.0663
+    ##          -9.93363           -4.25321           -2.46628  
+    ##          loudness        speechiness              tempo  
+    ##           0.81221           -8.40820            0.02311  
+    ##           valence  liveness:loudness  
+    ##          -9.36277            0.80716
 
-    ## [1] 0.2987631
+    ## [1] 0.2986424
 
-    ## [1] 0.2974984
+    ## [1] 0.2972366
 
 score\_hat = 56.20 + -11.30 \* acousticness + 17.19 \* danceability -
 5.933 \* energy - 4.11 \* instrumentalness + -6.40 \* liveness + 0.60 \*
@@ -148,9 +167,9 @@ song.
     ## 
     ## Coefficients:
     ## (Intercept)    modeMinor  
-    ##      44.151        1.125
+    ##      43.260        2.033
 
-    ## [1] 0.0009816861
+    ## [1] 0.003149919
 
 score\_hat = 43.77 + 2.007 \* mode\_minor
 
@@ -169,9 +188,9 @@ compared to the major key.
     ## 
     ## Coefficients:
     ## (Intercept)       energy  
-    ##       33.38        18.98
+    ##       32.79        19.28
 
-    ## [1] 0.08253054
+    ## [1] 0.08138488
 
     ## 
     ## Call:
@@ -179,19 +198,9 @@ compared to the major key.
     ## 
     ## Coefficients:
     ##  (Intercept)  danceability  
-    ##        29.34         27.38
+    ##        27.84         29.09
 
-    ## [1] 0.08609871
-
-    ## 
-    ## Call:
-    ## lm(formula = popularity ~ liveness, data = songs)
-    ## 
-    ## Coefficients:
-    ## (Intercept)     liveness  
-    ##       48.31       -17.62
-
-    ## [1] 0.03979683
+    ## [1] 0.09281284
 
     ## 
     ## Call:
@@ -199,9 +208,19 @@ compared to the major key.
     ## 
     ## Coefficients:
     ## (Intercept)     liveness  
-    ##       48.31       -17.62
+    ##       47.70       -17.32
 
-    ## [1] 0.03979683
+    ## [1] 0.03832614
+
+    ## 
+    ## Call:
+    ## lm(formula = popularity ~ liveness, data = songs)
+    ## 
+    ## Coefficients:
+    ## (Intercept)     liveness  
+    ##       47.70       -17.32
+
+    ## [1] 0.03832614
 
 ### Bootstrapping
 

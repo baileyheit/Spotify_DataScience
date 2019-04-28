@@ -9,7 +9,15 @@ knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(infer)
 library(broom)
-songs <- read_csv("/cloud/project/data/SpotifyFeatures.csv")
+```
+
+```{r load-data}
+songs_complete <- read_csv("/cloud/project/data/SpotifyFeatures.csv")
+songs <- sample_n(songs_complete, 5000, replace = FALSE)
+
+write.csv(songs,"/cloud/project/data/songs.csv", row.names = FALSE)
+
+songs
 ```
 
 ## Section 1. Introduction

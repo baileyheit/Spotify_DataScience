@@ -3,6 +3,46 @@ Project Proposal: What Makes a Song Popular on Spotify?
 CCBK
 3/21/19
 
+    ## Parsed with column specification:
+    ## cols(
+    ##   genre = col_character(),
+    ##   artist_name = col_character(),
+    ##   track_name = col_character(),
+    ##   track_id = col_character(),
+    ##   popularity = col_double(),
+    ##   acousticness = col_double(),
+    ##   danceability = col_double(),
+    ##   duration_ms = col_double(),
+    ##   energy = col_double(),
+    ##   instrumentalness = col_double(),
+    ##   key = col_character(),
+    ##   liveness = col_double(),
+    ##   loudness = col_double(),
+    ##   mode = col_character(),
+    ##   speechiness = col_double(),
+    ##   tempo = col_double(),
+    ##   time_signature = col_character(),
+    ##   valence = col_double()
+    ## )
+
+    ## # A tibble: 5,000 x 18
+    ##    genre artist_name track_name track_id popularity acousticness
+    ##    <chr> <chr>       <chr>      <chr>         <dbl>        <dbl>
+    ##  1 Dance Lostboycrow Verona     2DRfWdO…         50      0.196  
+    ##  2 Dance JP Cooper   Wait       3hqJFkx…         68      0.192  
+    ##  3 Ska   The Aquaba… Dear Spike 25TYdzF…         22      0.0888 
+    ##  4 R&B   Sampha      What Shou… 7gDc8hQ…         48      0.922  
+    ##  5 Movie Riders In … Cowpoke    5JMJdZg…          2      0.876  
+    ##  6 Rock  The Growle… Big Toe    7qHBtTd…         49      0.0102 
+    ##  7 Dance Lizzo       Jang a La… 3s3tKXk…         42      0.00365
+    ##  8 Opera Léo Delibes Sylvia ou… 2KpiSeb…         10      0.942  
+    ##  9 Clas… Michael Ha… Concertin… 1wnnXK7…         30      0.974  
+    ## 10 Dance Calvin Har… Promises … 3Lv3frZ…         68      0.186  
+    ## # … with 4,990 more rows, and 12 more variables: danceability <dbl>,
+    ## #   duration_ms <dbl>, energy <dbl>, instrumentalness <dbl>, key <chr>,
+    ## #   liveness <dbl>, loudness <dbl>, mode <chr>, speechiness <dbl>,
+    ## #   tempo <dbl>, time_signature <chr>, valence <dbl>
+
 ## Section 1. Introduction
 
 The goal of our project is to determine the qualities of a song that
@@ -50,11 +90,11 @@ determine this.
 
 R^2 value for liveness as a predictor of popularity:
 
-    ## [1] 0.04126875
+    ## [1] 0.03832614
 
 R^2 value for energy as a predictor of popularity:
 
-    ## [1] 0.07709083
+    ## [1] 0.08138488
 
 From the r-squared values, we can see that energy is a better predictor
 of popularity compared with liveness. However, variation in energy only
@@ -78,16 +118,16 @@ Average population scores by genre:
     ## # A tibble: 26 x 2
     ##    genre            average
     ##    <chr>              <dbl>
-    ##  1 Pop                 66.6
-    ##  2 Rap                 60.5
-    ##  3 Rock                59.6
-    ##  4 Hip-Hop             58.4
-    ##  5 Dance               57.3
-    ##  6 Indie               54.7
-    ##  7 Alternative         54.7
-    ##  8 Anime               54.7
-    ##  9 Blues               54.7
-    ## 10 Children’s Music    54.7
+    ##  1 Pop                 67.1
+    ##  2 Rap                 60.9
+    ##  3 Rock                58.9
+    ##  4 Hip-Hop             58.3
+    ##  5 Dance               55.7
+    ##  6 Anime               55.2
+    ##  7 Alternative         54.5
+    ##  8 Children’s Music    54.5
+    ##  9 Blues               54.4
+    ## 10 Indie               54.3
     ## # … with 16 more rows
 
 Pop and Rap genres have the highest average population scores. The
@@ -136,23 +176,23 @@ indicator of the center.
 
 ## Section 3. Data
 
-    ## Observations: 228,159
+    ## Observations: 5,000
     ## Variables: 18
-    ## $ genre            <chr> "Opera", "Opera", "Opera", "Opera", "Opera", "O…
-    ## $ artist_name      <chr> "Giuseppe Verdi", "Giacomo Puccini", "Giacomo P…
-    ## $ track_name       <chr> "Stiffelio, Act III: Ei fugge! … Lina, pensai c…
-    ## $ track_id         <chr> "7EsKYeHtTc4H4xWiTqSVZA", "7MfmRBvqaW0I6UTxXnad…
-    ## $ popularity       <dbl> 21, 18, 10, 17, 19, 20, 13, 19, 20, 16, 20, 17,…
-    ## $ acousticness     <dbl> 0.986, 0.972, 0.935, 0.961, 0.985, 0.990, 0.980…
-    ## $ danceability     <dbl> 0.3130, 0.3600, 0.1680, 0.2500, 0.1420, 0.2110,…
-    ## $ duration_ms      <dbl> 490867, 176797, 266184, 288573, 629760, 334720,…
-    ## $ energy           <dbl> 0.23100, 0.20100, 0.47000, 0.00605, 0.05800, 0.…
-    ## $ instrumentalness <dbl> 4.31e-04, 2.80e-02, 2.04e-02, 0.00e+00, 1.46e-0…
-    ## $ key              <chr> "C#", "D#", "C", "D", "D", "G#", "D", "F#", "C"…
-    ## $ liveness         <dbl> 0.0964, 0.1330, 0.3630, 0.1200, 0.0969, 0.0730,…
-    ## $ loudness         <dbl> -14.287, -19.794, -8.415, -33.440, -23.625, -20…
-    ## $ mode             <chr> "Major", "Major", "Major", "Major", "Major", "M…
-    ## $ speechiness      <dbl> 0.0547, 0.0581, 0.0383, 0.0480, 0.0493, 0.0534,…
-    ## $ tempo            <dbl> 86.001, 131.798, 75.126, 76.493, 172.935, 81.40…
-    ## $ time_signature   <chr> "4/4", "4/4", "3/4", "4/4", "4/4", "3/4", "1/4"…
-    ## $ valence          <dbl> 0.0886, 0.3690, 0.0696, 0.0380, 0.0382, 0.0400,…
+    ## $ genre            <chr> "Dance", "Dance", "Ska", "R&B", "Movie", "Rock"…
+    ## $ artist_name      <chr> "Lostboycrow", "JP Cooper", "The Aquabats!", "S…
+    ## $ track_name       <chr> "Verona", "Wait", "Dear Spike", "What Shouldn't…
+    ## $ track_id         <chr> "2DRfWdOZhBi00BcCwv9ljR", "3hqJFkxeobh6Y9mOL37N…
+    ## $ popularity       <dbl> 50, 68, 22, 48, 2, 49, 42, 10, 30, 68, 46, 51, …
+    ## $ acousticness     <dbl> 0.196000, 0.192000, 0.088800, 0.922000, 0.87600…
+    ## $ danceability     <dbl> 0.704, 0.552, 0.579, 0.348, 0.615, 0.510, 0.854…
+    ## $ duration_ms      <dbl> 190704, 231533, 244440, 212585, 102040, 151719,…
+    ## $ energy           <dbl> 0.7320, 0.5800, 0.9800, 0.1530, 0.1680, 0.7660,…
+    ## $ instrumentalness <dbl> 7.73e-05, 0.00e+00, 0.00e+00, 6.27e-02, 1.25e-0…
+    ## $ key              <chr> "F", "E", "B", "G", "C", "E", "A#", "G#", "D", …
+    ## $ liveness         <dbl> 0.0951, 0.1130, 0.1430, 0.0996, 0.0982, 0.0673,…
+    ## $ loudness         <dbl> -6.125, -8.062, -2.907, -16.777, -15.317, -5.81…
+    ## $ mode             <chr> "Minor", "Major", "Major", "Minor", "Major", "M…
+    ## $ speechiness      <dbl> 0.0539, 0.0466, 0.1620, 0.0290, 0.0306, 0.0278,…
+    ## $ tempo            <dbl> 105.044, 79.895, 129.977, 86.020, 93.243, 132.1…
+    ## $ time_signature   <chr> "4/4", "4/4", "4/4", "4/4", "1/4", "4/4", "4/4"…
+    ## $ valence          <dbl> 0.6990, 0.2900, 0.6840, 0.4030, 0.4470, 0.7270,…
