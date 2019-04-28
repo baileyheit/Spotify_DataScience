@@ -1,0 +1,157 @@
+---
+title: "Bootstrap"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(infer)
+library(broom)
+songs_complete <- read_csv("/cloud/project/data/SpotifyFeatures.csv")
+songs <- sample_n(songs_complete, 5000, replace = FALSE)
+```
+
+```{r setseed}
+set.seed(1234)
+```
+
+```{r rap_pop}
+
+songs_gen <- songs %>%
+  filter(genre == "Rap"|genre == "Pop")
+
+boot_rap_pop <- songs_gen %>%
+   specify(response = popularity, explanatory = genre) %>%
+   generate(reps = 1000, type = "bootstrap") %>%
+   calculate(stat = "diff in means", order = c("Pop", "Rap"))
+
+ggplot(data = boot_rap_pop, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "Pop - Rap", x = "Difference in Popularity")
+```
+
+```{r conf_rap_pop}
+boot_rap_pop %>%
+  summarize(lower_bound = quantile(stat, 0.025),
+            upper_bound = quantile(stat, 0.975))
+```
+We are 95% certain that the difference in means between the popularity score of the rap and pop genre is between 5.83 and 6.26. 
+
+```{r mode}
+songs %>%
+   group_by(mode) %>%
+   summarise(average = mean(popularity))
+```
+
+```{r major_minor}
+
+boot_mode <- songs %>%
+   specify(response = popularity, explanatory = mode) %>%
+   generate(reps = 1000, type = "bootstrap") %>%
+   calculate(stat = "diff in means", order = c("Minor", "Major"))
+
+```
+
+``` {r gg}
+ggplot(data = boot_mode, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "Minor - Major", x = "Difference in Popularity")
+```
+
+```{r conf_mode}
+boot_mode %>%
+  summarize(lower_bound = quantile(stat, 0.025),
+            upper_bound = quantile(stat, 0.975))
+```
+We are 95% certain that the difference in means between the popularity score of the rap and pop genre is between 1.77 and 2.08. 
+
+```{r danceability}
+
+ggplot(data = songs, mapping = aes(x = danceability)) +
+  geom_histogram() +
+  labs(title = "Distribution of Pulse", x = "Is Active?", y = "Pulse")
+
+songs %>%
+   summarise(max = max(danceability), min = min(danceability), q1 = quantile(danceability, probs = 0.25), q3 = quantile(danceability, probs = 0.75))
+
+```
+
+```{r dance_new}
+dance_songs <- songs %>%
+   mutate(danceHL = case_when(
+    danceability >= 0.437 ~ "High",
+    danceability <= 0.69 ~ "Low"))
+
+```
+
+```{r dance}
+dance_songs %>%
+   group_by(danceHL) %>%
+   summarise(average = mean(popularity))
+```
+
+```{r dance_boot}
+
+boot_dance <- dance_songs %>%
+   specify(response = popularity, explanatory = danceHL) %>%
+   generate(reps = 1000, type = "bootstrap") %>%
+   calculate(stat = "diff in means", order = c("High", "Low"))
+
+```
+
+``` {r gg_dance}
+ggplot(data = boot_dance, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "High - Low", x = "Difference in Popularity")
+```
+
+```{r conf_dance}
+boot_dance %>%
+  summarize(lower_bound = quantile(stat, 0.025),
+            upper_bound = quantile(stat, 0.975))
+```
+We are 95% certain that the difference between the songs with higher (>= 1st quartile) danceability and the lower (<= 3rd quartile) danceability is between 10.30 and 10.61.
+
+```{r energy_plot}
+
+ggplot(data = songs, mapping = aes(x = energy)) +
+  geom_histogram() +
+  labs(title = "Distribution of Pulse", x = "Is Active?", y = "Pulse")
+
+songs %>%
+   summarise(max = max(energy), min = min(energy), q1 = quantile(energy, probs = 0.25), q3 = quantile(energy, probs = 0.75))
+
+```
+
+```{r energy_new}
+   
+energy_songs <- songs %>%
+   mutate(energyHL = case_when(
+    energy >= 0.793 ~ "High",
+    energy <= 0.405 ~ "Low")) %>%
+   filter(! is.na(energyHL))
+
+```
+
+```{r energy}
+energy_songs %>%
+   group_by(energyHL) %>%
+   summarise(average = mean(popularity))
+```
+
+```{r energy_boot}
+
+boot_energy <- energy_songs %>%
+   specify(response = popularity, explanatory = energyHL) %>%
+   generate(reps = 1000, type = "bootstrap") %>%
+   calculate(stat = "diff in means", order = c("High", "Low"))
+
+```
+
+``` {r gg_energy}
+ggplot(data = boot_energy, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "High - Low", x = "Difference in Popularity")
+```
+
+```{r conf_energy}
+boot_energy %>%
+  summarize(lower_bound = quantile(stat, 0.025),
+            upper_bound = quantile(stat, 0.975))
+```
+We are 95% certain that the difference between the songs with higher (>= 1st quartile) energy and the lower (<= 3rd quartile) energy is between 10.91 and 11.32.
+
+
