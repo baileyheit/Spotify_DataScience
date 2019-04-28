@@ -741,6 +741,48 @@ upper_bound5
 ```
 We are 95% certain that the difference in popularity means between songs with high  acousticness and the low acousticness is between `r lower_bound5` and `r upper_bound5`.
 
+### Valence
+
+```{r valence_info}
+songs %>%
+   summarise(max = max(valence), min = min(valence), q1 = quantile(valence, probs = 0.25), q3 = quantile(valence, probs = 0.75))
+
+```
+
+```{r valence_new}
+   
+valence_songs <- songs %>%
+   mutate(valenceHL = case_when(
+    valence >= 0.642 ~ "High",
+    valence <= 0.23 ~ "Low")) %>%
+   filter(! is.na(valenceHL))
+
+valence_songs %>%
+   group_by(valenceHL) %>%
+   summarise(average = mean(popularity))
+```
+Songs with high valence have a mean popularity score that is around 5 higher compared songs with low valence. 
+
+```{r valence_boot}
+
+boot_valence <- valence_songs %>%
+   specify(response = popularity, explanatory = valenceHL) %>%
+   generate(reps = 1000, type = "bootstrap") %>%
+   calculate(stat = "diff in means", order = c("High", "Low"))
+
+ggplot(data = boot_valence, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "High - Low", x = "Difference in Popularity")
+```
+
+```{r conf_valence}
+lower_bound6 <- boot_valence %>%
+  summarize(lower_bound = quantile(stat, 0.025))
+lower_bound6
+upper_bound6 <- boot_valence %>%
+  summarize(upper_bound = quantile(stat, 0.975))
+upper_bound6
+```
+We are 95% certain that the difference in means between songs with high  valence and low valence is between `r lower_bound6` and `r upper_bound6`.
+
 ### Conclusion
 
 Your project goes here! Before you submit, make sure your chunks are turned off with `echo = FALSE`. 
