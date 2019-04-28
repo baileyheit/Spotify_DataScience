@@ -23,7 +23,7 @@ songs <- read_csv("/cloud/project/data/songs.csv")
 
 Relationship Between Different Variables and Song Popularity
 
-```{r}
+```{r median-popularity-genre}
 songs %>%
   group_by(genre) %>%
   summarise(medianpop = median(popularity)) %>%
@@ -36,7 +36,7 @@ songs_genre <- songs %>%
 
 ggplot(data = songs_genre, mapping = aes(x = genre, y = popularity)) +
   geom_boxplot() +
-  labs(title = "Comparing the Most Popular and Lease Popular Genres", x = "Genres", y = "Popularity")
+  labs(title = "Comparing the Most Popular and Least Popular Genres", x = "Genres", y = "Popularity")
 ```
 
 
