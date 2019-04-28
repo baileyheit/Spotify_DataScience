@@ -19,6 +19,10 @@ songs <- read_csv("/cloud/project/data/songs.csv")
 
 ### Introduction
 
+  The goal of our project is to determine the qualities of a song that influence popularity on Spotify. The dataset was retrieved online from kaggle.com. The data is derived from the Spotify Web API, which uses internal Spotify metrics to determine the parameters of the dataset. For subjective variables such as danceability and instrumentalness, the Spotify Web API utilizes Echo Nest algorithms. The dataset curator retrieved data for 228159 songs at random and aggregated this information into the dataset. Because the data set was so large and difficult to analyze in R-studio, a random sample of 5000 data points was taken and a new csv file was made.
+
+  This project will analyze the variables of a song that correlate with a higher song popularity. To find this, we will assign song popularity as our dependent response variable and the other variables such as danceability, energy, and key as our predictor variables. Using backwards selection using multiple predictors models, we can determine which variables are the best predictors of a song's popularity score. Higher R^2 value for single predictors model or a higher adjusted R^2 value for multiple predictors can help us determine this. Visualizations will be used to show  general trends in popularity through various the qualitative and quantitative variables. Bootstraps and permutations will look at whether significant differences exist between certain variables as well as confidence intervals. These different statistical strategies all contribute to the research question of what qualities of a song contribute to its popularity. 
+
 ### Visualization
 
 Relationship Between Different Variables and Song Popularity
@@ -202,40 +206,14 @@ score_hat = 43.77 + 2.007 * 0
           
   Songs that are in the major mode tent to have higher popularity scores than songs in a minor key. All else held constant, theere is an expected popularity score increase of 2.007 if the song is in the minor key compared to the major key. 
 
-```{r energy-model}
 
-energy_model = lm(popularity ~ energy, data = songs)
+```{r genre-model}
 
-energy_model
+genre_model = lm(popularity ~ genre, data = songs)
 
-glance(energy_model)$r.squared
-```
+genre_model
 
-```{r danceability-model}
-
-danceability_model = lm(popularity ~ danceability, data = songs)
-
-danceability_model
-
-glance(danceability_model)$r.squared
-```
-
-```{r liveness-model}
-
-liveness_model = lm(popularity ~ liveness, data = songs)
-
-liveness_model
-
-glance(liveness_model)$r.squared
-```
-
-```{r acoustiness-model}
-
-liveness_model = lm(popularity ~ liveness, data = songs)
-
-liveness_model
-
-glance(liveness_model)$r.squared
+glance(genre_model)$r.squared
 ```
 
 ### Bootstrapping

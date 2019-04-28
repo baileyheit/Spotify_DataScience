@@ -27,6 +27,32 @@ CCBK
 
 ### Introduction
 
+The goal of our project is to determine the qualities of a song that
+influence popularity on Spotify. The dataset was retrieved online from
+kaggle.com. The data is derived from the Spotify Web API, which uses
+internal Spotify metrics to determine the parameters of the dataset. For
+subjective variables such as danceability and instrumentalness, the
+Spotify Web API utilizes Echo Nest algorithms. The dataset curator
+retrieved data for 228159 songs at random and aggregated this
+information into the dataset. Because the data set was so large and
+difficult to analyze in R-studio, a random sample of 5000 data points
+was taken and a new csv file was made.
+
+This project will analyze the variables of a song that correlate with a
+higher song popularity. To find this, we will assign song popularity as
+our dependent response variable and the other variables such as
+danceability, energy, and key as our predictor variables. Using
+backwards selection using multiple predictors models, we can determine
+which variables are the best predictors of a song’s popularity score.
+Higher R^2 value for single predictors model or a higher adjusted R^2
+value for multiple predictors can help us determine this. Visualizations
+will be used to show general trends in popularity through various the
+qualitative and quantitative variables. Bootstraps and permutations will
+look at whether significant differences exist between certain variables
+as well as confidence intervals. These different statistical strategies
+all contribute to the research question of what qualities of a song
+contribute to its popularity.
+
 ### Visualization
 
 Relationship Between Different Variables and Song Popularity
@@ -34,16 +60,16 @@ Relationship Between Different Variables and Song Popularity
     ## # A tibble: 26 x 2
     ##    genre            medianpop
     ##    <chr>                <dbl>
-    ##  1 Pop                     67
+    ##  1 Pop                     66
     ##  2 Rap                     60
     ##  3 Rock                    58
-    ##  4 Hip-Hop                 57
-    ##  5 Dance                   56
-    ##  6 Anime                   54
-    ##  7 Indie                   54
-    ##  8 Alternative             53
-    ##  9 Blues                   53
-    ## 10 Children’s Music        53
+    ##  4 Dance                   57
+    ##  5 Hip-Hop                 57
+    ##  6 Alternative             54
+    ##  7 Anime                   54
+    ##  8 Blues                   54
+    ##  9 Children’s Music        54
+    ## 10 Indie                   54
     ## # … with 16 more rows
 
 ![](project_files/figure-gfm/plot-selectedgenres-popularity-1.png)<!-- -->
@@ -106,33 +132,33 @@ Relationship Between Different Variables and Song Popularity
     ## 
     ## Coefficients:
     ##       (Intercept)       acousticness       danceability  
-    ##          57.27147          -11.83038           16.70482  
+    ##          55.92945          -13.84582           16.60983  
     ##            energy   instrumentalness           liveness  
-    ##          -9.93363           -4.25321           -2.46628  
+    ##          -6.46620           -3.73733           -4.99717  
     ##          loudness        speechiness              tempo  
-    ##           0.81221           -8.40820            0.02311  
+    ##           0.62554           -6.76749            0.01213  
     ##           valence  liveness:loudness  
-    ##          -9.36277            0.80716
+    ##          -9.21265            0.73623
 
-    ## [1] 0.2986424
+    ## [1] 0.3035142
 
-    ## [1] 0.2972366
+    ## [1] 0.3021182
 
-    ## Start:  AIC=26810.05
+    ## Start:  AIC=26948.77
     ## popularity ~ acousticness + danceability + energy + instrumentalness + 
     ##     liveness + loudness + speechiness + tempo + valence + loudness * 
     ##     liveness
     ## 
     ##                     Df Sum of Sq     RSS   AIC
-    ## <none>                           1061086 26810
-    ## - tempo              1    2250.5 1063336 26819
-    ## - liveness:loudness  1    3172.3 1064258 26823
-    ## - instrumentalness   1    5061.5 1066147 26832
-    ## - speechiness        1    6420.0 1067506 26838
-    ## - energy             1    6518.9 1067605 26839
-    ## - valence            1   16694.5 1077780 26886
-    ## - danceability       1   24551.0 1085637 26922
-    ## - acousticness       1   30380.1 1091466 26949
+    ## <none>                           1090937 26949
+    ## - tempo              1       640 1091576 26950
+    ## - energy             1      2820 1093757 26960
+    ## - liveness:loudness  1      2839 1093776 26960
+    ## - instrumentalness   1      3783 1094719 26964
+    ## - speechiness        1      4854 1095791 26969
+    ## - valence            1     16658 1107595 27022
+    ## - danceability       1     25353 1116290 27062
+    ## - acousticness       1     43888 1134825 27144
 
     ## 
     ## Call:
@@ -142,17 +168,17 @@ Relationship Between Different Variables and Song Popularity
     ## 
     ## Coefficients:
     ##       (Intercept)       acousticness       danceability  
-    ##          57.27147          -11.83038           16.70482  
+    ##          55.92945          -13.84582           16.60983  
     ##            energy   instrumentalness           liveness  
-    ##          -9.93363           -4.25321           -2.46628  
+    ##          -6.46620           -3.73733           -4.99717  
     ##          loudness        speechiness              tempo  
-    ##           0.81221           -8.40820            0.02311  
+    ##           0.62554           -6.76749            0.01213  
     ##           valence  liveness:loudness  
-    ##          -9.36277            0.80716
+    ##          -9.21265            0.73623
 
-    ## [1] 0.2986424
+    ## [1] 0.3035142
 
-    ## [1] 0.2972366
+    ## [1] 0.3021182
 
 score\_hat = 56.20 + -11.30 \* acousticness + 17.19 \* danceability -
 5.933 \* energy - 4.11 \* instrumentalness + -6.40 \* liveness + 0.60 \*
@@ -181,9 +207,9 @@ song.
     ## 
     ## Coefficients:
     ## (Intercept)    modeMinor  
-    ##      43.260        2.033
+    ##      43.100        2.496
 
-    ## [1] 0.003149919
+    ## [1] 0.004568754
 
 score\_hat = 43.77 + 2.007 \* mode\_minor
 
@@ -198,43 +224,29 @@ compared to the major key.
 
     ## 
     ## Call:
-    ## lm(formula = popularity ~ energy, data = songs)
+    ## lm(formula = popularity ~ genre, data = songs)
     ## 
     ## Coefficients:
-    ## (Intercept)       energy  
-    ##       32.79        19.28
+    ##           (Intercept)       genreAlternative             genreAnime  
+    ##                 8.750                 45.490                 45.278  
+    ##            genreBlues  genreChildren’s Music         genreClassical  
+    ##                46.417                 46.466                 22.621  
+    ##           genreComedy           genreCountry             genreDance  
+    ##                12.159                 38.587                 48.756  
+    ##       genreElectronic              genreFolk           genreHip-Hop  
+    ##                29.356                 40.616                 49.903  
+    ##            genreIndie              genreJazz             genreMovie  
+    ##                46.193                 31.223                  1.538  
+    ##            genreOpera               genrePop               genreR&B  
+    ##                 3.711                 57.695                 43.260  
+    ##              genreRap            genreReggae         genreReggaeton  
+    ##                52.255                 27.397                 28.750  
+    ##             genreRock               genreSka              genreSoul  
+    ##                50.429                 19.490                 38.485  
+    ##       genreSoundtrack             genreWorld  
+    ##                24.534                 27.082
 
-    ## [1] 0.08138488
-
-    ## 
-    ## Call:
-    ## lm(formula = popularity ~ danceability, data = songs)
-    ## 
-    ## Coefficients:
-    ##  (Intercept)  danceability  
-    ##        27.84         29.09
-
-    ## [1] 0.09281284
-
-    ## 
-    ## Call:
-    ## lm(formula = popularity ~ liveness, data = songs)
-    ## 
-    ## Coefficients:
-    ## (Intercept)     liveness  
-    ##       47.70       -17.32
-
-    ## [1] 0.03832614
-
-    ## 
-    ## Call:
-    ## lm(formula = popularity ~ liveness, data = songs)
-    ## 
-    ## Coefficients:
-    ## (Intercept)     liveness  
-    ##       47.70       -17.32
-
-    ## [1] 0.03832614
+    ## [1] 0.7098728
 
 ### Bootstrapping
 
