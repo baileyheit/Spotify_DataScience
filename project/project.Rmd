@@ -23,11 +23,22 @@ songs <- read_csv("/cloud/project/data/songs.csv")
 
 Relationship Between Different Variables and Song Popularity
 
-```{r plot-genre-popularity, fig.width=15, fig.width=15}
-ggplot(data = songs, mapping = aes(x = fct_reorder(genre, -popularity), y = popularity)) +
-  geom_boxplot() +
-  labs(title = "Genre v. Popularity of Songs", x = "Genre", y = "Popularity")
+```{r}
+songs %>%
+  group_by(genre) %>%
+  summarise(medianpop = median(popularity)) %>%
+  arrange(desc(medianpop))
 ```
+
+```{r plot-selectedgenres-popularity}
+songs_genre <- songs %>%
+  filter(genre == "Pop"| genre == "Movie")
+
+ggplot(data = songs_genre, mapping = aes(x = genre, y = popularity)) +
+  geom_boxplot() +
+  labs(title = "Comparing the Most Popular and Lease Popular Genres", x = "Genres", y = "Popularity")
+```
+
 
 ```{r plot-acousticness-popularity}
 ggplot(data = songs, mapping = aes(x = acousticness, y = popularity, alpha = 0.005)) +
