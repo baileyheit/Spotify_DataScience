@@ -10,10 +10,12 @@ library(tidyverse)
 library(infer)
 library(broom)
 library(forcats)
-songs <- read_csv("/cloud/project/data/SpotifyFeatures.csv")
 
-glimpse(songs)
+songs <- sample_n(songs_complete, 5000, replace = FALSE)
+
+songs
 ```
+
 
 ```{r full-model}
 

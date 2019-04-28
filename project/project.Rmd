@@ -10,17 +10,118 @@ knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(infer)
 library(broom)
-songs_complete <- read_csv("/cloud/project/data/SpotifyFeatures.csv")
 ```
 
-```{r songs-less}
-
+```{r load-data}
+songs_complete <- read_csv("/cloud/project/data/SpotifyFeatures.csv")
 songs <- sample_n(songs_complete, 5000, replace = FALSE)
 
 songs
 ```
 
+### Introduction
 
+### Visualization
+### Data Wrangling
+### Linear Regression
+```{r full-model}
+
+full_model = lm(popularity ~ acousticness +
+                  danceability +
+                  energy +
+                  instrumentalness +
+                  liveness +
+                  loudness +
+                  speechiness + 
+                  tempo + 
+                  valence +
+                  loudness * liveness,
+                data = songs)
+
+full_model
+
+glance(full_model)$r.squared
+glance(full_model)$adj.r.squared
+```
+
+
+```{r selected-model}
+
+selected_model <- step(full_model, direction = "backward")
+
+selected_model
+
+glance(selected_model)$r.squared
+glance(selected_model)$adj.r.squared
+```
+
+score_hat = 56.20 + -11.30 * acousticness + 17.19 * danceability - 5.933 * energy - 4.11 * instrumentalness + -6.40 * liveness + 0.60 * loudness + -10.36 * speechiness + -8.25 * valence + 0.62 * liveness:loudness
+
+When all variables have a value of 0, then it is expected that a song's populariy is 56.20 One example of how a variable influences the popularity is with acousticness. If a song's acoustic score increases by 1 then popularity will on average decrease by 11.30 points, all else held constant. There is also an apparent interaction between danceability and energy. When the interaction increases by one on average the popularity decreases by 12.96 points, all else held constant. 
+
+The adjusted R squared value for this model is 0.289, which means that roughly 28.9% of the variability in a song's popularity can be explained by the different variables in the multiple regression model. This indicates that there is a weak to moderate positive overall realtionship between a song's popularity and the different variables related to a song.
+
+
+```{r mode-model}
+
+mode_model = lm(popularity ~ mode, data = songs)
+
+mode_model
+
+glance(mode_model)$r.squared
+```
+
+score_hat = 43.77 + 2.007 * mode_minor
+
+Minor equation: 
+score_hat = 43.77 + 2.007 * 1 
+          = 45.77
+
+Major equestion:
+score_hat = 43.77 + 2.007 * 0
+          = 43.77
+          
+  Songs that are in the major mode tent to have higher popularity scores than songs in a minor key. All else held constant, theere is an expected popularity score increase of 2.007 if the song is in the minor key compared to the major key. 
+
+```{r energy-model}
+
+energy_model = lm(popularity ~ energy, data = songs)
+
+energy_model
+
+glance(energy_model)$r.squared
+```
+
+```{r danceability-model}
+
+danceability_model = lm(popularity ~ danceability, data = songs)
+
+danceability_model
+
+glance(danceability_model)$r.squared
+```
+
+```{r liveness-model}
+
+liveness_model = lm(popularity ~ liveness, data = songs)
+
+liveness_model
+
+glance(liveness_model)$r.squared
+```
+
+```{r acoustiness-model}
+
+liveness_model = lm(popularity ~ liveness, data = songs)
+
+liveness_model
+
+glance(liveness_model)$r.squared
+```
+
+### Bootstrapping
+
+### Conclusion
 
 Your project goes here! Before you submit, make sure your chunks are turned off with `echo = FALSE`. 
 
