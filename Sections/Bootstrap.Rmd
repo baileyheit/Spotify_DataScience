@@ -16,6 +16,10 @@ songs <- sample_n(songs_complete, 5000, replace = FALSE)
 set.seed(1234)
 ```
 
+### Bootstrapping to find confidence intervals
+
+In this section, bootstrapping was used to determine the confidence intervals for the difference in mean popularity scores between different categories within variables. For example, the confidence interval for the difference in mean popularity scores between the Rap and Pop genres (the most popular 2 genres) were calculated. 
+
 ### Genre 
 
 ```{r rap_pop}
@@ -25,25 +29,25 @@ songs_gen <- songs %>%
 
 boot_rap_pop <- songs_gen %>%
    specify(response = popularity, explanatory = genre) %>%
-   generate(reps = 1000, type = "bootstrap") %>%
+   generate(reps = 100, type = "bootstrap") %>%
    calculate(stat = "diff in means", order = c("Pop", "Rap"))
 
 ggplot(data = boot_rap_pop, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "Pop - Rap", x = "Difference in Popularity")
 ```
 
 ```{r conf_rap_pop}
-boot_rap_pop %>%
-  summarize(lower_bound = quantile(stat, 0.025),
-            upper_bound = quantile(stat, 0.975))
+lower_bound <- boot_rap_pop %>%
+  summarize(lower_bound = quantile(stat, 0.025))
+lower_bound
+upper_bound <- boot_rap_pop %>%
+  summarize(upper_bound = quantile(stat, 0.975))
+upper_bound
 ```
-We are 95% certain that the difference in means between the popularity score of the rap and pop genre is between 5.83 and 6.26. 
+We are 95% certain that the difference in means between the popularity score of the rap and pop genres is between `r lower_bound` and `r upper_bound`. 
 
 ### Time Signature
 
-```{r time_signature_p}
-songs %>%
-   count(time_signature)
-```
+From the boxplot in the visualizations section, we can see that the 4/4 time signature had a higher average population score than the rest of the time signatures. Thus, we decided to construct a confidence interval estimating the difference in popularity means between songs with a 4/4 time signature and songs that do not use a 4/4 time signature. 
 
 ```{r time_signature_new}
    
@@ -57,6 +61,7 @@ time_signature_songs %>%
    group_by(time_signatureHL) %>%
    summarise(average = mean(popularity))
 ```
+We can see that songs with 4/4 time signature have an average popularity score that is around 10 higher than songs that do not have a 4/4 time signature. 
 
 ```{r time_signature_boot}
 
@@ -69,15 +74,24 @@ ggplot(data = boot_time_signature, mapping = aes(x=stat)) + geom_histogram() + l
 ```
 
 ```{r conf_time_signature}
-boot_time_signature %>%
-  summarize(lower_bound = quantile(stat, 0.025),
-            upper_bound = quantile(stat, 0.975))
+lower_bound0 <- boot_time_signature %>%
+  summarize(lower_bound = quantile(stat, 0.025))
+lower_bound0
+upper_bound0 <- boot_time_signature %>%
+  summarize(upper_bound = quantile(stat, 0.975))
+upper_bound0
 ```
-We are 95% certain that the difference between the songs with higher (>= 1st quartile) time_signature and the lower (<= 3rd quartile) time_signature is between 10.89 and 13.91.
+We are 95% certain that the difference in popularity means between the songs with higher (highest 25%) time_signature and the lower (lowest 25%) time_signature is between `r lower_bound0` and `r upper_bound0`.
+
+### Confidence intervals for continous variables
+
+The following variables were selected because the visualizations showed that they had the strongest linear relationships with popularity scores. The variables that were chosen are: danceability, energy, liveness, loudness, and acousticness. 
+
+For each of these variables, we took the highest 25% of the data ("High" danceability, energy, liveness etc.) and the lowest 25% of the data ("Low" danceability, energy, liveness etc.) and conducted a 95% confidence interval test for the difference in mean popularities between the two. 
 
 ### Danceability
 
-```{r danceability}
+```{r dance_info}
 songs %>%
    summarise(max = max(danceability), min = min(danceability), q1 = quantile(danceability, probs = 0.25), q3 = quantile(danceability, probs = 0.75))
 
@@ -93,6 +107,7 @@ dance_songs %>%
    group_by(danceHL) %>%
    summarise(average = mean(popularity))
 ```
+Songs with high danceability have a mean popularity score that is around 10 higher compared songs with low danceability. 
 
 ```{r dance_boot}
 
@@ -105,15 +120,18 @@ ggplot(data = boot_dance, mapping = aes(x=stat)) + geom_histogram() + labs(title
 ```
 
 ```{r conf_dance}
-boot_dance %>%
-  summarize(lower_bound = quantile(stat, 0.025),
-            upper_bound = quantile(stat, 0.975))
+lower_bound1 <- boot_dance %>%
+  summarize(lower_bound = quantile(stat, 0.025))
+lower_bound1
+upper_bound1 <- boot_dance %>%
+  summarize(upper_bound = quantile(stat, 0.975))
+upper_bound1
 ```
-We are 95% certain that the difference between the songs with higher (>= 1st quartile) danceability and the lower (<= 3rd quartile) danceability is between 10.30 and 10.61.
+We are 95% certain that the difference in popularity means between the songs with high danceability and low danceability is between `r lower_bound1` and `r upper_bound1`.
 
 ### Energy 
 
-```{r energy_p}
+```{r energy_info}
 songs %>%
    summarise(max = max(energy), min = min(energy), q1 = quantile(energy, probs = 0.25), q3 = quantile(energy, probs = 0.75))
 
@@ -131,6 +149,7 @@ energy_songs %>%
    group_by(energyHL) %>%
    summarise(average = mean(popularity))
 ```
+Songs with high energy have a mean popularity score that is around 10 higher compared songs with low energy. 
 
 ```{r energy_boot}
 
@@ -143,15 +162,18 @@ ggplot(data = boot_energy, mapping = aes(x=stat)) + geom_histogram() + labs(titl
 ```
 
 ```{r conf_energy}
-boot_energy %>%
-  summarize(lower_bound = quantile(stat, 0.025),
-            upper_bound = quantile(stat, 0.975))
+lower_bound2 <- boot_energy %>%
+  summarize(lower_bound = quantile(stat, 0.025))
+lower_bound2
+upper_bound2 <- boot_energy %>%
+  summarize(upper_bound = quantile(stat, 0.975))
+upper_bound2
 ```
-We are 95% certain that the difference between the songs with higher (>= 1st quartile) energy and the lower (<= 3rd quartile) energy is between 10.91 and 11.32.
+We are 95% certain that the difference in means between songs with high  energy and low energy is between `r lower_bound2` and `r upper_bound2`.
 
 ### Liveness
 
-```{r liveness_p}
+```{r liveness_info}
 songs %>%
    summarise(max = max(liveness), min = min(liveness), q1 = quantile(liveness, probs = 0.25), q3 = quantile(liveness, probs = 0.75))
 
@@ -169,6 +191,7 @@ liveness_songs %>%
    group_by(livenessHL) %>%
    summarise(average = mean(popularity))
 ```
+Songs with high liveness (chances of having been performed live) have a mean popularity score that is around 6 lower compared songs with low liveness. 
 
 ```{r liveness_boot}
 
@@ -181,15 +204,18 @@ ggplot(data = boot_liveness, mapping = aes(x=stat)) + geom_histogram() + labs(ti
 ```
 
 ```{r conf_liveness}
-boot_liveness %>%
-  summarize(lower_bound = quantile(stat, 0.025),
-            upper_bound = quantile(stat, 0.975))
+lower_bound3 <- boot_liveness %>%
+  summarize(lower_bound = quantile(stat, 0.025))
+lower_bound3
+upper_bound3 <- boot_liveness %>%
+  summarize(upper_bound = quantile(stat, 0.975))
+upper_bound3
 ```
-We are 95% certain that the difference between the songs with higher (>= 1st quartile) liveness and the lower (<= 3rd quartile) liveness is between -6.81 and -4.101.
+We are 95% certain that the difference in popularity means between songs with high liveness and low liveness is between`r lower_bound3` and `r upper_bound3`.
 
 ### Loudness 
 
-```{r loudness_p}
+```{r loudness_info}
 songs %>%
    summarise(max = max(loudness), min = min(loudness), q1 = quantile(loudness, probs = 0.25), q3 = quantile(loudness, probs = 0.75))
 
@@ -207,6 +233,7 @@ loudness_songs %>%
    group_by(loudnessHL) %>%
    summarise(average = mean(popularity))
 ```
+Songs with high loudness have a mean popularity score that is around 18 higher compared with songs with low loudness. 
 
 ```{r loudness_boot}
 
@@ -219,15 +246,18 @@ ggplot(data = boot_loudness, mapping = aes(x=stat)) + geom_histogram() + labs(ti
 ```
 
 ```{r conf_loudness}
-boot_loudness %>%
-  summarize(lower_bound = quantile(stat, 0.025),
-            upper_bound = quantile(stat, 0.975))
+lower_bound4 <- boot_loudness %>%
+  summarize(lower_bound = quantile(stat, 0.025))
+lower_bound4
+upper_bound4 <- boot_loudness %>%
+  summarize(upper_bound = quantile(stat, 0.975))
+upper_bound4
 ```
-We are 95% certain that the difference between the songs with higher (>= 1st quartile) loudness and the lower (<= 3rd quartile) loudness is between 16.837 and 19.333.
+We are 95% certain that the difference in mean popularity scores between songs with high loudness and the low loudness is between `r lower_bound4` and `r upper_bound4`.
 
 ### Acousticness 
 
-```{r acousticness_p}
+```{r acousticness_info}
 songs %>%
    summarise(max = max(acousticness), min = min(acousticness), q1 = quantile(acousticness, probs = 0.25), q3 = quantile(acousticness, probs = 0.75))
 
@@ -245,6 +275,7 @@ acousticness_songs %>%
    group_by(acousticnessHL) %>%
    summarise(average = mean(popularity))
 ```
+Songs with high acousticness have a mean popularity score that is around 18 lower compared songs with low acousticness. 
 
 ```{r acousticness_boot}
 
@@ -257,8 +288,12 @@ ggplot(data = boot_acousticness, mapping = aes(x=stat)) + geom_histogram() + lab
 ```
 
 ```{r conf_acousticness}
-boot_acousticness %>%
-  summarize(lower_bound = quantile(stat, 0.025),
-            upper_bound = quantile(stat, 0.975))
+lower_bound5 <- boot_acousticness %>%
+  summarize(lower_bound = quantile(stat, 0.025))
+lower_bound5
+upper_bound5 <- boot_acousticness %>%
+  summarize(upper_bound = quantile(stat, 0.975))
+upper_bound5
 ```
-We are 95% certain that the difference between the songs with higher (>= 1st quartile) acousticness and the lower (<= 3rd quartile) acousticness is between -19.48 and -17.00.
+We are 95% certain that the difference in popularity means between songs with high  acousticness and the low acousticness is between `r lower_bound5` and `r upper_bound5`.
+
