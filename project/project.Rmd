@@ -13,16 +13,9 @@ library(broom)
 ```
 
 ```{r load-data}
-songs_complete <- read_csv("/cloud/project/data/SpotifyFeatures.csv")
-songs <- sample_n(songs_complete, 5000, replace = FALSE)
-
-write.csv(songs,"/cloud/project/data/songsc.csv", row.names = FALSE)
-
-songs
+songs <- read_csv("/cloud/project/data/songs.csv")
 ```
 
-songs
-```
 
 ### Introduction
 
