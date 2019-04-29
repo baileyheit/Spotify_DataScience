@@ -210,9 +210,9 @@ valence increases, there appears to be a generally constant relationship
 between the valence and popularity. The relationship between popularity
 and liveness is non-linear.
 
-From this exploratory analyses, it appears that genre, energy,
-danceability, loudness, and acousticness had the strongest relationships
-with song popularity.
+From this exploratory analysis, it appears that genre, energy,
+danceability, loudness, and acousticness are variables that have the
+stronger relationships with song popularity.
 
 The variables that have a positive relationship with popularity are:
 energy, danceability, and loudness. The variables that have a negative
@@ -242,16 +242,16 @@ the Rap and Pop genres (the most popular 2 genres) were
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1        3.85
+    ## 1        3.79
 
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1        7.06
+    ## 1        7.11
 
 We are 95% certain that the difference in means between the popularity
-score of the rap and pop genres is between 3.8508453 and
-7.0627042.
+score of the rap and pop genres is between 3.7893877 and
+7.1095839.
 
 ##### Estimate of the Popularity Difference between 4/4 Time Signature and Non-4/4 Time Signature
 
@@ -278,16 +278,16 @@ signature.
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1        10.4
+    ## 1        10.5
 
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1        13.4
+    ## 1        13.3
 
 We are 95% certain that the difference in popularity means between the
 songs with higher (highest 25%) time\_signature and the lower (lowest
-25%) time\_signature is between 10.4284512 and 13.3655711.
+25%) time\_signature is between 10.4625676 and 13.3066937.
 
 #### Confidence Intervals for Continous Variables
 
@@ -327,16 +327,16 @@ Songs with high danceability have a mean popularity score that is around
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1        10.0
+    ## 1        10.1
 
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1        12.2
+    ## 1        12.1
 
 We are 95% certain that the difference in popularity means between the
-songs with high danceability and low danceability is between 10.0366084
-and 12.202372.
+songs with high danceability and low danceability is between 10.055322
+and 12.1061423.
 
 ##### Energy
 
@@ -367,10 +367,10 @@ higher compared songs with low
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1        13.8
+    ## 1        14.0
 
 We are 95% certain that the difference in means between songs with high
-energy and low energy is between 11.2184815 and 13.8136991.
+energy and low energy is between 11.2331271 and 14.0031044.
 
 ##### Loudness
 
@@ -404,8 +404,8 @@ higher compared with songs with low
     ## 1        20.9
 
 We are 95% certain that the difference in mean popularity scores between
-songs with high loudness and the low loudness is between 18.3520663 and
-20.922551.
+songs with high loudness and the low loudness is between 18.420685 and
+20.8742337.
 
 ##### Acousticness
 
@@ -431,16 +431,16 @@ Songs with high acousticness have a mean popularity score that is around
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1       -20.9
+    ## 1       -20.7
 
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1       -18.4
+    ## 1       -18.3
 
 We are 95% certain that the difference in popularity means between songs
-with high acousticness and the low acousticness is between -20.9084388
-and -18.4460568.
+with high acousticness and the low acousticness is between -20.7497461
+and -18.3158881.
 
 ### Permutation Analysis
 
@@ -850,46 +850,76 @@ appeared to influence popularity the most, we used linear regression and
 bootstrapping to help verify which variables actually had a significant
 effect on popularity.
 
-Our permutation and bootstrapping analyses were conducted in order to
-verify the trends noted in our initial visualizations and the model
-selection result. The permutation tests showed that there is indeed a
-significant difference in popularity scores between the variables in the
-selected model (danceability, speechiness, and valence). We also
-observed a significant difference in popularity scores between the rap
-and pop genres and the major and minor modes.
+In order to verify the trends that we observed in the initial
+explanatory analysis, we conducted a confidence interval test for
+variables that appeared to have a strong relationship with popularity
+scores. These variables were genre, time signature, energy,
+danceability, loudness, and acousticness. Our results for our continous
+variables show that the value of the confidence intervals were greatest
+for loudness and acousticness, (18.4 - 20.9) and (-20.8, -28.4)
+respectively, indicating that there was a wider mean popularity score
+gap between songs with high and low loudness and acousticness.
+Danceability and energy had confidence intervals of (10.0, 12.3) and
+(11.1, 13.8) respectively, indicating that there was still a wide mean
+popularity score gap between songs with high and low danceability and
+liveness, but not as much as acousticness and loudness. This suggests
+that songs with high loudness or low acousticness are more likely to be
+popular compared with songs with high danceability or energy. The
+confidence interval for 4/4 v. not 4/4 time signature was similar at
+(10.4, 13.3). The confidence interval for difference in means between
+rap v. pop genres had the smallest values at (3.82, 7.04) but these
+values are quite large, considering that pop and rap genres are the two
+most popular genres. Since both of them are popular, the difference in
+popularity would be less than a non-popular genre v. popular genre.
 
-The results of our model selection showed that genre is the strongest
-predictor of popularity scores. The best model with the highest
-R-squared value was the model containing genre, danceability, loudness,
-speechiness, and valence. There were a few things that we found
-surprising in the result of the model selection. First, the selected
-model did not include energy, even though the visualizations showed a
-strong, positive relationship between energy and danceability. Second,
-the selected model included valence, which during our initial
-visualizations did not show a clear relationship with popularity scores.
-The rest of the results were as expected by the visualizations we had
-produced. Variables that showed a positive relationship with popularity
-scores in the scatter plot had a positive coefficient, and variables
-that showed a negative relationship with popularity scores in the plot
-had a negative coefficient.
+Then, we conducted a permutation test to further confirm whether there
+is a significant difference in popularity means between categories
+within variables that we thought had the strongest relationships with
+popularity scores in our exploratory data analysis (genre, energy,
+danceability) and variables that seemed to have interesting trends
+(valence, speechiness). For the continous variables, we observed
+significant differences between the popularity means of the highest 50%
+of the data and lowest 50% of the data. For genre, there was a
+significant difference between the popularity means of rap and pop
+genres. This further confirms the trends we initially noted in the
+visualizations, and further shows that high valence and low speechiness
+are trends that can be seen in popular songs.
 
-In addition, the selected model coefficient indicates that acousticness
-has a positive relationship with song popularity, whereas our
-visualizations and confidence intervals show that low acousticness
-results in a lower popularity score. These inconsistencies in our
-results reveal that acousticness is most likely not a good predictor of
-spotify song popularity. Aso, even though the visualizations showed that
-there seemed to be no clear relationship between valence and song
-popularity, the model selection result revealed that valence is one of
-the better predictors of song popularity, and our permutation result
-shows that there is indeed a significant difference between the
-popularity scores of high and low valence songs.
+Next, we conducted model selection to see which combinations of
+variables are the best predictors of song popularity. The results of our
+model selection showed that genre is the strongest predictor of
+popularity scores. Our selected model without genre had an R-squared
+value of around 0.3, whereas our selected model with genre had an
+R-squared value of around 0.7. This means that genre alone acounted for
+around 40% of the variability seen in the popularity scores. The best
+model with the highest R-squared value was the model containing genre,
+danceability, loudness, speechiness, and valence. There were a few
+things that we found surprising in the result of the model selection.
+First, the selected model did not include energy, even though the
+visualizations showed a strong, positive relationship between energy and
+danceability. Second, the selected model included valence, which during
+our initial visualizations did not show a clear relationship with
+popularity scores. The rest of the results were as expected by the
+visualizations we had produced. Variables that showed a positive
+relationship with popularity scores in the scatter plot had a positive
+coefficient, and variables that showed a negative relationship with
+popularity scores in the plot had a negative coefficient.
 
-Overall, genre is the strongest indicator of song popularity. This makes
-logical sense because Spotify’s largest listening population is
-millenials. Millenials generally spend more time listening to pop and
-rap as opposed to classical music. Other patterns may arise because
-certain genres tend to have similar musical properties.
+Overall, genre is the strongest indicator of song popularity, accounting
+for a majority of the variation in popularity scores. However, this is
+not to say that the trends we observed in other variables in our
+bootstrap and permutation analyses are invalid, or do not count.
+Variables such as danceability, energy, and acousticness can still
+function as good indicators of popular songs. For example, a song in the
+rap genre that has high danceability, energy, and low acousticness will
+more likely be popular than a song in the rap genre that has low
+danceability, energy, and high acousticness. However, that same song is
+likely to be less popular than a song in the pop genre that has low
+danceability, energy, and high acousticness. This makes logical sense
+because Spotify’s largest listening population is millenials. Millenials
+generally spend more time listening to pop and rap as opposed to
+classical music. Other patterns may arise because certain genres tend to
+have similar musical properties.
 
 In future research and implementations of this project, it would be
 important to find a data set that has a manageable amount of data
