@@ -26,7 +26,7 @@ This project will analyze the variables of a song that correlate with a higher s
 
 ### Visualization
 
-#### Exploratory Analysis of Relationships Between Different Variables and Song Popularity
+#### Exploratory Data Analysis of Relationships Between Different Variables and Song Popularity
 
 In this section, an exploratory analysis of the relationships between song popularity and different variables was conducted, in order to determine which characteristics of songs are good predictors of the popularity of songs. 
 
@@ -169,103 +169,280 @@ valence <-
 cowplot::plot_grid(acousticness, energy, danceability, duration, liveness, loudness, speechiness, tempo, valence)
 ```
 
-For the relationship between a confidence measure of whether songs are acoustic (acousticness) and the popularity of Spotify songs, there appears to be is a generally indirect trend in the data, where as acousticness increases song popularity decreases. The relationship between acousticness and song popularity is non-linear. 
+For the relationship between a confidence measure of whether songs are acoustic (acousticness) and the popularity of Spotify songs, there appears to be a generally indirect trend in the data. According to the visualization, as acousticness increases, song popularity decreases. The relationship between acousticness and song popularity is non-linear. 
 
-For the relationship between energy and popularity of Spotify songs, there appears to be is a generally direct trend in the data, where as song  energy increases, song popularity increases as well. The relationship between energy and song popularity is non-linear. 
+For the relationship between energy and popularity of Spotify songs, there appears to be a generally direct trend in the data. According to the visualization,  as song  energy increases, song popularity increases as well. The relationship between energy and song popularity is non-linear. 
 
-For the relationship between the how suitable a song is for dancing (danceability) and the popularity of Spotify songs, there appears to be a generally direct trend in the data, where  as danceability increases, song popularity increases as well. The relationship between danceability and song popularity is non-linear. 
+For the relationship between the how suitable a song is for dancing (danceability) and the popularity of Spotify songs, there appears to be a generally direct trend in the data. According to the visualization,  as danceability increases, song popularity increases as well. The relationship between danceability and song popularity is non-linear. 
 
 Before creating the plot for the relationship between song durationo and popluarity, we used the mutate() function to create a new variable that measures the duration of songs in seconds. We also used the filter() function to remove extreme outliers from the data and make it easier to see observations in the heavily populated regions in the visualization.
 
 For the relationship between the duration and popularity of songs on Spotify,  according to the data, songs with durations of about 200 seconds (3.33 minutes) have the highest average popularity. The relationship between song duration and popularity is non-linear. The majority of songs are under 600 seconds (10 minutes) long. Since the majority of Spotify songs are similar in length, duration does not appear to be a strong predictor of song popularity. 
 
-For the relationship between whether songs are predicted to be majority instrumental (instrumentalness) and the popularity of songs, there appears to be a generally indirect trend in the data, where as the intrumentalness of a song increases, the popularity decreases. The relationship between instrumentalness and popularity is non-linear.
+For the relationship between whether songs are predicted to be majority instrumental (instrumentalness) and the popularity of songs, there appears to be a generally indirect trend in the data. According to the visualization, as the intrumentalness of a song increases, the popularity decreases. The relationship between instrumentalness and popularity is non-linear.
 
-For the relationship between the liveliness that songs were preformed live (liveness) and the popularity of songs, there appears to be a generally indirect trend in the data, where as liveness increases, popularity decreases. The relationship between popularity and liveness is non-linear. 
+For the relationship between the liveliness that songs were preformed live (liveness) and the popularity of songs, there appears to be a generally indirect trend in the data. According to the visualization, as liveness increases, popularity decreases. The relationship between popularity and liveness is non-linear. 
 
-Before creating the plot displaying the relationship between loudness and popularity, we filtered the loudness variable to remove extreme outliers from the data and make heavily populated regions of the visualization easier to see. 
-This scatterplot appears to have a generally direct trend in the data, where as loudness increases, popularity increases as well. The relationship between popularity and liveness is non-linear.
+Before creating the plot displaying the relationship between loudness and popularity, we filtered the loudness variable to remove extreme outliers from the data and make heavily populated regions of the visualization easier to see. This scatterplot appears to have a generally direct trend in the data. According to the visualizaiton, as loudness increases, popularity increases as well. The relationship between popularity and liveness is non-linear.
 
-For the relationship between how exclusively speech-like songs are (speechiness) and the popularity of songs, there appears to be a generally indirect trend in the data, where as speechiness increases, popularity decreases. The relationship between popularity and speechiess is non-linear. 
+For the relationship between how exclusively speech-like songs are (speechiness) and the popularity of songs, there appears to be a generally indirect trend in the data. According to the visualization, as speechiness increases, popularity decreases. The relationship between popularity and speechiess is non-linear. 
 
 For the relationship between the tempo and popularity of songs, there appears to be a generally direct trend in the data, where as tempo increases, popularity increases as well. The relationship between popularity and liveness is non-linear. 
 
 For the relationship between the musical positiveness (valence) and the popularity of songs, although popularity appears to increase slightly as valence increases, there appears to be a generally constant relationship between the valence and popularity. The relationship between popularity and liveness is non-linear. 
 
-From this exploratory analyses, it appears that genre, energy, danceability, loudness, and speechiness had the largest relationships with song popularity. 
+From this exploratory analyses, it appears that genre, energy, danceability, loudness, and acousticness had the strongest relationships with song popularity. 
 
 The variables that have a positive relationship with popularity are: energy, danceability, and loudness. The variables that have a negative relationship with popularity are: acoustiness, instrumentalness, liveness, and acousticness 
 
-### Linear Regression
+### Bootstrapping to find Confidence Intervals
+#### Confidence Intervals for Categorical Variables
 
-After conducting an exploratory analysis through multiple visualizations, and examining strong individual relationships between song popularity and genre, energy, danceability, loudness, and speechiness, we wanted to find the best fit model of the variables that maximize the popularity of a song. To do this, a multiple linear regression model was created and backwards selection was utilized to determine the best model. 
+After conducting the exploratory data analysis, we wanted to further investigate the relationships between individual variables and song popularity.
+In this section, bootstrapping was used to determine the confidence intervals for the difference in mean popularity scores between different categories within variables that appeared to have the strongest relationship with popularity scores. For example, the confidence interval for the difference in mean popularity scores between the Rap and Pop genres (the most popular 2 genres) were calculated. 
 
-This is the selected multiple linear regression model using backwards selection. It looks at the relationship between popularity and different variables. Genre is not included in this model.
-```{r selected-model-nogenre, echo = FALSE}
+##### Estimate of the Popularity Difference between Rap and Pop Genres 
 
-full_model_nogenre = lm(popularity ~ acousticness +
-                  danceability +
-                  energy +
-                  instrumentalness +
-                  liveness +
-                  loudness +
-                  speechiness + 
-                  tempo + 
-                  valence,
-                data = songs)
+```{r rap_pop, echo = FALSE}
 
-nogenre_model <- step(full_model_nogenre, direction = "backward")
+songs_gen <- songs %>%
+  filter(genre == "Rap"|genre == "Pop")
 
-nogenre_model 
+boot_rap_pop <- songs_gen %>%
+   specify(response = popularity, explanatory = genre) %>%
+   generate(reps = 1000, type = "bootstrap") %>%
+   calculate(stat = "diff in means", order = c("Pop", "Rap"))
 
-glance(nogenre_model)$r.squared
-glance(nogenre_model)$adj.r.squared
-```
-Selected model = 57.28 + -13.77 * acousticness + 16.52 * danceability - 6.24 * energy - 3.62 * instrumentalness + -11.85 * liveness + 0.78 * loudness + -7.72 * speechiness + 0.013 * tempo + -9.29 * valence
-
-The adjusted R squared value for this model is 0.30, which means that roughly 30% of the variability in a song's popularity can be explained by the different variables in the multiple regression model. This indicates that there is a weak to moderate positive overall realtionship between a song's popularity and the different variables related to a song.
-
-This is the selected multiple linear regression model using backwards selection. It looks at the relationship between popularity and different variables. Genre is included in this model.
-```{r selected-model, echo = FALSE}
-
-full_model = lm(popularity ~ acousticness +
-                  danceability +
-                  energy +
-                  instrumentalness +
-                  liveness +
-                  loudness +
-                  speechiness + 
-                  tempo + 
-                  genre +
-                  valence,
-                data = songs)
-
-selected_model <- step(full_model, direction = "backward")
-
-selected_model
-
-glance(selected_model)$r.squared
-glance(selected_model)$adj.r.squared
+ggplot(data = boot_rap_pop, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "Pop - Rap", x = "Difference in Popularity")
 ```
 
-score_hat = 9.15 + 3.28 * danceability + 0.12 * loudness - 2.055 * speechiness - 1.32 * valence + 44.97 * alternative + 44.67 * anime + 45.81 * Blues + 45.82 * children's music + 24.01 * classical + 13.65 * comedy + 37.92 * country + 47.85 * dance + 28.50 * electronic + 40.34 * folk + 49.09 * hip-hop + 45.57 * indie + 31.07 * jazz + 1.94 * movie + 4.96 * opera + 56.81 * pop + 42.54 * R&B + 51.31 * rap + 26.72 * reggae + 27.86 * reggaeton + 49.95 * rock + 19.29 * Ska + 37.95 * soul + 25.83 * soundtrack + 27.13 * world 
+```{r conf_rap_pop, echo = FALSE}
+lower_bound <- boot_rap_pop %>%
+  summarize(lower_bound = quantile(stat, 0.025))
+lower_bound
+upper_bound <- boot_rap_pop %>%
+  summarize(upper_bound = quantile(stat, 0.975))
+upper_bound
+```
+We are 95% certain that the difference in means between the popularity score of the rap and pop genres is between `r lower_bound` and `r upper_bound`. 
 
-Through experimenting with different multiple regression models, it is found that genre is the most influential predictor of popularity. Without genre as a part of this model, no variables are removed using backwards selection. When genre is a part of the model, most of the variables are selected out the model. For the ones that do remain (danceability, loudness, speechiness, and valence) their coefficients are small which shows that they do not heavily influence popularity. 
+##### Estimate of the Popularity Difference between 4/4 Time Signature and Non-4/4 Time Signature
 
-When all variables have a value of 0, then it is expected that a song's populariy is 9.15. One example of how a variable influences the popularity is danceabiliy If a song's acoustic score increases by 1 then popularity will increases by 3.28 points. It can be seen that popularity is increased most when the genre is either pop or rap. Popularity is, on average, higher by 56.81 if a song is under the rap genre than any of the other genres, all else held constant. Popularity is, on average, 51.31 points higher if the song is a rap song as opposed to any other song, all else held constant. This makes sense because the two most popular genres are rap and pop. This is in contras to the movie genre where popularity is only 1.94 points higher on average if it is under the movie genre compared to any other genre, all else held constant. It is interesting to note that no genres cause the popularity to decrease. 
+From the boxplot in the visualizations section, we can see that the 4/4 time signature had a higher average popularity score than the rest of the time signatures. Thus, we decided to construct a confidence interval estimating the difference in popularity means between songs with a 4/4 time signature and songs that do not use a 4/4 time signature. 
 
-The adjusted R squared value for this model is 0.71, which means that roughly 71.0% of the variability in a song's popularity can be explained by the different variables in the multiple regression model. This indicates that there is a strong positive overall relationship between a song's popularity and the different variables related to a song. When looking at individual r-value models, it can be seen that genre is the variable that contributes to the high r-value. Without it, the selected model r-value is .30. 
+```{r time_signature_new, echo = FALSE}
+   
+time_signature_songs <- songs %>%
+   mutate(time_signatureHL = case_when(
+    time_signature == "4/4" ~ "4/4",
+    TRUE ~ "Not 4/4")) %>%
+   filter(! is.na(time_signatureHL))
 
-### Bootstrapping
+time_signature_songs %>%
+   group_by(time_signatureHL) %>%
+   summarise(average = mean(popularity))
+```
+We can see that songs with 4/4 time signature have an average popularity score that is around 10 higher than songs that do not have a 4/4 time signature. 
+
+```{r time_signature_boot, echo = FALSE}
+
+boot_time_signature <- time_signature_songs %>%
+   specify(response = popularity, explanatory = time_signatureHL) %>%
+   generate(reps = 1000, type = "bootstrap") %>%
+   calculate(stat = "diff in means", order = c("4/4", "Not 4/4"))
+
+ggplot(data = boot_time_signature, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "4/4 - Not 4/4", x = "Difference in Popularity")
+```
+
+```{r conf_time_signature, echo = FALSE}
+lower_bound0 <- boot_time_signature %>%
+  summarize(lower_bound = quantile(stat, 0.025))
+lower_bound0
+upper_bound0 <- boot_time_signature %>%
+  summarize(upper_bound = quantile(stat, 0.975))
+upper_bound0
+```
+We are 95% certain that the difference in popularity means between the songs with higher (highest 25%) time_signature and the lower (lowest 25%) time_signature is between `r lower_bound0` and `r upper_bound0`.
+
+#### Confidence Intervals for Continous Variables
+
+The following variables were selected because the scatterplot visualizations mapping them against popularity scores showed there was a clear relationship between the variables and the scores. The variables that were chosen are: danceability, energy, liveness, loudness, and acousticness. 
+
+For each of these variables, we took the highest 25% of the data ("High" danceability, energy, liveness etc.) and the lowest 25% of the data ("Low" danceability, energy, liveness etc.) and conducted a 95% confidence interval test for the difference in mean popularities between the two. 
+
+##### Danceability
+
+```{r dance_info, echo = FALSE}
+songs %>%
+   summarise(max = max(danceability), min = min(danceability), q1 = quantile(danceability, probs = 0.25), q3 = quantile(danceability, probs = 0.75))
+
+```
+
+```{r dance_new, echo = FALSE}
+dance_songs <- songs %>%
+   mutate(danceHL = case_when(
+    danceability >= 0.437 ~ "High",
+    danceability <= 0.69 ~ "Low"))
+
+dance_songs %>%
+   group_by(danceHL) %>%
+   summarise(average = mean(popularity))
+```
+Songs with high danceability have a mean popularity score that is around 10 higher compared songs with low danceability. 
+
+```{r dance_boot, echo = FALSE}
+
+boot_dance <- dance_songs %>%
+   specify(response = popularity, explanatory = danceHL) %>%
+   generate(reps = 1000, type = "bootstrap") %>%
+   calculate(stat = "diff in means", order = c("High", "Low"))
+
+ggplot(data = boot_dance, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "High - Low", x = "Difference in Popularity")
+```
+
+```{r conf_dance, echo = FALSE}
+lower_bound1 <- boot_dance %>%
+  summarize(lower_bound = quantile(stat, 0.025))
+lower_bound1
+upper_bound1 <- boot_dance %>%
+  summarize(upper_bound = quantile(stat, 0.975))
+upper_bound1
+```
+We are 95% certain that the difference in popularity means between the songs with high danceability and low danceability is between `r lower_bound1` and `r upper_bound1`.
+
+##### Energy 
+
+```{r energy_info, echo = FALSE}
+songs %>%
+   summarise(max = max(energy), min = min(energy), q1 = quantile(energy, probs = 0.25), q3 = quantile(energy, probs = 0.75))
+
+```
+
+```{r energy_new, echo = FALSE}
+   
+energy_songs <- songs %>%
+   mutate(energyHL = case_when(
+    energy >= 0.793 ~ "High",
+    energy <= 0.405 ~ "Low")) %>%
+   filter(! is.na(energyHL))
+
+energy_songs %>%
+   group_by(energyHL) %>%
+   summarise(average = mean(popularity))
+```
+Songs with high energy have a mean popularity score that is around 10 higher compared songs with low energy. 
+
+```{r energy_boot, echo = FALSE}
+
+boot_energy <- energy_songs %>%
+   specify(response = popularity, explanatory = energyHL) %>%
+   generate(reps = 1000, type = "bootstrap") %>%
+   calculate(stat = "diff in means", order = c("High", "Low"))
+
+ggplot(data = boot_energy, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "High - Low", x = "Difference in Popularity")
+```
+
+```{r conf_energy, echo = FALSE}
+lower_bound2 <- boot_energy %>%
+  summarize(lower_bound = quantile(stat, 0.025))
+lower_bound2
+upper_bound2 <- boot_energy %>%
+  summarize(upper_bound = quantile(stat, 0.975))
+upper_bound2
+```
+We are 95% certain that the difference in means between songs with high  energy and low energy is between `r lower_bound2` and `r upper_bound2`.
+
+##### Loudness 
+
+```{r loudness_info, echo = FALSE}
+songs %>%
+   summarise(max = max(loudness), min = min(loudness), q1 = quantile(loudness, probs = 0.25), q3 = quantile(loudness, probs = 0.75))
+
+```
+
+```{r loudness_new, echo = FALSE}
+   
+loudness_songs <- songs %>%
+   mutate(loudnessHL = case_when(
+    loudness >= -5.36 ~ "High",
+    loudness <= -11.34 ~ "Low")) %>%
+   filter(! is.na(loudnessHL))
+
+loudness_songs %>%
+   group_by(loudnessHL) %>%
+   summarise(average = mean(popularity))
+```
+Songs with high loudness have a mean popularity score that is around 18 higher compared with songs with low loudness. 
+
+```{r loudness_boot, echo = FALSE}
+
+boot_loudness <- loudness_songs %>%
+   specify(response = popularity, explanatory = loudnessHL) %>%
+   generate(reps = 1000, type = "bootstrap") %>%
+   calculate(stat = "diff in means", order = c("High", "Low"))
+
+ggplot(data = boot_loudness, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "High Loudness - Low Loudness", x = "Difference in Popularity")
+```
+
+```{r conf_loudness, echo = FALSE}
+lower_bound4 <- boot_loudness %>%
+  summarize(lower_bound = quantile(stat, 0.025))
+lower_bound4
+upper_bound4 <- boot_loudness %>%
+  summarize(upper_bound = quantile(stat, 0.975))
+upper_bound4
+```
+We are 95% certain that the difference in mean popularity scores between songs with high loudness and the low loudness is between `r lower_bound4` and `r upper_bound4`.
+
+##### Acousticness 
+
+```{r acousticness_info, echo = FALSE}
+songs %>%
+   summarise(max = max(acousticness), min = min(acousticness), q1 = quantile(acousticness, probs = 0.25), q3 = quantile(acousticness, probs = 0.75))
+
+```
+
+```{r acousticness_new, echo = FALSE}
+   
+acousticness_songs <- songs %>%
+   mutate(acousticnessHL = case_when(
+    acousticness >= 0.703 ~ "High",
+    acousticness <= 0.0303 ~ "Low")) %>%
+   filter(! is.na(acousticnessHL))
+
+acousticness_songs %>%
+   group_by(acousticnessHL) %>%
+   summarise(average = mean(popularity))
+```
+Songs with high acousticness have a mean popularity score that is around 18 lower compared songs with low acousticness. 
+
+```{r acousticness_boot, echo = FALSE}
+
+boot_acousticness <- acousticness_songs %>%
+   specify(response = popularity, explanatory = acousticnessHL) %>%
+   generate(reps = 1000, type = "bootstrap") %>%
+   calculate(stat = "diff in means", order = c("High", "Low"))
+
+ggplot(data = boot_acousticness, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "High Acousticness - Low Acousticness", x = "Difference in Popularity")
+```
+
+```{r conf_acousticness, echo = FALSE}
+lower_bound5 <- boot_acousticness %>%
+  summarize(lower_bound = quantile(stat, 0.025))
+lower_bound5
+upper_bound5 <- boot_acousticness %>%
+  summarize(upper_bound = quantile(stat, 0.975))
+upper_bound5
+```
+We are 95% certain that the difference in popularity means between songs with high  acousticness and the low acousticness is between `r lower_bound5` and `r upper_bound5`.
+
+### Permutation Analysis
 ```{r nrep, echo = FALSE}
 nrep <- 1000
 ```
-
-
-### Permutation Analysis
 #### Popularity Difference Between Pop and Rap 
 
-Our previous visualization of the distribution of song popularity based on genres suggested that the Pop and Rap genres had the greatest median song popularities. As a result, we wanted to see if the difference in song popularity between these two genres is significant. 
+After conducting the exploratory data analysis, the visualization of the distribution of song popularity based on genres suggested that the Pop and Rap genres had the greatest median song popularities. As a result, we wanted to see if the difference in song popularity between these two genres is significant. 
 
 Null Hypothesis: There is not a difference between the mean popularities of songs that are pop and songs that are rap. 
 Alternative Hypothesis: There is a difference between the mean popularities of songs that are pop and songs that are rap.
@@ -463,323 +640,66 @@ null_dist_valence %>%
 
 The p-value of the difference between high and low valence is 0, which means we can reject the null hypothesis that there is not a difference between the mean popularities of songs that have high valence and low valence. The data provides convincing evidence that there is a difference in mean popularities of songs that have high valence versus low valence. 
 
-#### Popularity Difference Between Major and Minor
-We wanted to see if the difference in popularity between songs in a major or minor mode was significant. 
+### Linear Regression
 
-Null Hypothesis: There is not a difference between the mean popularities of songs that are in a major mode versus minor mode.
-Alternative Hypothesis: There is a difference between the mean popularities of songs that are in a major mode versus minor mode.
+After conducting an exploratory analysis through multiple visualizations, and examining strong individual relationships between song popularity and genre, energy, danceability, loudness, and speechiness, we wanted to find the best fit model of the variables that maximize the popularity of a song. To do this, a multiple linear regression model was created and backwards selection was utilized to determine the best model. 
 
-```{r observed-difference-mode, echo = FALSE}
-mean_mode <- songs %>%
-  group_by(mode) %>%  
-  summarise(samp_mean = mean(popularity)) %>%
-  summarise(diff(samp_mean)) %>%
-  pull()
-mean_mode
+This is the selected multiple linear regression model using backwards selection. It looks at the relationship between popularity and different variables. Genre is not included in this model.
+```{r selected-model-nogenre, echo = FALSE}
+
+full_model_nogenre = lm(popularity ~ acousticness +
+                  danceability +
+                  energy +
+                  instrumentalness +
+                  liveness +
+                  loudness +
+                  speechiness + 
+                  tempo + 
+                  valence,
+                data = songs)
+
+nogenre_model <- step(full_model_nogenre, direction = "backward")
+
+nogenre_model 
+
+glance(nogenre_model)$r.squared
+glance(nogenre_model)$adj.r.squared
 ```
-The observed mean popularity difference between major and minor songs is 2.03.
-```{r null-dist-mode, echo = FALSE}
-null_dist_mode <- songs %>%
-  specify(response = popularity, explanatory = mode) %>%
-  hypothesize(null = "independence") %>%
-  generate(reps = nrep, type = "permute") %>%
-  calculate(stat = "diff in means", order = c("Major", "Minor"))
-ggplot(data = null_dist_mode, aes(x = stat)) +
-  geom_histogram(binwidth=.2) +
-  geom_vline(xintercept = mean_mode, color = "red") +
-  geom_vline(xintercept = -1 * mean_mode, color = "red") +
-  labs(title = "Null distribution of differences in popularity means based on mode")
-```
+Selected model = 57.28 + -13.77 * acousticness + 16.52 * danceability - 6.24 * energy - 3.62 * instrumentalness + -11.85 * liveness + 0.78 * loudness + -7.72 * speechiness + 0.013 * tempo + -9.29 * valence
 
-```{r p-value-mode, echo = FALSE}
-null_dist_mode %>%
-  filter(stat >= mean_mode) %>%
-  summarise(pvalue = 2 * (n() / nrep))
-```
+The adjusted R squared value for this model is 0.30, which means that roughly 30% of the variability in a song's popularity can be explained by the different variables in the multiple regression model. This indicates that there is a weak to moderate positive overall realtionship between a song's popularity and the different variables related to a song.
 
-The p-value of the difference between major and minor is 0, which means we can reject the null hypothesis that there is not a difference between the mean popularities of songs that are in a major or minor mode. The data provides convincing evidence that there is a difference in mean popularities of songs that are in a major mode versus a minor mode.  
+This is the selected multiple linear regression model using backwards selection. It looks at the relationship between popularity and different variables. Genre is included in this model.
+```{r selected-model, echo = FALSE}
 
-### Bootstrapping to find Confidence Intervals
-#### Confidence Intervals for Categorical Variables
+full_model = lm(popularity ~ acousticness +
+                  danceability +
+                  energy +
+                  instrumentalness +
+                  liveness +
+                  loudness +
+                  speechiness + 
+                  tempo + 
+                  genre +
+                  valence,
+                data = songs)
 
-In this section, bootstrapping was used to determine the confidence intervals for the difference in mean popularity scores between different categories within variables. For example, the confidence interval for the difference in mean popularity scores between the Rap and Pop genres (the most popular 2 genres) were calculated. 
+selected_model <- step(full_model, direction = "backward")
 
-##### Estimate of the Popularity Difference between Rap and Pop Genres 
+selected_model
 
-```{r rap_pop, echo = FALSE}
-
-songs_gen <- songs %>%
-  filter(genre == "Rap"|genre == "Pop")
-
-boot_rap_pop <- songs_gen %>%
-   specify(response = popularity, explanatory = genre) %>%
-   generate(reps = 1000, type = "bootstrap") %>%
-   calculate(stat = "diff in means", order = c("Pop", "Rap"))
-
-ggplot(data = boot_rap_pop, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "Pop - Rap", x = "Difference in Popularity")
+glance(selected_model)$r.squared
+glance(selected_model)$adj.r.squared
 ```
 
-```{r conf_rap_pop, echo = FALSE}
-lower_bound <- boot_rap_pop %>%
-  summarize(lower_bound = quantile(stat, 0.025))
-lower_bound
-upper_bound <- boot_rap_pop %>%
-  summarize(upper_bound = quantile(stat, 0.975))
-upper_bound
-```
-We are 95% certain that the difference in means between the popularity score of the rap and pop genres is between `r lower_bound` and `r upper_bound`. 
+score_hat = 9.15 + 3.28 * danceability + 0.12 * loudness - 2.055 * speechiness - 1.32 * valence + 44.97 * alternative + 44.67 * anime + 45.81 * Blues + 45.82 * children's music + 24.01 * classical + 13.65 * comedy + 37.92 * country + 47.85 * dance + 28.50 * electronic + 40.34 * folk + 49.09 * hip-hop + 45.57 * indie + 31.07 * jazz + 1.94 * movie + 4.96 * opera + 56.81 * pop + 42.54 * R&B + 51.31 * rap + 26.72 * reggae + 27.86 * reggaeton + 49.95 * rock + 19.29 * Ska + 37.95 * soul + 25.83 * soundtrack + 27.13 * world 
 
-##### Estimate of the Popularity Difference between 4/4 Time Signature and Non-4/4 Time Signature
+Through experimenting with different multiple regression models, it is found that genre is the most influential predictor of popularity. Without genre as a part of this model, no variables are removed using backwards selection. When genre is a part of the model, most of the variables are selected out the model. For the ones that do remain (danceability, loudness, speechiness, and valence) their coefficients are small which shows that they do not heavily influence popularity. 
 
-From the boxplot in the visualizations section, we can see that the 4/4 time signature had a higher average popularity score than the rest of the time signatures. Thus, we decided to construct a confidence interval estimating the difference in popularity means between songs with a 4/4 time signature and songs that do not use a 4/4 time signature. 
+When all variables have a value of 0, then it is expected that a song's populariy is 9.15. One example of how a variable influences the popularity is danceabiliy If a song's acoustic score increases by 1 then popularity will increases by 3.28 points. It can be seen that popularity is increased most when the genre is either pop or rap. Popularity is, on average, higher by 56.81 if a song is under the rap genre than any of the other genres, all else held constant. Popularity is, on average, 51.31 points higher if the song is a rap song as opposed to any other song, all else held constant. This makes sense because the two most popular genres are rap and pop. This is in contras to the movie genre where popularity is only 1.94 points higher on average if it is under the movie genre compared to any other genre, all else held constant. It is interesting to note that no genres cause the popularity to decrease. 
 
-```{r time_signature_new, echo = FALSE}
-   
-time_signature_songs <- songs %>%
-   mutate(time_signatureHL = case_when(
-    time_signature == "4/4" ~ "4/4",
-    TRUE ~ "Not 4/4")) %>%
-   filter(! is.na(time_signatureHL))
+The adjusted R squared value for this model is 0.71, which means that roughly 71.0% of the variability in a song's popularity can be explained by the different variables in the multiple regression model. This indicates that there is a strong positive overall relationship between a song's popularity and the different variables related to a song. When looking at individual r-value models, it can be seen that genre is the variable that contributes to the high r-value. Without it, the selected model r-value is .30. 
 
-time_signature_songs %>%
-   group_by(time_signatureHL) %>%
-   summarise(average = mean(popularity))
-```
-We can see that songs with 4/4 time signature have an average popularity score that is around 10 higher than songs that do not have a 4/4 time signature. 
-
-```{r time_signature_boot, echo = FALSE}
-
-boot_time_signature <- time_signature_songs %>%
-   specify(response = popularity, explanatory = time_signatureHL) %>%
-   generate(reps = 1000, type = "bootstrap") %>%
-   calculate(stat = "diff in means", order = c("4/4", "Not 4/4"))
-
-ggplot(data = boot_time_signature, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "4/4 - Not 4/4", x = "Difference in Popularity")
-```
-
-```{r conf_time_signature, echo = FALSE}
-lower_bound0 <- boot_time_signature %>%
-  summarize(lower_bound = quantile(stat, 0.025))
-lower_bound0
-upper_bound0 <- boot_time_signature %>%
-  summarize(upper_bound = quantile(stat, 0.975))
-upper_bound0
-```
-We are 95% certain that the difference in popularity means between the songs with higher (highest 25%) time_signature and the lower (lowest 25%) time_signature is between `r lower_bound0` and `r upper_bound0`.
-
-#### Confidence Intervals for Continous Variables
-
-The following variables were selected because the scatterplot visualizations mapping them against popularity scores showed there was a clear relationship between the variables and the scores. The variables that were chosen are: danceability, energy, liveness, loudness, and acousticness. 
-
-For each of these variables, we took the highest 25% of the data ("High" danceability, energy, liveness etc.) and the lowest 25% of the data ("Low" danceability, energy, liveness etc.) and conducted a 95% confidence interval test for the difference in mean popularities between the two. 
-
-##### Danceability
-
-```{r dance_info, echo = FALSE}
-songs %>%
-   summarise(max = max(danceability), min = min(danceability), q1 = quantile(danceability, probs = 0.25), q3 = quantile(danceability, probs = 0.75))
-
-```
-
-```{r dance_new, echo = FALSE}
-dance_songs <- songs %>%
-   mutate(danceHL = case_when(
-    danceability >= 0.437 ~ "High",
-    danceability <= 0.69 ~ "Low"))
-
-dance_songs %>%
-   group_by(danceHL) %>%
-   summarise(average = mean(popularity))
-```
-Songs with high danceability have a mean popularity score that is around 10 higher compared songs with low danceability. 
-
-```{r dance_boot, echo = FALSE}
-
-boot_dance <- dance_songs %>%
-   specify(response = popularity, explanatory = danceHL) %>%
-   generate(reps = 1000, type = "bootstrap") %>%
-   calculate(stat = "diff in means", order = c("High", "Low"))
-
-ggplot(data = boot_dance, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "High - Low", x = "Difference in Popularity")
-```
-
-```{r conf_dance, echo = FALSE}
-lower_bound1 <- boot_dance %>%
-  summarize(lower_bound = quantile(stat, 0.025))
-lower_bound1
-upper_bound1 <- boot_dance %>%
-  summarize(upper_bound = quantile(stat, 0.975))
-upper_bound1
-```
-We are 95% certain that the difference in popularity means between the songs with high danceability and low danceability is between `r lower_bound1` and `r upper_bound1`.
-
-##### Energy 
-
-```{r energy_info, echo = FALSE}
-songs %>%
-   summarise(max = max(energy), min = min(energy), q1 = quantile(energy, probs = 0.25), q3 = quantile(energy, probs = 0.75))
-
-```
-
-```{r energy_new, echo = FALSE}
-   
-energy_songs <- songs %>%
-   mutate(energyHL = case_when(
-    energy >= 0.793 ~ "High",
-    energy <= 0.405 ~ "Low")) %>%
-   filter(! is.na(energyHL))
-
-energy_songs %>%
-   group_by(energyHL) %>%
-   summarise(average = mean(popularity))
-```
-Songs with high energy have a mean popularity score that is around 10 higher compared songs with low energy. 
-
-```{r energy_boot, echo = FALSE}
-
-boot_energy <- energy_songs %>%
-   specify(response = popularity, explanatory = energyHL) %>%
-   generate(reps = 1000, type = "bootstrap") %>%
-   calculate(stat = "diff in means", order = c("High", "Low"))
-
-ggplot(data = boot_energy, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "High - Low", x = "Difference in Popularity")
-```
-
-```{r conf_energy, echo = FALSE}
-lower_bound2 <- boot_energy %>%
-  summarize(lower_bound = quantile(stat, 0.025))
-lower_bound2
-upper_bound2 <- boot_energy %>%
-  summarize(upper_bound = quantile(stat, 0.975))
-upper_bound2
-```
-We are 95% certain that the difference in means between songs with high  energy and low energy is between `r lower_bound2` and `r upper_bound2`.
-
-##### Liveness
-
-```{r liveness_info, echo = FALSE}
-songs %>%
-   summarise(max = max(liveness), min = min(liveness), q1 = quantile(liveness, probs = 0.25), q3 = quantile(liveness, probs = 0.75))
-
-```
-
-```{r liveness_new, echo = FALSE}
-   
-liveness_songs <- songs %>%
-   mutate(livenessHL = case_when(
-    liveness >= 0.266 ~ "High",
-    liveness <= 0.098 ~ "Low")) %>%
-   filter(! is.na(livenessHL))
-
-liveness_songs %>%
-   group_by(livenessHL) %>%
-   summarise(average = mean(popularity))
-```
-Songs with high liveness (chances of having been performed live) have a mean popularity score that is around 6 lower compared songs with low liveness. 
-
-```{r liveness_boot, echo = FALSE}
-
-boot_liveness <- liveness_songs %>%
-   specify(response = popularity, explanatory = livenessHL) %>%
-   generate(reps = 1000, type = "bootstrap") %>%
-   calculate(stat = "diff in means", order = c("High", "Low"))
-
-ggplot(data = boot_liveness, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "High Liveness - Low Liveness", x = "Difference in Popularity")
-```
-
-```{r conf_liveness, echo = FALSE}
-lower_bound3 <- boot_liveness %>%
-  summarize(lower_bound = quantile(stat, 0.025))
-lower_bound3
-upper_bound3 <- boot_liveness %>%
-  summarize(upper_bound = quantile(stat, 0.975))
-upper_bound3
-```
-We are 95% certain that the difference in popularity means between songs with high liveness and low liveness is between`r lower_bound3` and `r upper_bound3`.
-
-##### Loudness 
-
-```{r loudness_info, echo = FALSE}
-songs %>%
-   summarise(max = max(loudness), min = min(loudness), q1 = quantile(loudness, probs = 0.25), q3 = quantile(loudness, probs = 0.75))
-
-```
-
-```{r loudness_new, echo = FALSE}
-   
-loudness_songs <- songs %>%
-   mutate(loudnessHL = case_when(
-    loudness >= -5.36 ~ "High",
-    loudness <= -11.34 ~ "Low")) %>%
-   filter(! is.na(loudnessHL))
-
-loudness_songs %>%
-   group_by(loudnessHL) %>%
-   summarise(average = mean(popularity))
-```
-Songs with high loudness have a mean popularity score that is around 18 higher compared with songs with low loudness. 
-
-```{r loudness_boot, echo = FALSE}
-
-boot_loudness <- loudness_songs %>%
-   specify(response = popularity, explanatory = loudnessHL) %>%
-   generate(reps = 1000, type = "bootstrap") %>%
-   calculate(stat = "diff in means", order = c("High", "Low"))
-
-ggplot(data = boot_loudness, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "High Loudness - Low Loudness", x = "Difference in Popularity")
-```
-
-```{r conf_loudness, echo = FALSE}
-lower_bound4 <- boot_loudness %>%
-  summarize(lower_bound = quantile(stat, 0.025))
-lower_bound4
-upper_bound4 <- boot_loudness %>%
-  summarize(upper_bound = quantile(stat, 0.975))
-upper_bound4
-```
-We are 95% certain that the difference in mean popularity scores between songs with high loudness and the low loudness is between `r lower_bound4` and `r upper_bound4`.
-
-##### Acousticness 
-
-```{r acousticness_info, echo = FALSE}
-songs %>%
-   summarise(max = max(acousticness), min = min(acousticness), q1 = quantile(acousticness, probs = 0.25), q3 = quantile(acousticness, probs = 0.75))
-
-```
-
-```{r acousticness_new, echo = FALSE}
-   
-acousticness_songs <- songs %>%
-   mutate(acousticnessHL = case_when(
-    acousticness >= 0.703 ~ "High",
-    acousticness <= 0.0303 ~ "Low")) %>%
-   filter(! is.na(acousticnessHL))
-
-acousticness_songs %>%
-   group_by(acousticnessHL) %>%
-   summarise(average = mean(popularity))
-```
-Songs with high acousticness have a mean popularity score that is around 18 lower compared songs with low acousticness. 
-
-```{r acousticness_boot, echo = FALSE}
-
-boot_acousticness <- acousticness_songs %>%
-   specify(response = popularity, explanatory = acousticnessHL) %>%
-   generate(reps = 1000, type = "bootstrap") %>%
-   calculate(stat = "diff in means", order = c("High", "Low"))
-
-ggplot(data = boot_acousticness, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "High Acousticness - Low Acousticness", x = "Difference in Popularity")
-```
-
-```{r conf_acousticness, echo = FALSE}
-lower_bound5 <- boot_acousticness %>%
-  summarize(lower_bound = quantile(stat, 0.025))
-lower_bound5
-upper_bound5 <- boot_acousticness %>%
-  summarize(upper_bound = quantile(stat, 0.975))
-upper_bound5
-```
-We are 95% certain that the difference in popularity means between songs with high  acousticness and the low acousticness is between `r lower_bound5` and `r upper_bound5`.
 
 ### Conclusion
 
