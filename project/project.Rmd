@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(infer)
 library(broom)
+install.packages("cowplot", repos="http://cran.r-project.org/")
 ```
 
 ```{r load-data, echo = FALSE}
@@ -19,9 +20,9 @@ songs <- read_csv("/cloud/project/data/songs.csv")
 
 ### Introduction
 
-  The goal of our project is to determine the qualities of a song that influence popularity on Spotify. The dataset was retrieved online from kaggle.com. The data is derived from the Spotify Web API, which uses internal Spotify metrics to determine the parameters of the dataset. For subjective variables such as danceability and instrumentalness, the Spotify Web API utilizes Echo Nest algorithms. The dataset curator retrieved data for 228159 songs at random and aggregated this information into the dataset. Because the data set was so large and difficult to analyze in R-studio, a random sample of 5000 data points was taken and a new csv file was made.
+The goal of our project is to determine the qualities of a song that influence popularity on Spotify. The dataset was retrieved online from kaggle.com. The data is derived from the Spotify Web API, which uses internal Spotify metrics to determine the parameters of the dataset. For subjective variables such as danceability and instrumentalness, the Spotify Web API utilizes Echo Nest algorithms. The dataset curator retrieved data for 228159 songs at random and aggregated this information into the dataset. Because the data set was so large and difficult to analyze in R-studio, a random sample of 5000 data points was taken and a new csv file was made.
 
-  This project will analyze the variables of a song that correlate with a higher song popularity. To find this, song popularity is assigned as our dependent response variable and the other variables such as danceability, energy, and key as our predictor variables. Using backwards selection on a multiple regression models, the variables that are the best predictors of a song's popularity score can be predicted. Visualizations will be used to show  general trends in popularity through various the qualitative and quantitative variables. Bootstraps and permutations will look at whether significant differences exist between certain variables. Confidence intervals will also be constructed. These different statistical strategies all contribute to the research question of what qualities of a song contribute to its popularity. 
+This project will analyze the variables of a song that correlate with a higher song popularity. To find this, song popularity is assigned as our dependent response variable and the other variables such as danceability, energy, and key as our predictor variables. Using backwards selection on a multiple regression models, the variables that are the best predictors of a song's popularity score can be predicted. Visualizations will be used to show  general trends in popularity through various the qualitative and quantitative variables. Bootstraps and permutations will look at whether significant differences exist between certain variables. Confidence intervals will also be constructed. These different statistical strategies all contribute to the research question of what qualities of a song contribute to its popularity. 
 
 ### Visualization
 
@@ -47,7 +48,7 @@ ggplot(data = songs_avg, mapping = aes(x=reorder(genre, medianpop), y = medianpo
 
 #### Boxplots for Categorical Variables
 
-This boxplot visualizes the distribution of the genre with the highest median popularity (Pop) and the genre with the lowest median popularity (Movie). The Pop plot is relatively normal shaped, as the median is located in the center of the data. There appears to be three outliers in the data set, two above the median song popularity and one below the median song popularity. The movie plot is not normally shaped, as the majority of the data lies above the median in the upper quartile, making the plot slightly-right skewed. There appears to be four outliers in the data set, all of which lie above the median song popularity.
+The following boxplot visualizes the distribution of the genre with the highest median popularity (Pop) and the genre with the lowest median popularity (Movie). The Pop plot is relatively normal shaped, as the median is located in the center of the data. There appears to be three outliers in the data set, two above the median song popularity and one below the median song popularity. The movie plot is not normally shaped, as the majority of the data lies above the median in the upper quartile, making the plot slightly-right skewed. There appears to be four outliers in the data set, all of which lie above the median song popularity.
 
 ```{r plot-selectedgenres-popularity, echo = FALSE}
 songs_genre <- songs %>%
@@ -59,7 +60,7 @@ ggplot(data = songs_genre, mapping = aes(x = genre, y = popularity)) +
   theme_light()
 ```
 
-This box plot visualizes the distribution of song popularity, based on the modality (mode) of the track. According to the visualization, the median popularity of songs with minor modalities is slightly higher than the median popularity of sons with major modalities. The minor plot is not normally shaped, as the majority of the data lies below the median, making the plot slightly left-skewed. There appears to be two outliers in the minor plot, both of which fall below the median song popularity of songs with minor modalities. The major plot is also not normally shaped, as the majority of the data lies below the median, making it slightly left-skewed. There appears to be one outlier in the major data, which falls above the median popularity of songs with major modalities. 
+The following box plot visualizes the distribution of song popularity, based on the modality (mode) of the track. According to the visualization, the median popularity of songs with minor modalities is slightly higher than the median popularity of sons with major modalities. The minor plot is not normally shaped, as the majority of the data lies below the median, making the plot slightly left-skewed. There appears to be two outliers in the minor plot, both of which fall below the median song popularity of songs with minor modalities. The major plot is also not normally shaped, as the majority of the data lies below the median, making it slightly left-skewed. There appears to be one outlier in the major data, which falls above the median popularity of songs with major modalities. 
 
 ```{r plot-mode-popularity, echo = FALSE}
 ggplot(data = songs, mapping = aes(x = mode, y = popularity, fill = mode)) +
@@ -67,7 +68,7 @@ ggplot(data = songs, mapping = aes(x = mode, y = popularity, fill = mode)) +
   labs(title = "Mode v. Popularity of Songs", x = "Mode", y = "Popularity")
 ```
 
-This boxplot visualizes the distribution of song popularity, based on the time-signature of each track. According to the visualization, the median song popularity is greatest when the time signature is 4/4 and the median song popularity is lowest when the time signature is 1/4. The 1/4, 3/4, and 5/4 plots are all relatively normally shaped, as the median song popularities fall in the center of the data plots. There do not appear to be any outliers in the 1/4, 3/4, and 5/4 data plots. The 4/4 data plot, however, is not normally shaped, as the majority of the data falls below the median song popularity, making it slightly left-skewed. There appears to be two outliers above the median song popularity of the 4/4 plot, and multiple outliers below the median song popularity of the 4/4 plot. 
+The following boxplot visualizes the distribution of song popularity, based on the time-signature of each track. According to the visualization, the median song popularity is greatest when the time signature is 4/4 and the median song popularity is lowest when the time signature is 1/4. The 1/4, 3/4, and 5/4 plots are all relatively normally shaped, as the median song popularities fall in the center of the data plots. There do not appear to be any outliers in the 1/4, 3/4, and 5/4 data plots. The 4/4 data plot, however, is not normally shaped, as the majority of the data falls below the median song popularity, making it slightly left-skewed. There appears to be two outliers above the median song popularity of the 4/4 plot, and multiple outliers below the median song popularity of the 4/4 plot. 
 
 ```{r timesignature-popularity, echo = FALSE}
 ggplot(data = songs, mapping = aes(x = time_signature, y = popularity, fill = time_signature)) +
@@ -75,7 +76,7 @@ ggplot(data = songs, mapping = aes(x = time_signature, y = popularity, fill = ti
   labs(title = "Time Signature v. Popularity of Songs", x = "Time Signature", y = "Popularity")
 ```
 
-This boxplot visualizes the distribution of song popularity based on the keys of songs. According to the data, the key with the highest median song popularity is F#. Since there is little variability between the median popularities of songs, based on the track's key, key does not appear to be a strong predictor of song popularity. 
+The following boxplot visualizes the distribution of song popularity based on the keys of songs. According to the data, the key with the highest median song popularity is F#. Since there is little variability between the median popularities of songs, based on the track's key, key does not appear to be a strong predictor of song popularity. 
 
 ```{r plot-key-popularity,echo = FALSE}
 ggplot(data = songs, mapping = aes(x = key, y = popularity, fill = key)) +
@@ -87,69 +88,78 @@ ggplot(data = songs, mapping = aes(x = key, y = popularity, fill = key)) +
 The following scatterplots visualizes the relationship between variables in the data and the popularity of the Spotify song. 
 
 ```{r plot-popularity, fig.width = 15, fig.height = 15}
-acousticness <- ggplot(data = songs, mapping = aes(x = acousticness, y = popularity, alpha = 0.005)) +
+acousticness <- 
+  ggplot(data = songs, mapping = aes(x = acousticness, y = popularity, alpha = 0.005)) +
   geom_point(color="dark gray") + 
   geom_smooth() +
   labs(title = "Acousticness", x = "Acousticness", y = "Popularity")+
   theme_light()+
   theme(legend.position="none")
 
-energy <- ggplot(data = songs, mapping = aes(x = energy, y = popularity, alpha = 0.0005)) +
+energy <- 
+  ggplot(data = songs, mapping = aes(x = energy, y = popularity, alpha = 0.0005)) +
   geom_point(color="dark gray") +
   geom_smooth() +
   labs(title = "Energy", x = "Energy", y = "Popularity")+
   theme_light()+
   theme(legend.position="none")
 
-danceability <- ggplot(data = songs, mapping = aes(x = danceability, y = popularity, alpha = 0.0005)) +
+danceability <- 
+  ggplot(data = songs, mapping = aes(x = danceability, y = popularity, alpha = 0.0005)) +
   geom_point(color="dark gray") + 
   geom_smooth() +
   labs(title = "Danceability", x = "Danceability", y = "Popularity")+
   theme_light()+
   theme(legend.position="none")
 
-songs_duration <- songs %>%
+songs2 <- songs %>%
   mutate(duration_s = duration_ms/1000) %>%
   filter(duration_s <= 800)
-duration <- ggplot(data = songs_duration, mapping = aes(x = duration_s, y = popularity, alpha = 0.0005)) +
+duration <- 
+  ggplot(data = songs2, mapping = aes(x = duration_s, y = popularity, alpha = 0.0005)) +
   geom_point(color="dark gray") + 
   geom_smooth() +
   labs(title = "Duration", x = "Duration", y = "Popularity")+
   theme_light()+
   theme(legend.position="none")
 
-liveness <- ggplot(data = songs, mapping = aes(x = liveness, y = popularity, alpha = 0.0005)) +
+liveness <- 
+  ggplot(data = songs, mapping = aes(x = liveness, y = popularity, alpha = 0.0005)) +
   geom_point(color="dark gray") + 
   geom_smooth() +
   labs(title = "Liveness", x = "Liveness", y = "Popularity")+
   theme_light()+
   theme(legend.position="none")
 
-songs_loudness <- songs %>%
+songs3 <- songs %>%
   filter(loudness >= -30)
 
-loudness <- ggplot(data = songs_loudness, mapping = aes(x = loudness, y = popularity, alpha = 0.0005)) +
+loudness <- 
+  ggplot(data = songs3, mapping = aes(x = loudness, y = popularity, alpha = 0.0005)) +
   geom_point(color="dark gray") + 
   geom_smooth() +
   labs(title = "Loudness", x = "Loudness", y = "Popularity")+
   theme_light()+
   theme(legend.position="none")
 
-speechiness <- ggplot(data = songs, mapping = aes(x = speechiness, y = popularity, alpha = 0.0005)) +
+speechiness <- 
+  ggplot(data = songs, mapping = aes(x = speechiness, y = popularity, alpha = 0.0005)) +
   geom_point(color="dark gray") + 
   geom_smooth() +
   labs(title = "Speechiness", x = "Speechiness", y = "Popularity")+
   theme_light()+
   theme(legend.position="none")
 
-tempo <- ggplot(data = songs, mapping = aes(x = tempo, y = popularity, alpha = 0.0005)) +
+tempo <- 
+  ggplot(data = songs, mapping = aes(x = tempo, y = popularity, alpha = 0.0005)) +
   geom_point(color="dark gray") + 
   geom_smooth() +
   labs(title = "Tempo", x = "Tempo", y = "Popularity")+
   theme_light()+
   theme(legend.position="none")
 
-valence <- ggplot(data = songs, mapping = aes(x = valence, y = popularity, alpha = 0.0005)) +
+valence <- 
+  ggplot(data = songs, mapping = aes(x = valence, y = popularity, alpha = 0.0005)) +
   geom_point(color="dark gray") + 
   geom_smooth() +
   labs(title = "Valence", x = "Valence", y = "Popularity")+
@@ -184,7 +194,7 @@ For the relationship between the musical positiveness (valence) and the populari
 
 From this exploratory analyses, it appears that genre, energy, danceability, loudness, and speechiness had the largest relationships with song popularity. 
 
-The variables that have a positive relationship with popularity are: energy, danceability, and loudness. The variables that have a negative relationship with popularity are: acoustiness, instrumentalness, liveness, and speechiness. 
+The variables that have a positive relationship with popularity are: energy, danceability, and loudness. The variables that have a negative relationship with popularity are: acoustiness, instrumentalness, liveness, and acousticness 
 
 ### Linear Regression
 
@@ -211,6 +221,9 @@ nogenre_model
 glance(nogenre_model)$r.squared
 glance(nogenre_model)$adj.r.squared
 ```
+Selected model = 57.28 + -13.77 * acousticness + 16.52 * danceability - 6.24 * energy - 3.62 * instrumentalness + -11.85 * liveness + 0.78 * loudness + -7.72 * speechiness + 0.013 * tempo + -9.29 * valence
+
+The adjusted R squared value for this model is 0.30, which means that roughly 30% of the variability in a song's popularity can be explained by the different variables in the multiple regression model. This indicates that there is a weak to moderate positive overall realtionship between a song's popularity and the different variables related to a song.
 
 This is the selected multiple linear regression model using backwards selection. It looks at the relationship between popularity and different variables. Genre is included in this model.
 ```{r selected-model, echo = FALSE}
@@ -781,4 +794,8 @@ Our permutation and bootstrapping analyses were conducted in order to verify the
 acousticness??? <- The selected model coefficient indicates that acousticness has a positive relationship with song popularity, whereas our visualizations and confidence intervals show that low acousticness results in a lower popularity score. These inconsistencies in our results reveal that acousticness is most likely not a good predictor of spotify song popularity. 
 
 valence <- Even though the visualizations showed that there seemed to be no clear relationship between valence and song popularity, the model selection result revealed that valence is one of the better predictors of song popularity, and our permutation result shows that there is indeed a significant difference between the popularity scores of high and low valence songs. 
+
+Overall, genre is the strongest indicator of song popularity. This makes logical sense because Spotify's largest listening population is millenials. Millenials generally spend more time listening to pop and rap as opposed to classical music. Other patterns may arise because certain genres tend to have similar musical properties. 
+
+In future research, it would be important to find a data set that has a manageable amount of data points. Our group ran into trouble generating a random sample of 5000 data points. It is possible that if we took a different sample then the results may have been differently. Additionally, it would be important to focus on a few variables instead of surveying all of the variables to begin with. It was difficult to pull together a cohesive storyline when juggling such a large amount of variables. Looking at the relationships between the explanatory variables would be interesting to look at if our focus was not primarily on song popularity.
 
