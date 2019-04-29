@@ -24,7 +24,7 @@ The goal of our project is to determine the qualities of a song that influence p
 
 This project will analyze the variables of a song that correlate with a higher song popularity. To find this, song popularity is assigned as our dependent response variable and the other variables such as danceability, energy, and key as our predictor variables. Using backwards selection on a multiple regression models, the variables that are the best predictors of a song's popularity score can be predicted. Visualizations will be used to show  general trends in popularity through various the qualitative and quantitative variables. Bootstraps and permutations will look at whether significant differences exist between certain variables. Confidence intervals will also be constructed. These different statistical strategies all contribute to the research question of what qualities of a song contribute to its popularity. 
 
-### Visualization
+### Visualizations
 
 #### Exploratory Data Analysis of Relationships Between Different Variables and Song Popularity
 
@@ -297,7 +297,7 @@ boot_dance <- dance_songs %>%
    generate(reps = 1000, type = "bootstrap") %>%
    calculate(stat = "diff in means", order = c("High", "Low"))
 
-ggplot(data = boot_dance, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "High - Low", x = "Difference in Popularity")
+ggplot(data = boot_dance, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "High Danceability - Low Danceability", x = "Difference in Popularity")
 ```
 
 ```{r conf_dance, echo = FALSE}
@@ -339,7 +339,7 @@ boot_energy <- energy_songs %>%
    generate(reps = 1000, type = "bootstrap") %>%
    calculate(stat = "diff in means", order = c("High", "Low"))
 
-ggplot(data = boot_energy, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "High - Low", x = "Difference in Popularity")
+ggplot(data = boot_energy, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "High Energy - Low Energy", x = "Difference in Popularity")
 ```
 
 ```{r conf_energy, echo = FALSE}
@@ -437,12 +437,15 @@ upper_bound5
 We are 95% certain that the difference in popularity means between songs with high  acousticness and the low acousticness is between `r lower_bound5` and `r upper_bound5`.
 
 ### Permutation Analysis
+
+Following the exploratory data analysis, we wanted to further examine the variables that appeared to have the strongest relationship with song popularity. Below, we conducted permutation analyses on three such variables, genre, energy and danceability. We also investigated variables that showed interesting trends. These include valence, which showed a parabolic relationship with popularity, and speechiness, which had the steepest trendline. 
+
 ```{r nrep, echo = FALSE}
 nrep <- 1000
 ```
 #### Popularity Difference Between Pop and Rap 
 
-After conducting the exploratory data analysis, the visualization of the distribution of song popularity based on genres suggested that the Pop and Rap genres had the greatest median song popularities. As a result, we wanted to see if the difference in song popularity between these two genres is significant. 
+From the exploratory data analysis, the visualization of the distribution of song popularity based on genres suggested that the Pop and Rap genres had the greatest median song popularities. As a result, we wanted to see if the difference in song popularity between these two genres is significant. 
 
 Null Hypothesis: There is not a difference between the mean popularities of songs that are pop and songs that are rap. 
 Alternative Hypothesis: There is a difference between the mean popularities of songs that are pop and songs that are rap.
@@ -564,7 +567,7 @@ null_dist_dance %>%
 The p-value of the difference between high and low danceability is 0, which means we can reject the null hypothesis that there is not a difference between the mean popularities of songs that have high danceability and low danceability The data provides convincing evidence that there is a difference in mean popularities of songs that have high danceability versus low danceability 
 
 #### Popularity Difference Between High Speechiness and Low Speechiness
-From the visualizations, we saw that songs with more speechiness were more likely to have a greater popularity. We wanted to see if the difference in popularity between sonogs with high and low speechiness (defined as songs with speechiness at or above .5 and speechiness below .5 respectively) was significant. 
+From the visualizations, we saw that songs with less speechiness were more likely to have a greater popularity. We wanted to see if the difference in popularity between sonogs with high and low speechiness (defined as songs with speechiness at or above .5 and speechiness below .5 respectively) was significant. 
 
 Null Hypothesis: There is not a difference between the mean popularities of songs that have high speechiness and low speechiness
 Alternative Hypothesis: There is a difference between the mean popularities of songs that have high speechiness and low speechiness

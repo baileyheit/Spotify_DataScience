@@ -52,7 +52,7 @@ different statistical strategies all contribute to the research question
 of what qualities of a song contribute to its
 popularity.
 
-### Visualization
+### Visualizations
 
 #### Exploratory Data Analysis of Relationships Between Different Variables and Song Popularity
 
@@ -247,11 +247,11 @@ the Rap and Pop genres (the most popular 2 genres) were
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1        6.96
+    ## 1        6.98
 
 We are 95% certain that the difference in means between the popularity
-score of the rap and pop genres is between 3.9137838 and
-6.9628062.
+score of the rap and pop genres is between 3.9103713 and
+6.9767954.
 
 ##### Estimate of the Popularity Difference between 4/4 Time Signature and Non-4/4 Time Signature
 
@@ -278,7 +278,7 @@ signature.
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1        10.4
+    ## 1        10.5
 
     ## # A tibble: 1 x 1
     ##   upper_bound
@@ -287,7 +287,7 @@ signature.
 
 We are 95% certain that the difference in popularity means between the
 songs with higher (highest 25%) time\_signature and the lower (lowest
-25%) time\_signature is between 10.4398251 and 13.2997452.
+25%) time\_signature is between 10.481723 and 13.3173699.
 
 #### Confidence Intervals for Continous Variables
 
@@ -327,7 +327,7 @@ Songs with high danceability have a mean popularity score that is around
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1        10.0
+    ## 1        10.1
 
     ## # A tibble: 1 x 1
     ##   upper_bound
@@ -335,8 +335,8 @@ Songs with high danceability have a mean popularity score that is around
     ## 1        12.3
 
 We are 95% certain that the difference in popularity means between the
-songs with high danceability and low danceability is between 10.0392687
-and 12.3242095.
+songs with high danceability and low danceability is between 10.0776533
+and 12.3168175.
 
 ##### Energy
 
@@ -367,10 +367,10 @@ higher compared songs with low
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1        14.0
+    ## 1        13.9
 
 We are 95% certain that the difference in means between songs with high
-energy and low energy is between 11.2140294 and 13.9970674.
+energy and low energy is between 11.2168506 and 13.9250608.
 
 ##### Loudness
 
@@ -404,8 +404,8 @@ higher compared with songs with low
     ## 1        20.9
 
 We are 95% certain that the difference in mean popularity scores between
-songs with high loudness and the low loudness is between 18.4074171 and
-20.8839182.
+songs with high loudness and the low loudness is between 18.377511 and
+20.9198295.
 
 ##### Acousticness
 
@@ -436,17 +436,25 @@ Songs with high acousticness have a mean popularity score that is around
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1       -18.4
+    ## 1       -18.3
 
 We are 95% certain that the difference in popularity means between songs
-with high acousticness and the low acousticness is between -20.8566857
-and -18.3846637.
+with high acousticness and the low acousticness is between -20.8562053
+and -18.3364854.
 
 ### Permutation Analysis
 
+Following the exploratory data analysis, we wanted to further examine
+the variables that appeared to have the strongest relationship with song
+popularity. Below, we conducted permutation analyses on three such
+variables, genre, energy and danceability. We also investigated
+variables that showed interesting trends. These include valence, which
+showed a parabolic relationship with popularity, and speechiness, which
+had the steepest trendline.
+
 #### Popularity Difference Between Pop and Rap
 
-After conducting the exploratory data analysis, the visualization of the
+From the exploratory data analysis, the visualization of the
 distribution of song popularity based on genres suggested that the Pop
 and Rap genres had the greatest median song popularities. As a result,
 we wanted to see if the difference in song popularity between these two
@@ -542,7 +550,7 @@ danceability versus low danceability
 
 #### Popularity Difference Between High Speechiness and Low Speechiness
 
-From the visualizations, we saw that songs with more speechiness were
+From the visualizations, we saw that songs with less speechiness were
 more likely to have a greater popularity. We wanted to see if the
 difference in popularity between sonogs with high and low speechiness
 (defined as songs with speechiness at or above .5 and speechiness below
