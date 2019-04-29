@@ -479,7 +479,7 @@ ggplot(data = null_dist_poprap, aes(x = stat)) +
 ```{r p-value-pop, echo = FALSE}
 null_dist_poprap %>%
   filter(stat <= mean_poprap) %>%
-  summarise(pvalue = 2 * (n() / nrep))
+  summarise(pvalue = 2 * (n() / nrow(songs)))
 ```
 The p-value of the difference between the popularity of Pop and Rap songs is 0%, which is the proportion of observations that are at least as extreme or more extreme than the observed difference in means (6.15). Since 0% is less than a significance level of 5%, the null hypothesis is rejected, meaning that the data provides convincing evidence that there is a difference in mean popularities of songs that are Pop versus Rap. 
 
@@ -520,7 +520,7 @@ ggplot(data = null_dist_energy, aes(x = stat)) +
 ```{r p-value-energy, echo = FALSE}
 null_dist_energy %>%
   filter(stat <= mean_energy) %>%
-  summarise(pvalue = 2 * (n() / nrep))
+  summarise(pvalue = 2 * (n() / nrow(songs)))
 ```
 The p-value of the difference between high and low energy is 0, which mean we can reject the null hypothesis that there is not a difference between the mean popularities of songs that have high energy and low energy. The data provides convincing evidence that there is a difference in mean popularities of songs that have high energy versus low energy. 
 
@@ -561,7 +561,7 @@ ggplot(data = null_dist_dance, aes(x = stat)) +
 ```{r p-value-dance, echo = FALSE}
 null_dist_dance %>%
   filter(stat <= mean_dance) %>%
-  summarise(pvalue = 2 * (n() / nrep))
+  summarise(pvalue = 2 * (n() / nrow(songs)))
 ```
 
 The p-value of the difference between high and low danceability is 0, which means we can reject the null hypothesis that there is not a difference between the mean popularities of songs that have high danceability and low danceability The data provides convincing evidence that there is a difference in mean popularities of songs that have high danceability versus low danceability 
@@ -597,6 +597,12 @@ ggplot(data = null_dist_speech, aes(x = stat)) +
   geom_vline(xintercept = mean_speech, color = "red") +
   geom_vline(xintercept = -1 * mean_speech, color = "red") +
   labs(title = "Null distribution of differences in popularity means based on speechiness")
+```
+
+```{r p-value-speech, echo = FALSE}
+null_dist_speech %>%
+  filter(stat >= mean_speech) %>%
+  summarise(pvalue = 2 * (n() / nrow(songs)))
 ```
 
 The p-value of the difference between high and low speechiness is 0, which means we can reject the null hypothesis that there is not a difference between the mean popularities of songs that have high speechiness and low speechiness The data provides convincing evidence that there is a difference in mean popularities of songs that have high speechiness versus low speechiness. 
