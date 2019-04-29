@@ -203,7 +203,7 @@ liveness, and acousticness
 
 After conducting the exploratory data analysis, we wanted to further
 investigate the relationships between individual variables and song
-popularity. In this section, bootstrapping was used to determine the
+popularity. In this section, bootstrapping was used to determine the 95%
 confidence intervals for the difference in mean popularity scores
 between different categories within variables that appeared to have the
 strongest relationship with popularity scores. For example, the
@@ -220,16 +220,16 @@ the Rap and Pop genres (the most popular 2 genres) were
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1        3.74
+    ## 1        3.87
 
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1        7.06
+    ## 1        7.10
 
 We are 95% certain that the difference in means between the popularity
-score of the rap and pop genres is between 3.7352927 and
-7.0617716.
+score of the rap and pop genres is between 3.8661785 and
+7.0964118.
 
 ##### Estimate of the Popularity Difference between 4/4 Time Signature and Non-4/4 Time Signature
 
@@ -256,7 +256,7 @@ signature.
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1        10.5
+    ## 1        10.4
 
     ## # A tibble: 1 x 1
     ##   upper_bound
@@ -265,7 +265,7 @@ signature.
 
 We are 95% certain that the difference in popularity means between the
 songs with higher (highest 25%) time\_signature and the lower (lowest
-25%) time\_signature is between 10.4998313 and 13.3559074.
+25%) time\_signature is between 10.3739344 and 13.3618742.
 
 #### Confidence Intervals for Continous Variables
 
@@ -276,10 +276,10 @@ that were chosen are: danceability, energy, liveness, loudness, and
 acousticness.
 
 For each of these variables, we took the highest 25% of the data (“High”
-danceability, energy, liveness etc.) and the lowest 25% of the data
-(“Low” danceability, energy, liveness etc.) and conducted a 95%
-confidence interval test for the difference in mean popularities between
-the two.
+danceability, energy, loudness and acousticness.) and the lowest 25% of
+the data (“Low” danceability, energy, loudness, and acousticness) and
+conducted a 95% confidence interval test for the difference in mean
+popularities between the two.
 
 ##### Danceability
 
@@ -310,11 +310,11 @@ Songs with high danceability have a mean popularity score that is around
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1        12.2
+    ## 1        12.3
 
 We are 95% certain that the difference in popularity means between the
-songs with high danceability and low danceability is between 10.0226991
-and 12.2221103.
+songs with high danceability and low danceability is between 10.0105387
+and 12.2793069.
 
 ##### Energy
 
@@ -340,15 +340,15 @@ higher compared songs with low
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1        11.2
+    ## 1        11.3
 
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1        14.0
+    ## 1        13.8
 
 We are 95% certain that the difference in means between songs with high
-energy and low energy is between 11.2036999 and 14.0499756.
+energy and low energy is between 11.2653239 and 13.7750617.
 
 ##### Loudness
 
@@ -374,7 +374,7 @@ higher compared with songs with low
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1        18.3
+    ## 1        18.5
 
     ## # A tibble: 1 x 1
     ##   upper_bound
@@ -382,8 +382,8 @@ higher compared with songs with low
     ## 1        20.9
 
 We are 95% certain that the difference in mean popularity scores between
-songs with high loudness and the low loudness is between 18.3165483 and
-20.9230737.
+songs with high loudness and the low loudness is between 18.4658069 and
+20.8691712.
 
 ##### Acousticness
 
@@ -417,8 +417,8 @@ Songs with high acousticness have a mean popularity score that is around
     ## 1       -18.4
 
 We are 95% certain that the difference in popularity means between songs
-with high acousticness and the low acousticness is between -20.8779025
-and -18.3932181.
+with high acousticness and the low acousticness is between -20.8563839
+and -18.3572302.
 
 ### Permutation Analysis
 

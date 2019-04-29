@@ -199,7 +199,7 @@ The variables that have a positive relationship with popularity are: energy, dan
 #### Confidence Intervals for Categorical Variables
 
 After conducting the exploratory data analysis, we wanted to further investigate the relationships between individual variables and song popularity.
-In this section, bootstrapping was used to determine the confidence intervals for the difference in mean popularity scores between different categories within variables that appeared to have the strongest relationship with popularity scores. For example, the confidence interval for the difference in mean popularity scores between the Rap and Pop genres (the most popular 2 genres) were calculated. 
+In this section, bootstrapping was used to determine the 95% confidence intervals for the difference in mean popularity scores between different categories within variables that appeared to have the strongest relationship with popularity scores. For example, the confidence interval for the difference in mean popularity scores between the Rap and Pop genres (the most popular 2 genres) were calculated. 
 
 ##### Estimate of the Popularity Difference between Rap and Pop Genres 
 
@@ -268,7 +268,7 @@ We are 95% certain that the difference in popularity means between the songs wit
 
 The following variables were selected because the scatterplot visualizations mapping them against popularity scores showed there was a clear relationship between the variables and the scores. The variables that were chosen are: danceability, energy, liveness, loudness, and acousticness. 
 
-For each of these variables, we took the highest 25% of the data ("High" danceability, energy, liveness etc.) and the lowest 25% of the data ("Low" danceability, energy, liveness etc.) and conducted a 95% confidence interval test for the difference in mean popularities between the two. 
+For each of these variables, we took the highest 25% of the data ("High" danceability, energy, loudness and acousticness.) and the lowest 25% of the data ("Low" danceability, energy, loudness, and acousticness) and conducted a 95% confidence interval test for the difference in mean popularities between the two. 
 
 ##### Danceability
 
