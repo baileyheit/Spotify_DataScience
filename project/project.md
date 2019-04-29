@@ -54,7 +54,7 @@ popularity.
 
 ### Visualization
 
-#### Exploratory Analysis of Relationships Between Different Variables and Song Popularity
+#### Exploratory Data Analysis of Relationships Between Different Variables and Song Popularity
 
 In this section, an exploratory analysis of the relationships between
 song popularity and different variables was conducted, in order to
@@ -71,187 +71,532 @@ median song popularity.
 
 #### Boxplots for Categorical Variables
 
-This boxplot visualizes the distribution of the genre with the highest
-median popularity (Pop) and the genre with the lowest median popularity
-(Movie). The Pop plot is relatively normal shaped, as the median is
-located in the center of the data. There appears to be three outliers in
-the data set, two above the median song popularity and one below the
-median song popularity. The movie plot is not normally shaped, as the
-majority of the data lies above the median in the upper quartile, making
-the plot slightly-right skewed. There appears to be four outliers in the
-data set, all of which lie above the median song
+The following boxplot visualizes the distribution of the genre with the
+highest median popularity (Pop) and the genre with the lowest median
+popularity (Movie). The Pop plot is relatively normal shaped, as the
+median is located in the center of the data. There appears to be three
+outliers in the data set, two above the median song popularity and one
+below the median song popularity. The movie plot is not normally shaped,
+as the majority of the data lies above the median in the upper quartile,
+making the plot slightly-right skewed. There appears to be four outliers
+in the data set, all of which lie above the median song
 popularity.
 
 ![](project_files/figure-gfm/plot-selectedgenres-popularity-1.png)<!-- -->
 
-This box plot visualizes the distribution of song popularity, based on
-the modality (mode) of the track. According to the visualization, the
-median popularity of songs with minor modalities is slightly higher than
-the median popularity of sons with major modalities. The minor plot is
-not normally shaped, as the majority of the data lies below the median,
-making the plot slightly left-skewed. There appears to be two outliers
-in the minor plot, both of which fall below the median song popularity
-of songs with minor modalities. The major plot is also not normally
-shaped, as the majority of the data lies below the median, making it
-slightly left-skewed. There appears to be one outlier in the major data,
-which falls above the median popularity of songs with major modalities.
+The following box plot visualizes the distribution of song popularity,
+based on the modality (mode) of the track. According to the
+visualization, the median popularity of songs with minor modalities is
+slightly higher than the median popularity of sons with major
+modalities. The minor plot is not normally shaped, as the majority of
+the data lies below the median, making the plot slightly left-skewed.
+There appears to be two outliers in the minor plot, both of which fall
+below the median song popularity of songs with minor modalities. The
+major plot is also not normally shaped, as the majority of the data lies
+below the median, making it slightly left-skewed. There appears to be
+one outlier in the major data, which falls above the median popularity
+of songs with major modalities.
 
 ![](project_files/figure-gfm/plot-mode-popularity-1.png)<!-- -->
 
-This boxplot visualizes the distribution of song popularity, based on
-the time-signature of each track. According to the visualization, the
-median song popularity is greatest when the time signature is 4/4 and
-the median song popularity is lowest when the time signature is 1/4. The
-1/4, 3/4, and 5/4 plots are all relatively normally shaped, as the
-median song popularities fall in the center of the data plots. There do
-not appear to be any outliers in the 1/4, 3/4, and 5/4 data plots. The
-4/4 data plot, however, is not normally shaped, as the majority of the
-data falls below the median song popularity, making it slightly
-left-skewed. There appears to be two outliers above the median song
-popularity of the 4/4 plot, and multiple outliers below the median song
-popularity of the 4/4 plot.
+The following boxplot visualizes the distribution of song popularity,
+based on the time-signature of each track. According to the
+visualization, the median song popularity is greatest when the time
+signature is 4/4 and the median song popularity is lowest when the time
+signature is 1/4. The 1/4, 3/4, and 5/4 plots are all relatively
+normally shaped, as the median song popularities fall in the center of
+the data plots. There do not appear to be any outliers in the 1/4, 3/4,
+and 5/4 data plots. The 4/4 data plot, however, is not normally shaped,
+as the majority of the data falls below the median song popularity,
+making it slightly left-skewed. There appears to be two outliers above
+the median song popularity of the 4/4 plot, and multiple outliers below
+the median song popularity of the 4/4 plot.
 
 ![](project_files/figure-gfm/timesignature-popularity-1.png)<!-- -->
 
-This boxplot visualizes the distribution of song popularity based on the
-keys of songs. According to the data, the key with the highest median
-song popularity is F\#. Since there is little variability between the
-median popularities of songs, based on the track’s key, key does not
-appear to be a strong predictor of song popularity.
+The following boxplot visualizes the distribution of song popularity
+based on the keys of songs. According to the data, the key with the
+highest median song popularity is F\#. Since there is little variability
+between the median popularities of songs, based on the track’s key, key
+does not appear to be a strong predictor of song popularity.
 
 ![](project_files/figure-gfm/plot-key-popularity-1.png)<!-- -->
 
-### Scatterplots for Continous Variables
+#### Scatterplots for Numerical Variables
 
-### Variables that Have a Positive Relationship with Popularity
-
-This scatterplot visualizes the relationship between the energy and
-popularity of Spotify songs. There appears to be a generally direct
-trend in the data. According to the visualization, as song energy
-increases, song popularity increases as well. The relationship between
-energy and song popularity is
-    non-linear.
+The following scatterplots visualizes the relationship between variables
+in the data and the popularity of the Spotify
+    song.
 
     ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
-
-![](project_files/figure-gfm/plot-energy-popularity-1.png)<!-- -->
-
-This scatterplot visualizes the relationship between the how suitable a
-song is for dancing (danceability) and the popularity of Spotify songs.
-There appears to be a generally direct trend in the data. According to
-the visualization as danceability increases, song popularity increases
-as well. The relationship between danceability and song popularity is
-non-linear.
-
+    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
     ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
 
-![](project_files/figure-gfm/plot-danceability-popularity-1.png)<!-- -->
+![](project_files/figure-gfm/plot-popularity-1.png)<!-- -->
 
-Before creating this plot, we filtered the loudness variable to remove
-extreme outliers from the data and make heavily populated regions of the
-visualization easier to see. This scatterplot visualizes the
-relationship between the loudness and popularity of songs. There appears
-to be a a generally direct trend in the data. According to the
-visualization, as loudness increases,song popularity increases as well.
-The relationship between popularity and loudness is
-    non-linear.
-
-    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
-
-![](project_files/figure-gfm/plot-loudness-popularity-1.png)<!-- -->
-
-### Variables that Have a Negative Relationship with Popularity
-
-This scatterplot visualizes the relationship between a confidence
-measure of whether songs are acoustic (acousticness) and the popularity
-of Spotify songs. There appears to be a generally indirect trend in the
-data. According to the data, as acousticness increases, song popularity
-decreases. The relationship between acousticness and song popularity is
-non-linear.
-
-    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
-
-![](project_files/figure-gfm/plot-acousticness-popularity-1.png)<!-- -->
-
-This scatterplot visualizes the relationship between whether songs are
-predicted to be majority instrumental (instrumentalness) and the
-popularity of songs. There appears to be a generally indirect trend in
-the data. According to the visualization, as the intrumentalness of a
-song increases, the popularity of the song decreases. The relationship
-between instrumentalness and popularity is
-    non-linear.
-
-    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
-
-![](project_files/figure-gfm/plot-instrumentalness-popularity-1.png)<!-- -->
-
-This scatterplot visualizes the relationship between the likeliness that
-songs were preformed live (liveness) and the popularity of songs. There
+For the relationship between a confidence measure of whether songs are
+acoustic (acousticness) and the popularity of Spotify songs, there
 appears to be a generally indirect trend in the data. According to the
-visualization, as the liveness of a song increases, the song popularity
-decreases. The relationship between popularity and liveness is
+visualization, as acousticness increases, song popularity decreases. The
+relationship between acousticness and song popularity is non-linear.
+
+For the relationship between energy and popularity of Spotify songs,
+there appears to be a generally direct trend in the data. According to
+the visualization, as song energy increases, song popularity increases
+as well. The relationship between energy and song popularity is
 non-linear.
 
-    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+For the relationship between the how suitable a song is for dancing
+(danceability) and the popularity of Spotify songs, there appears to be
+a generally direct trend in the data. According to the visualization, as
+danceability increases, song popularity increases as well. The
+relationship between danceability and song popularity is non-linear.
 
-![](project_files/figure-gfm/plot-liveness-popularity-1.png)<!-- -->
+Before creating the plot for the relationship between song durationo and
+popluarity, we used the mutate() function to create a new variable that
+measures the duration of songs in seconds. We also used the filter()
+function to remove extreme outliers from the data and make it easier to
+see observations in the heavily populated regions in the visualization.
 
-This scatterplot visualizes the relationship between how exclusively
-speech-like songs are (speechiness) and the popularity of songs. There
+For the relationship between the duration and popularity of songs on
+Spotify, according to the data, songs with durations of about 200
+seconds (3.33 minutes) have the highest average popularity. The
+relationship between song duration and popularity is non-linear. The
+majority of songs are under 600 seconds (10 minutes) long. Since the
+majority of Spotify songs are similar in length, duration does not
+appear to be a strong predictor of song popularity.
+
+For the relationship between whether songs are predicted to be majority
+instrumental (instrumentalness) and the popularity of songs, there
 appears to be a generally indirect trend in the data. According to the
-visualization, as speechiness increases, song popularity decreases. The
-relationship between popularity and speechiess is
-    non-linear.
+visualization, as the intrumentalness of a song increases, the
+popularity decreases. The relationship between instrumentalness and
+popularity is non-linear.
 
-    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+For the relationship between the liveliness that songs were preformed
+live (liveness) and the popularity of songs, there appears to be a
+generally indirect trend in the data. According to the visualization, as
+liveness increases, popularity decreases. The relationship between
+popularity and liveness is non-linear.
 
-![](project_files/figure-gfm/plot-speechiness-popularity-1.png)<!-- -->
+Before creating the plot displaying the relationship between loudness
+and popularity, we filtered the loudness variable to remove extreme
+outliers from the data and make heavily populated regions of the
+visualization easier to see. This scatterplot appears to have a
+generally direct trend in the data. According to the visualizaiton, as
+loudness increases, popularity increases as well. The relationship
+between popularity and liveness is non-linear.
 
-### Other Variables
+For the relationship between how exclusively speech-like songs are
+(speechiness) and the popularity of songs, there appears to be a
+generally indirect trend in the data. According to the visualization, as
+speechiness increases, popularity decreases. The relationship between
+popularity and speechiess is non-linear.
 
-Before creating the plot, we used the mutate() function to create a new
-variable that measures the duration of songs in seconds. We also used
-the filter() function to remove extreme outliers from the data and make
-it easier to see observations in the heavily populated regions in the
-visualization.
+For the relationship between the tempo and popularity of songs, there
+appears to be a generally direct trend in the data, where as tempo
+increases, popularity increases as well. The relationship between
+popularity and liveness is non-linear.
 
-This scatterplot visualizes the relationship between the duration and
-popularity of songs on Spotify. According to the data, songs with
-durations of about 200 seconds (3.33 minutes) appear to have the highest
-average popularity. The relationship between song duration and
-popularity is non-linear. The majority of songs are under 600 seconds
-(10 minutes) long. Since the majority of Spotify songs are similar in
-length, duration does not appear to be a strong predictor of song
-popularity.
+For the relationship between the musical positiveness (valence) and the
+popularity of songs, although popularity appears to increase slightly as
+valence increases, there appears to be a generally constant relationship
+between the valence and popularity. The relationship between popularity
+and liveness is non-linear.
 
-    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+From this exploratory analyses, it appears that genre, energy,
+danceability, loudness, and acousticness had the strongest relationships
+with song popularity.
 
-![](project_files/figure-gfm/plotg-duration-popularity-1.png)<!-- -->
+The variables that have a positive relationship with popularity are:
+energy, danceability, and loudness. The variables that have a negative
+relationship with popularity are: acoustiness, instrumentalness,
+liveness, and acousticness
 
-This scatterplot visualizes the relationship between the tempo and
-popularity of songs. There does not appear to be a clear relationship
-shown in the
-    data.
+### Bootstrapping to find Confidence Intervals
 
-    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+#### Confidence Intervals for Categorical Variables
 
-![](project_files/figure-gfm/plot-tempo-popularity-1.png)<!-- -->
+After conducting the exploratory data analysis, we wanted to further
+investigate the relationships between individual variables and song
+popularity. In this section, bootstrapping was used to determine the
+confidence intervals for the difference in mean popularity scores
+between different categories within variables that appeared to have the
+strongest relationship with popularity scores. For example, the
+confidence interval for the difference in mean popularity scores between
+the Rap and Pop genres (the most popular 2 genres) were
+    calculated.
 
-This scatterplot visualizes the relationship between the musical
-positiveness (valence) and the popularity of songs. Based on the
-visualization, while popularity appears to increase slightly as valence
-increases, there appears to be a generally constant relationship between
-the valence and
-    popularity.
+##### Estimate of the Popularity Difference between Rap and Pop Genres
 
-    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 
-![](project_files/figure-gfm/plot-valence-popularity-1.png)<!-- -->
+![](project_files/figure-gfm/rap_pop-1.png)<!-- -->
 
-From this exploratory analysis, it appears that genre, energy,
-danceability, loudness, and speechiness had the most significant
-relationships with song popularity. Therefore, these variables appear to
-be strong predictors of what makes a song popular.
+    ## # A tibble: 1 x 1
+    ##   lower_bound
+    ##         <dbl>
+    ## 1        3.91
+
+    ## # A tibble: 1 x 1
+    ##   upper_bound
+    ##         <dbl>
+    ## 1        6.96
+
+We are 95% certain that the difference in means between the popularity
+score of the rap and pop genres is between 3.9137838 and
+6.9628062.
+
+##### Estimate of the Popularity Difference between 4/4 Time Signature and Non-4/4 Time Signature
+
+From the boxplot in the visualizations section, we can see that the 4/4
+time signature had a higher average popularity score than the rest of
+the time signatures. Thus, we decided to construct a confidence interval
+estimating the difference in popularity means between songs with a 4/4
+time signature and songs that do not use a 4/4 time signature.
+
+    ## # A tibble: 2 x 2
+    ##   time_signatureHL average
+    ##   <chr>              <dbl>
+    ## 1 4/4                 45.7
+    ## 2 Not 4/4             33.8
+
+We can see that songs with 4/4 time signature have an average popularity
+score that is around 10 higher than songs that do not have a 4/4 time
+signature.
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+![](project_files/figure-gfm/time_signature_boot-1.png)<!-- -->
+
+    ## # A tibble: 1 x 1
+    ##   lower_bound
+    ##         <dbl>
+    ## 1        10.4
+
+    ## # A tibble: 1 x 1
+    ##   upper_bound
+    ##         <dbl>
+    ## 1        13.3
+
+We are 95% certain that the difference in popularity means between the
+songs with higher (highest 25%) time\_signature and the lower (lowest
+25%) time\_signature is between 10.4398251 and 13.2997452.
+
+#### Confidence Intervals for Continous Variables
+
+The following variables were selected because the scatterplot
+visualizations mapping them against popularity scores showed there was a
+clear relationship between the variables and the scores. The variables
+that were chosen are: danceability, energy, liveness, loudness, and
+acousticness.
+
+For each of these variables, we took the highest 25% of the data (“High”
+danceability, energy, liveness etc.) and the lowest 25% of the data
+(“Low” danceability, energy, liveness etc.) and conducted a 95%
+confidence interval test for the difference in mean popularities between
+the two.
+
+##### Danceability
+
+    ## # A tibble: 1 x 4
+    ##     max    min    q1    q3
+    ##   <dbl>  <dbl> <dbl> <dbl>
+    ## 1 0.969 0.0599 0.434 0.688
+
+    ## # A tibble: 2 x 2
+    ##   danceHL average
+    ##   <chr>     <dbl>
+    ## 1 High       46.8
+    ## 2 Low        35.7
+
+Songs with high danceability have a mean popularity score that is around
+10 higher compared songs with low
+    danceability.
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+![](project_files/figure-gfm/dance_boot-1.png)<!-- -->
+
+    ## # A tibble: 1 x 1
+    ##   lower_bound
+    ##         <dbl>
+    ## 1        10.0
+
+    ## # A tibble: 1 x 1
+    ##   upper_bound
+    ##         <dbl>
+    ## 1        12.3
+
+We are 95% certain that the difference in popularity means between the
+songs with high danceability and low danceability is between 10.0392687
+and 12.3242095.
+
+##### Energy
+
+    ## # A tibble: 1 x 4
+    ##     max     min    q1    q3
+    ##   <dbl>   <dbl> <dbl> <dbl>
+    ## 1 0.996 0.00152 0.399 0.791
+
+    ## # A tibble: 2 x 2
+    ##   energyHL average
+    ##   <chr>      <dbl>
+    ## 1 High        46.7
+    ## 2 Low         34.1
+
+Songs with high energy have a mean popularity score that is around 10
+higher compared songs with low
+    energy.
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+![](project_files/figure-gfm/energy_boot-1.png)<!-- -->
+
+    ## # A tibble: 1 x 1
+    ##   lower_bound
+    ##         <dbl>
+    ## 1        11.2
+
+    ## # A tibble: 1 x 1
+    ##   upper_bound
+    ##         <dbl>
+    ## 1        14.0
+
+We are 95% certain that the difference in means between songs with high
+energy and low energy is between 11.2140294 and 13.9970674.
+
+##### Loudness
+
+    ## # A tibble: 1 x 4
+    ##     max   min    q1    q3
+    ##   <dbl> <dbl> <dbl> <dbl>
+    ## 1 0.496 -42.1 -11.5 -5.45
+
+    ## # A tibble: 2 x 2
+    ##   loudnessHL average
+    ##   <chr>        <dbl>
+    ## 1 High          50.9
+    ## 2 Low           31.2
+
+Songs with high loudness have a mean popularity score that is around 18
+higher compared with songs with low
+    loudness.
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+![](project_files/figure-gfm/loudness_boot-1.png)<!-- -->
+
+    ## # A tibble: 1 x 1
+    ##   lower_bound
+    ##         <dbl>
+    ## 1        18.4
+
+    ## # A tibble: 1 x 1
+    ##   upper_bound
+    ##         <dbl>
+    ## 1        20.9
+
+We are 95% certain that the difference in mean popularity scores between
+songs with high loudness and the low loudness is between 18.4074171 and
+20.8839182.
+
+##### Acousticness
+
+    ## # A tibble: 1 x 4
+    ##     max        min     q1    q3
+    ##   <dbl>      <dbl>  <dbl> <dbl>
+    ## 1 0.996 0.00000266 0.0307 0.707
+
+    ## # A tibble: 2 x 2
+    ##   acousticnessHL average
+    ##   <chr>            <dbl>
+    ## 1 High              30.4
+    ## 2 Low               50.0
+
+Songs with high acousticness have a mean popularity score that is around
+18 lower compared songs with low
+    acousticness.
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+![](project_files/figure-gfm/acousticness_boot-1.png)<!-- -->
+
+    ## # A tibble: 1 x 1
+    ##   lower_bound
+    ##         <dbl>
+    ## 1       -20.9
+
+    ## # A tibble: 1 x 1
+    ##   upper_bound
+    ##         <dbl>
+    ## 1       -18.4
+
+We are 95% certain that the difference in popularity means between songs
+with high acousticness and the low acousticness is between -20.8566857
+and -18.3846637.
+
+### Permutation Analysis
+
+#### Popularity Difference Between Pop and Rap
+
+After conducting the exploratory data analysis, the visualization of the
+distribution of song popularity based on genres suggested that the Pop
+and Rap genres had the greatest median song popularities. As a result,
+we wanted to see if the difference in song popularity between these two
+genres is significant.
+
+Null Hypothesis: There is not a difference between the mean popularities
+of songs that are pop and songs that are rap. Alternative Hypothesis:
+There is a difference between the mean popularities of songs that are
+pop and songs that are rap.
+
+    ## [1] -5.440455
+
+The observed difference between the mean popularity of Pop and the mean
+popularity of Rap is 6.15.
+
+![](project_files/figure-gfm/null-dist-pop-1.png)<!-- -->
+
+    ## # A tibble: 1 x 1
+    ##   pvalue
+    ##    <dbl>
+    ## 1      0
+
+The p-value of the difference between the popularity of Pop and Rap
+songs is 0%, which is the proportion of observations that are at least
+as extreme or more extreme than the observed difference in means (6.15).
+Since 0% is less than a significance level of 5%, the null hypothesis is
+rejected, meaning that the data provides convincing evidence that there
+is a difference in mean popularities of songs that are Pop versus Rap.
+
+#### Popularity Difference Between High Energy and Low Energy
+
+From the visualizations, we saw that songs with more energy were more
+likely to have a greater popularity. We wanted to see if the difference
+in popularity between sonogs with high and low energy (defined as songs
+with energy at or above .5 and energy below .5 respectively) was
+significant.
+
+Null Hypothesis: There is not a difference between the mean popularities
+of songs that have high energy and low energy. Alternative Hypothesis:
+There is a difference between the mean popularities of songs that have
+high energy and low energy.
+
+    ## [1] -10.35784
+
+The observed mean popularity difference between songs with high and low
+energyy is 9.688.
+
+![](project_files/figure-gfm/null-dist-energy-1.png)<!-- -->
+
+    ## # A tibble: 1 x 1
+    ##   pvalue
+    ##    <dbl>
+    ## 1      0
+
+The p-value of the difference between high and low energy is 0, which
+mean we can reject the null hypothesis that there is not a difference
+between the mean popularities of songs that have high energy and low
+energy. The data provides convincing evidence that there is a difference
+in mean popularities of songs that have high energy versus low
+energy.
+
+#### Popularity Difference Between High Danceability and Low Danceabililty
+
+From the visualizations, we saw that songs with more danceability were
+more likely to have a greater popularity. We wanted to see if the
+difference in popularity between sonogs with high and low danceability
+(defined as songs with danceabililty at or above .5 and danceability
+below .5 respectively) was significant.
+
+Null Hypothesis: There is not a difference between the mean popularities
+of songs that have high danceability and low danceability Alternative
+Hypothesis: There is a difference between the mean popularities of songs
+that have high danceability and low danceability
+
+    ## [1] -9.20939
+
+The observed mean popularity difference between songs with high and low
+danceabiliity is 8.56.
+
+![](project_files/figure-gfm/null-dist-dance-1.png)<!-- -->
+
+    ## # A tibble: 1 x 1
+    ##   pvalue
+    ##    <dbl>
+    ## 1      0
+
+The p-value of the difference between high and low danceability is 0,
+which means we can reject the null hypothesis that there is not a
+difference between the mean popularities of songs that have high
+danceability and low danceability The data provides convincing evidence
+that there is a difference in mean popularities of songs that have high
+danceability versus low danceability
+
+#### Popularity Difference Between High Speechiness and Low Speechiness
+
+From the visualizations, we saw that songs with more speechiness were
+more likely to have a greater popularity. We wanted to see if the
+difference in popularity between sonogs with high and low speechiness
+(defined as songs with speechiness at or above .5 and speechiness below
+.5 respectively) was significant.
+
+Null Hypothesis: There is not a difference between the mean popularities
+of songs that have high speechiness and low speechiness Alternative
+Hypothesis: There is a difference between the mean popularities of songs
+that have high speechiness and low speechiness
+
+    ## [1] 21.43577
+
+The observed mean popularity difference between songs with high and low
+speechiness is 23.09.
+![](project_files/figure-gfm/null-dist-speech-1.png)<!-- -->
+
+The p-value of the difference between high and low speechiness is 0,
+which means we can reject the null hypothesis that there is not a
+difference between the mean popularities of songs that have high
+speechiness and low speechiness The data provides convincing evidence
+that there is a difference in mean popularities of songs that have high
+speechiness versus low speechiness.
+
+#### Popularity Difference Between High Valence and Low Valence
+
+From the linear model, we saw that songs with less valence were more
+likely to have a greater popularity. We wanted to see if the difference
+in popularity between songs with high and low valence (defined as songs
+with valence at or above .5 and valence below .5 respectively) was
+significant.
+
+Null Hypothesis: There is not a difference between the mean popularities
+of songs that have high valence and low valence Alternative Hypothesis:
+There is a difference between the mean popularities of songs that have
+high valence and low valence
+
+    ## [1] -2.302456
+
+The observed difference in mean popularity between songs with high and
+low valence is 2.12.
+
+![](project_files/figure-gfm/null-dist-valence-1.png)<!-- -->
+
+    ## # A tibble: 1 x 1
+    ##   pvalue
+    ##    <dbl>
+    ## 1      0
+
+The p-value of the difference between high and low valence is 0, which
+means we can reject the null hypothesis that there is not a difference
+between the mean popularities of songs that have high valence and low
+valence. The data provides convincing evidence that there is a
+difference in mean popularities of songs that have high valence versus
+low valence.
 
 ### Linear Regression
 
@@ -300,6 +645,17 @@ variables. Genre is not included in this model.
     ## [1] 0.3017019
 
     ## [1] 0.3004424
+
+Selected model = 57.28 + -13.77 \* acousticness + 16.52 \* danceability
+- 6.24 \* energy - 3.62 \* instrumentalness + -11.85 \* liveness + 0.78
+\* loudness + -7.72 \* speechiness + 0.013 \* tempo + -9.29 \* valence
+
+The adjusted R squared value for this model is 0.30, which means that
+roughly 30% of the variability in a song’s popularity can be explained
+by the different variables in the multiple regression model. This
+indicates that there is a weak to moderate positive overall realtionship
+between a song’s popularity and the different variables related to a
+song.
 
 This is the selected multiple linear regression model using backwards
 selection. It looks at the relationship between popularity and different
@@ -463,443 +819,6 @@ looking at individual r-value models, it can be seen that genre is the
 variable that contributes to the high r-value. Without it, the selected
 model r-value is .30.
 
-### Bootstrapping
-
-### Permutation Analysis
-
-#### Popularity Difference Between Pop and Rap
-
-Our previous visualization of the distribution of song popularity based
-on genres suggested that the Pop and Rap genres had the greatest median
-song popularities. As a result, we wanted to see if the difference in
-song popularity between these two genres is significant.
-
-Null Hypothesis: There is not a difference between the mean popularities
-of songs that are pop and songs that are rap. Alternative Hypothesis:
-There is a difference between the mean popularities of songs that are
-pop and songs that are rap.
-
-    ## [1] -5.440455
-
-The observed difference between the mean popularity of Pop and the mean
-popularity of Rap is 6.15.
-
-![](project_files/figure-gfm/null-dist-pop-1.png)<!-- -->
-
-    ## # A tibble: 1 x 1
-    ##   pvalue
-    ##    <dbl>
-    ## 1      0
-
-The p-value of the difference between the popularity of Pop and Rap
-songs is 0%, which is the proportion of observations that are at least
-as extreme or more extreme than the observed difference in means (6.15).
-Since 0% is less than a significance level of 5%, the null hypothesis is
-rejected, meaning that the data provides convincing evidence that there
-is a difference in mean popularities of songs that are Pop versus Rap.
-
-#### Popularity Difference Between High Energy and Low Energy
-
-From the visualizations, we saw that songs with more energy were more
-likely to have a greater popularity. We wanted to see if the difference
-in popularity between sonogs with high and low energy (defined as songs
-with energy at or above .5 and energy below .5 respectively) was
-significant.
-
-Null Hypothesis: There is not a difference between the mean popularities
-of songs that have high energy and low energy. Alternative Hypothesis:
-There is a difference between the mean popularities of songs that have
-high energy and low energy.
-
-    ## [1] -10.35784
-
-The observed mean popularity difference between songs with high and low
-energyy is 9.688.
-
-![](project_files/figure-gfm/null-dist-energy-1.png)<!-- -->
-
-    ## # A tibble: 1 x 1
-    ##   pvalue
-    ##    <dbl>
-    ## 1      0
-
-The p-value of the difference between high and low energy is 0, which
-mean we can reject the null hypothesis that there is not a difference
-between the mean popularities of songs that have high energy and low
-energy. The data provides convincing evidence that there is a difference
-in mean popularities of songs that have high energy versus low
-energy.
-
-#### Popularity Difference Between High Danceability and Low Danceabililty
-
-From the visualizations, we saw that songs with more danceability were
-more likely to have a greater popularity. We wanted to see if the
-difference in popularity between sonogs with high and low danceability
-(defined as songs with danceabililty at or above .5 and danceability
-below .5 respectively) was significant.
-
-Null Hypothesis: There is not a difference between the mean popularities
-of songs that have high danceability and low danceability Alternative
-Hypothesis: There is a difference between the mean popularities of songs
-that have high danceability and low danceability
-
-    ## [1] -9.20939
-
-The observed mean popularity difference between songs with high and low
-danceabiliity is 8.56.
-
-![](project_files/figure-gfm/null-dist-dance-1.png)<!-- -->
-
-    ## # A tibble: 1 x 1
-    ##   pvalue
-    ##    <dbl>
-    ## 1      0
-
-The p-value of the difference between high and low danceability is 0,
-which means we can reject the null hypothesis that there is not a
-difference between the mean popularities of songs that have high
-danceability and low danceability The data provides convincing evidence
-that there is a difference in mean popularities of songs that have high
-danceability versus low danceability
-
-#### Popularity Difference Between High Speechiness and Low Speechiness
-
-From the visualizations, we saw that songs with more speechiness were
-more likely to have a greater popularity. We wanted to see if the
-difference in popularity between sonogs with high and low speechiness
-(defined as songs with speechiness at or above .5 and speechiness below
-.5 respectively) was significant.
-
-Null Hypothesis: There is not a difference between the mean popularities
-of songs that have high speechiness and low speechiness Alternative
-Hypothesis: There is a difference between the mean popularities of songs
-that have high speechiness and low speechiness
-
-    ## [1] 21.43577
-
-The observed mean popularity difference between songs with high and low
-speechiness is 23.09.
-![](project_files/figure-gfm/null-dist-speech-1.png)<!-- -->
-
-The p-value of the difference between high and low speechiness is 0,
-which means we can reject the null hypothesis that there is not a
-difference between the mean popularities of songs that have high
-speechiness and low speechiness The data provides convincing evidence
-that there is a difference in mean popularities of songs that have high
-speechiness versus low speechiness.
-
-#### Popularity Difference Between High Valence and Low Valence
-
-From the linear model, we saw that songs with less valence were more
-likely to have a greater popularity. We wanted to see if the difference
-in popularity between songs with high and low valence (defined as songs
-with valence at or above .5 and valence below .5 respectively) was
-significant.
-
-Null Hypothesis: There is not a difference between the mean popularities
-of songs that have high valence and low valence Alternative Hypothesis:
-There is a difference between the mean popularities of songs that have
-high valence and low valence
-
-    ## [1] -2.302456
-
-The observed difference in mean popularity between songs with high and
-low valence is 2.12.
-
-![](project_files/figure-gfm/null-dist-valence-1.png)<!-- -->
-
-    ## # A tibble: 1 x 1
-    ##   pvalue
-    ##    <dbl>
-    ## 1      0
-
-The p-value of the difference between high and low valence is 0, which
-means we can reject the null hypothesis that there is not a difference
-between the mean popularities of songs that have high valence and low
-valence. The data provides convincing evidence that there is a
-difference in mean popularities of songs that have high valence versus
-low valence.
-
-#### Popularity Difference Between Major and Minor
-
-We wanted to see if the difference in popularity between songs in a
-major or minor mode was significant.
-
-Null Hypothesis: There is not a difference between the mean popularities
-of songs that are in a major mode versus minor mode. Alternative
-Hypothesis: There is a difference between the mean popularities of songs
-that are in a major mode versus minor mode.
-
-    ## [1] 2.496376
-
-The observed mean popularity difference between major and minor songs is
-2.03. ![](project_files/figure-gfm/null-dist-mode-1.png)<!-- -->
-
-    ## # A tibble: 1 x 1
-    ##   pvalue
-    ##    <dbl>
-    ## 1      0
-
-The p-value of the difference between major and minor is 0, which means
-we can reject the null hypothesis that there is not a difference between
-the mean popularities of songs that are in a major or minor mode. The
-data provides convincing evidence that there is a difference in mean
-popularities of songs that are in a major mode versus a minor mode.
-
-### Bootstrapping to find Confidence Intervals
-
-### Confidence Intervals for Categorical Variables
-
-In this section, bootstrapping was used to determine the confidence
-intervals for the difference in mean popularity scores between different
-categories within variables. For example, the confidence interval for
-the difference in mean popularity scores between the Rap and Pop genres
-(the most popular 2 genres) were
-    calculated.
-
-### Estimate of the Popularity Difference between Rap and Pop Genres
-
-    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-
-![](project_files/figure-gfm/rap_pop-1.png)<!-- -->
-
-    ## # A tibble: 1 x 1
-    ##   lower_bound
-    ##         <dbl>
-    ## 1        3.82
-
-    ## # A tibble: 1 x 1
-    ##   upper_bound
-    ##         <dbl>
-    ## 1        7.04
-
-We are 95% certain that the difference in means between the popularity
-score of the rap and pop genres is between 3.8214262 and
-7.0390146.
-
-### Estimate of the Popularity Difference between 4/4 Time Signature and Non-4/4 Time Signature
-
-From the boxplot in the visualizations section, we can see that the 4/4
-time signature had a higher average popularity score than the rest of
-the time signatures. Thus, we decided to construct a confidence interval
-estimating the difference in popularity means between songs with a 4/4
-time signature and songs that do not use a 4/4 time signature.
-
-    ## # A tibble: 2 x 2
-    ##   time_signatureHL average
-    ##   <chr>              <dbl>
-    ## 1 4/4                 45.7
-    ## 2 Not 4/4             33.8
-
-We can see that songs with 4/4 time signature have an average popularity
-score that is around 10 higher than songs that do not have a 4/4 time
-signature.
-
-    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-
-![](project_files/figure-gfm/time_signature_boot-1.png)<!-- -->
-
-    ## # A tibble: 1 x 1
-    ##   lower_bound
-    ##         <dbl>
-    ## 1        10.4
-
-    ## # A tibble: 1 x 1
-    ##   upper_bound
-    ##         <dbl>
-    ## 1        13.3
-
-We are 95% certain that the difference in popularity means between the
-songs with higher (highest 25%) time\_signature and the lower (lowest
-25%) time\_signature is between 10.4188576 and 13.2857593.
-
-### Confidence Intervals for Continous Variables
-
-The following variables were selected because the scatterplot
-visualizations mapping them against popularity scores showed there was a
-clear relationship between the variables and the scores. The variables
-that were chosen are: danceability, energy, liveness, loudness, and
-acousticness.
-
-For each of these variables, we took the highest 25% of the data (“High”
-danceability, energy, liveness etc.) and the lowest 25% of the data
-(“Low” danceability, energy, liveness etc.) and conducted a 95%
-confidence interval test for the difference in mean popularities between
-the two.
-
-### Danceability
-
-    ## # A tibble: 1 x 4
-    ##     max    min    q1    q3
-    ##   <dbl>  <dbl> <dbl> <dbl>
-    ## 1 0.969 0.0599 0.434 0.688
-
-    ## # A tibble: 2 x 2
-    ##   danceHL average
-    ##   <chr>     <dbl>
-    ## 1 High       46.8
-    ## 2 Low        35.7
-
-Songs with high danceability have a mean popularity score that is around
-10 higher compared songs with low
-    danceability.
-
-    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-
-![](project_files/figure-gfm/dance_boot-1.png)<!-- -->
-
-    ## # A tibble: 1 x 1
-    ##   lower_bound
-    ##         <dbl>
-    ## 1       10.00
-
-    ## # A tibble: 1 x 1
-    ##   upper_bound
-    ##         <dbl>
-    ## 1        12.3
-
-We are 95% certain that the difference in popularity means between the
-songs with high danceability and low danceability is between 9.9969454
-and 12.295439.
-
-### Energy
-
-    ## # A tibble: 1 x 4
-    ##     max     min    q1    q3
-    ##   <dbl>   <dbl> <dbl> <dbl>
-    ## 1 0.996 0.00152 0.399 0.791
-
-    ## # A tibble: 2 x 2
-    ##   energyHL average
-    ##   <chr>      <dbl>
-    ## 1 High        46.7
-    ## 2 Low         34.1
-
-Songs with high energy have a mean popularity score that is around 10
-higher compared songs with low
-    energy.
-
-    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-
-![](project_files/figure-gfm/energy_boot-1.png)<!-- -->
-
-    ## # A tibble: 1 x 1
-    ##   lower_bound
-    ##         <dbl>
-    ## 1        11.1
-
-    ## # A tibble: 1 x 1
-    ##   upper_bound
-    ##         <dbl>
-    ## 1        13.8
-
-We are 95% certain that the difference in means between songs with high
-energy and low energy is between 11.0892523 and 13.8231666.
-
-### Liveness
-
-    ## # A tibble: 1 x 4
-    ##     max    min     q1    q3
-    ##   <dbl>  <dbl>  <dbl> <dbl>
-    ## 1 0.985 0.0244 0.0975 0.263
-
-    ## # A tibble: 2 x 2
-    ##   livenessHL average
-    ##   <chr>        <dbl>
-    ## 1 High          39.4
-    ## 2 Low           45.4
-
-Songs with high liveness (chances of having been performed live) have a
-mean popularity score that is around 6 lower compared songs with low
-liveness.
-
-    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-
-![](project_files/figure-gfm/liveness_boot-1.png)<!-- -->
-
-    ## # A tibble: 1 x 1
-    ##   lower_bound
-    ##         <dbl>
-    ## 1       -7.49
-
-    ## # A tibble: 1 x 1
-    ##   upper_bound
-    ##         <dbl>
-    ## 1       -4.59
-
-We are 95% certain that the difference in popularity means between songs
-with high liveness and low liveness is between-7.4867366 and -4.5856276.
-
-### Loudness
-
-    ## # A tibble: 1 x 4
-    ##     max   min    q1    q3
-    ##   <dbl> <dbl> <dbl> <dbl>
-    ## 1 0.496 -42.1 -11.5 -5.45
-
-    ## # A tibble: 2 x 2
-    ##   loudnessHL average
-    ##   <chr>        <dbl>
-    ## 1 High          50.9
-    ## 2 Low           31.2
-
-Songs with high loudness have a mean popularity score that is around 18
-higher compared with songs with low
-    loudness.
-
-    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-
-![](project_files/figure-gfm/loudness_boot-1.png)<!-- -->
-
-    ## # A tibble: 1 x 1
-    ##   lower_bound
-    ##         <dbl>
-    ## 1        18.4
-
-    ## # A tibble: 1 x 1
-    ##   upper_bound
-    ##         <dbl>
-    ## 1        20.9
-
-We are 95% certain that the difference in mean popularity scores between
-songs with high loudness and the low loudness is between 18.4464466 and
-20.9211342.
-
-### Acousticness
-
-    ## # A tibble: 1 x 4
-    ##     max        min     q1    q3
-    ##   <dbl>      <dbl>  <dbl> <dbl>
-    ## 1 0.996 0.00000266 0.0307 0.707
-
-    ## # A tibble: 2 x 2
-    ##   acousticnessHL average
-    ##   <chr>            <dbl>
-    ## 1 High              30.4
-    ## 2 Low               50.0
-
-Songs with high acousticness have a mean popularity score that is around
-18 lower compared songs with low
-    acousticness.
-
-    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-
-![](project_files/figure-gfm/acousticness_boot-1.png)<!-- -->
-
-    ## # A tibble: 1 x 1
-    ##   lower_bound
-    ##         <dbl>
-    ## 1       -20.8
-
-    ## # A tibble: 1 x 1
-    ##   upper_bound
-    ##         <dbl>
-    ## 1       -18.4
-
-We are 95% certain that the difference in popularity means between songs
-with high acousticness and the low acousticness is between -20.8286344
-and -18.3915421.
-
 ### Conclusion
 
 Our initial visualizations showed us that continous variables energy,
@@ -913,25 +832,25 @@ more likely to be popular on spotify. Variables that showed the
 strongest relationship with popularity scores were energy, danceability,
 loudness, and acousticness. For categorical variables, we saw that there
 seemed to be a strong relationship between genre and popularity scores,
-and time signatures and popularity scores.
+and time signatures and popularity scores. After seeing which variables
+appeared to influence popularity the most, we used linear regression and
+bootstrapping to help verify which variables actually had a significant
+effect on popularity.
 
 The results of our model selection showed that genre is the strongest
 predictor of popularity scores. The best model with the highest
 R-squared value was the model containing genre, danceability, loudness,
-acousticness, liveness, speechiness, and valence. There were a few
-things that we found surprising in the result of the model selection.
-First, the selected model did not include energy, even though the
-visualizations showed a strong, positive relationship between energy and
-danceability. Second, the selected model included valence, which during
-our initial visualizations did not show a clear relationship with
-popularity scores. Third, the coefficient for acousticness in the model
-was positive, even though our initial visualizations showed that it had
-a negative overall relationship with popularity scores. The rest of the
-results were as expected by the visualizations we had produced.
-Variables that showed a positive relationship with popularity scores in
-the scatter plot had a positive coefficient, and variables that showed a
-negative relationship with popularity scores in the plot had a negative
-coefficient.
+speechiness, and valence. There were a few things that we found
+surprising in the result of the model selection. First, the selected
+model did not include energy, even though the visualizations showed a
+strong, positive relationship between energy and danceability. Second,
+the selected model included valence, which during our initial
+visualizations did not show a clear relationship with popularity scores.
+The rest of the results were as expected by the visualizations we had
+produced. Variables that showed a positive relationship with popularity
+scores in the scatter plot had a positive coefficient, and variables
+that showed a negative relationship with popularity scores in the plot
+had a negative coefficient.
 
 Our permutation and bootstrapping analyses were conducted in order to
 verify the trends noted in our initial visualizations and the model
@@ -956,3 +875,22 @@ selection result revealed that valence is one of the better predictors
 of song popularity, and our permutation result shows that there is
 indeed a significant difference between the popularity scores of high
 and low valence songs.
+
+Overall, genre is the strongest indicator of song popularity. This makes
+logical sense because Spotify’s largest listening population is
+millenials. Millenials generally spend more time listening to pop and
+rap as opposed to classical music. Other patterns may arise because
+certain genres tend to have similar musical properties.
+
+In future research and implementations of this project, it would be
+important to find a data set that has a manageable amount of data
+points. Our group ran into trouble generating a random sample of 5000
+data points. It is possible that if we took a different sample then the
+results may have been differently. This may threatent the reliability of
+our research. Additionally, it would be important to focus on a few
+variables instead of surveying all of the variables to begin with. It
+was difficult to pull together a cohesive storyline when juggling such a
+large amount of variables. We tried to use every statistical method,
+instead of delving further into one or two. This contributed to the
+difficulty of focusing our research. Next time, linear regression models
+and visualizations may be sufficient for our analysis.
