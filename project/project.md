@@ -39,38 +39,37 @@ difficult to analyze in R-studio, a random sample of 5000 data points
 was taken and a new csv file was made.
 
 This project will analyze the variables of a song that correlate with a
-higher song popularity. To find this, we will assign song popularity as
-our dependent response variable and the other variables such as
+higher song popularity. To find this, song popularity is assigned as our
+dependent response variable and the other variables such as
 danceability, energy, and key as our predictor variables. Using
-backwards selection using multiple predictors models, we can determine
-which variables are the best predictors of a song’s popularity score.
-Higher R^2 value for single predictors model or a higher adjusted R^2
-value for multiple predictors can help us determine this. Visualizations
-will be used to show general trends in popularity through various the
-qualitative and quantitative variables. Bootstraps and permutations will
-look at whether significant differences exist between certain variables
-as well as confidence intervals. These different statistical strategies
-all contribute to the research question of what qualities of a song
-contribute to its
+backwards selection on a multiple regression models, the variables that
+are the best predictors of a song’s popularity score can be predicted.
+Visualizations will be used to show general trends in popularity through
+various the qualitative and quantitative variables. Bootstraps and
+permutations will look at whether significant differences exist between
+certain variables. Confidence intervals will also be constructed. These
+different statistical strategies all contribute to the research question
+of what qualities of a song contribute to its
 popularity.
 
 ### Visualization
 
 #### Exploratory Analysis of Relationships Between Different Variables and Song Popularity
 
-In this section, we conducted an exploratory analysis of the
-relationships between different variables and song popularity, in order
-to determine which characteristics of songs are good predictors of the
+In this section, an exploratory analysis of the relationships between
+song popularity and different variables was conducted, in order to
+determine which characteristics of songs are good predictors of the
 popularity of songs.
 
-Below, we used the group\_by() and summarise() functions to find the
-median popularity of songs, based on their genres. Then, we arranged
-this data in decending order and found that the Pop genre has the
+Below, the group\_by() and summarise() functions were used to find the
+median popularity of songs, based on their genres. Then, this data was
+arranged in decending order and it was found that the Pop genre has the
 greatest median song popularity and the movie genre has the lowest
 median song popularity.
+
 ![](project_files/figure-gfm/median-popularity-genre-1.png)<!-- -->
 
-### Boxplots for Categorical Variables
+#### Boxplots for Categorical Variables
 
 This boxplot visualizes the distribution of the genre with the highest
 median popularity (Pop) and the genre with the lowest median popularity
@@ -258,11 +257,11 @@ be strong predictors of what makes a song popular.
 
 After conducting an exploratory analysis through multiple
 visualizations, and examining strong individual relationships between
-song popularity and genre, song popularity and energy, song popularity
-and danceability, song popularity and loudness, and song popularity and
+song popularity and genre, energy, danceability, loudness, and
 speechiness, we wanted to find the best fit model of the variables that
-maximize the popularity of a song. To do this, we used linear regression
-and backwards selection of variables.
+maximize the popularity of a song. To do this, a multiple linear
+regression model was created and backwards selection was utilized to
+determine the best model.
 
 This is the selected multiple linear regression model using backwards
 selection. It looks at the relationship between popularity and different
@@ -667,16 +666,16 @@ the difference in mean popularity scores between the Rap and Pop genres
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1        3.88
+    ## 1        3.81
 
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1        6.98
+    ## 1        6.94
 
 We are 95% certain that the difference in means between the popularity
-score of the rap and pop genres is between 3.8830289 and
-6.984821.
+score of the rap and pop genres is between 3.80924 and
+6.9385278.
 
 ### Estimate of the Popularity Difference between 4/4 Time Signature and Non-4/4 Time Signature
 
@@ -703,7 +702,7 @@ signature.
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1        10.5
+    ## 1        10.4
 
     ## # A tibble: 1 x 1
     ##   upper_bound
@@ -712,7 +711,7 @@ signature.
 
 We are 95% certain that the difference in popularity means between the
 songs with higher (highest 25%) time\_signature and the lower (lowest
-25%) time\_signature is between 10.4679884 and 13.2946947.
+25%) time\_signature is between 10.434142 and 13.3032863.
 
 ### Confidence Intervals for Continous Variables
 
@@ -760,8 +759,8 @@ Songs with high danceability have a mean popularity score that is around
     ## 1        12.2
 
 We are 95% certain that the difference in popularity means between the
-songs with high danceability and low danceability is between 10.1300629
-and 12.1902748.
+songs with high danceability and low danceability is between 10.0601294
+and 12.2313159.
 
 ### Energy
 
@@ -787,7 +786,7 @@ higher compared songs with low
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1        11.3
+    ## 1        11.1
 
     ## # A tibble: 1 x 1
     ##   upper_bound
@@ -795,7 +794,7 @@ higher compared songs with low
     ## 1        14.0
 
 We are 95% certain that the difference in means between songs with high
-energy and low energy is between 11.2551786 and 13.9565121.
+energy and low energy is between 11.0983431 and 13.9722792.
 
 ### Liveness
 
@@ -821,15 +820,15 @@ liveness.
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1       -7.39
+    ## 1       -7.48
 
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1       -4.67
+    ## 1       -4.59
 
 We are 95% certain that the difference in popularity means between songs
-with high liveness and low liveness is between-7.3862458 and -4.6737561.
+with high liveness and low liveness is between-7.4772744 and -4.5902602.
 
 ### Loudness
 
@@ -860,11 +859,11 @@ higher compared with songs with low
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1        20.8
+    ## 1        20.9
 
 We are 95% certain that the difference in mean popularity scores between
-songs with high loudness and the low loudness is between 18.3607257 and
-20.8354886.
+songs with high loudness and the low loudness is between 18.39168 and
+20.9120526.
 
 ### Acousticness
 
@@ -890,7 +889,7 @@ Songs with high acousticness have a mean popularity score that is around
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1       -20.8
+    ## 1       -20.7
 
     ## # A tibble: 1 x 1
     ##   upper_bound
@@ -898,8 +897,8 @@ Songs with high acousticness have a mean popularity score that is around
     ## 1       -18.4
 
 We are 95% certain that the difference in popularity means between songs
-with high acousticness and the low acousticness is between -20.8300631
-and -18.3757403.
+with high acousticness and the low acousticness is between -20.7178315
+and -18.393906.
 
 ### Conclusion
 
