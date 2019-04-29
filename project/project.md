@@ -92,7 +92,9 @@ the data set, three above the median song popularity and three below the
 median song popularity. The movie plot is not normally shaped, as the
 majority of the data lies above the median in the upper quartile, making
 the plot slightly-right skewed. There appears to be three outliers in
-the data set, all of which lie above the median song popularity.
+the data set, all of which lie above the median song
+popularity.
+
 ![](project_files/figure-gfm/plot-selectedgenres-popularity-1.png)<!-- -->
 
 This scatterplot visualizes the relationship between a confidence
@@ -164,6 +166,7 @@ keys of songs. According to the data, the key with the highest median
 song popularity is F\#. Since there is little variability between the
 median popularities of songs, based on the track’s key, key does not
 appear to be a strong predictor of song popularity.
+
 ![](project_files/figure-gfm/plot-key-popularity-1.png)<!-- -->
 
 This scatterplot visualizes the relationship between the likeliness that
@@ -201,6 +204,7 @@ of songs with minor modalities. The major plot is also not normally
 shaped, as the majority of the data lies below the median, making it
 slightly left-skewed. There appears to be one outlier in the major data,
 which falls above the median popularity of songs with major modalities.
+
 ![](project_files/figure-gfm/plot-mode-popularity-1.png)<!-- -->
 
 This scatterplot visualizes the relationship between how exclusively
@@ -236,6 +240,7 @@ data falls below the median song popularity, making it slightly
 left-skewed. There appears to be two outliers above the median song
 popularity of the 4/4 plot, and multiple outliers below the median song
 popularity of the 4/4 plot.
+
 ![](project_files/figure-gfm/timesignature-popularity-1.png)<!-- -->
 
 This scatterplot visualizes the relationship between the musical
@@ -493,11 +498,12 @@ popularity of Rap is 6.15.
     ##    <dbl>
     ## 1      0
 
-The p-value of the difference between Pop and Rap songs is 0, which
-means that we can reject the null hypothesis that there is not a
-difference between the mean popularities of songs that are Pop versus
-Rap. The data provides convincing evidence that there is a difference in
-mean popularities of songs that in the Pop genre versus the Rap genre.
+The p-value of the difference between the popularity of Pop and Rap
+songs is 0%, which is the proportion of observations that are at least
+as extreme or more extreme than the observed difference in means (6.15).
+Since 0% is less than a significance level of 5%, the null hypothesis is
+rejected, meaning that the data provides convincing evidence that there
+is a difference in mean popularities of songs that are Pop versus Rap.
 
 #### Popularity Difference Between High Energy and Low Energy
 
@@ -665,15 +671,15 @@ the difference in mean popularity scores between the Rap and Pop genres
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1        3.91
+    ## 1        3.87
 
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1        6.94
+    ## 1        6.98
 
 We are 95% certain that the difference in means between the popularity
-score of the rap and pop genres is between 3.9118453 and 6.9396844.
+score of the rap and pop genres is between 3.8697591 and 6.9843596.
 
 ### Time Signature
 
@@ -700,16 +706,16 @@ signature.
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1        10.4
+    ## 1        10.5
 
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1        13.3
+    ## 1        13.4
 
 We are 95% certain that the difference in popularity means between the
 songs with higher (highest 25%) time\_signature and the lower (lowest
-25%) time\_signature is between 10.3626823 and 13.3403091.
+25%) time\_signature is between 10.496159 and 13.3522235.
 
 ### Confidence intervals for continous variables
 
@@ -756,8 +762,8 @@ Songs with high danceability have a mean popularity score that is around
     ## 1        12.3
 
 We are 95% certain that the difference in popularity means between the
-songs with high danceability and low danceability is between 10.0689462
-and 12.3067126.
+songs with high danceability and low danceability is between 10.0644013
+and 12.2550735.
 
 ### Energy
 
@@ -791,7 +797,7 @@ higher compared songs with low
     ## 1        13.9
 
 We are 95% certain that the difference in means between songs with high
-energy and low energy is between 11.1744179 and 13.8869729.
+energy and low energy is between 11.2271226 and 13.9134096.
 
 ### Liveness
 
@@ -817,15 +823,15 @@ liveness.
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1       -7.49
+    ## 1       -7.40
 
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1       -4.66
+    ## 1       -4.69
 
 We are 95% certain that the difference in popularity means between songs
-with high liveness and low liveness is between-7.486912 and -4.6582772.
+with high liveness and low liveness is between-7.3992985 and -4.6896393.
 
 ### Loudness
 
@@ -859,8 +865,8 @@ higher compared with songs with low
     ## 1        20.9
 
 We are 95% certain that the difference in mean popularity scores between
-songs with high loudness and the low loudness is between 18.3526001 and
-20.9074858.
+songs with high loudness and the low loudness is between 18.3855711 and
+20.9102096.
 
 ### Acousticness
 
@@ -886,16 +892,16 @@ Songs with high acousticness have a mean popularity score that is around
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1       -20.8
+    ## 1       -20.9
 
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1       -18.4
+    ## 1       -18.3
 
 We are 95% certain that the difference in popularity means between songs
-with high acousticness and the low acousticness is between -20.8428027
-and -18.3584242.
+with high acousticness and the low acousticness is between -20.8781871
+and -18.3312398.
 
 ### Valence
 
@@ -921,15 +927,15 @@ higher compared songs with low
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1        4.63
+    ## 1        4.58
 
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1        7.40
+    ## 1        7.36
 
 We are 95% certain that the difference in means between songs with high
-valence and low valence is between 4.6317943 and 7.3984785.
+valence and low valence is between 4.5777989 and 7.3586448.
 
 ### Conclusion
 
