@@ -29,13 +29,22 @@ songs <- read_csv("/cloud/project/data/songs.csv")
 
 In this section, we conducted an exploratory analysis of the relationships between different variables and song popularity, in order to determine which characteristics of songs are good predictors of the popularity of songs. 
 
-Below, we used the groupby() and summarise() functions to find the median popularity of songs, based on their genres. Then, we arranged this data in decending order and found that the Pop genre has the greatest median song popularity and the movie genre has the lowest median song popularity. 
+Below, we used the group_by() and summarise() functions to find the median popularity of songs, based on their genres. Then, we arranged this data in decending order and found that the Pop genre has the greatest median song popularity and the movie genre has the lowest median song popularity. 
 ```{r median-popularity-genre}
-songs %>%
+songs_avg <- songs %>%
   group_by(genre) %>%
   summarise(medianpop = median(popularity)) %>%
   arrange(desc(medianpop))
+
+ggplot(data = songs_avg, mapping = aes(x=reorder(genre, medianpop), y = medianpop))+
+   geom_bar(stat="identity") + 
+   labs(title = "Median Popularity Scores by Genre",
+   x = "Genre", 
+   y = "Median Popularity Score") + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
+
+### Boxplots for Categorical Variables
 
 This boxplot visualizes the distribution of the genre with the highest median popularity (Pop) and the genre with the lowest median popularity (Movie). The Pop plot is relatively normal shaped, as the median is located in the center of the data. There appears to be three outliers in the data set, two above the median song popularity and one below the median song popularity. The movie plot is not normally shaped, as the majority of the data lies above the median in the upper quartile, making the plot slightly-right skewed. There appears to be four outliers in the data set, all of which lie above the median song popularity.
 
@@ -48,6 +57,70 @@ ggplot(data = songs_genre, mapping = aes(x = genre, y = popularity)) +
   labs(title = "Comparing the Most Popular and Least Popular Genres", x = "Genres", y = "Popularity")
 ```
 
+This box plot visualizes the distribution of song popularity, based on the modality (mode) of the track. According to the visualization, the median popularity of songs with minor modalities is slightly higher than the median popularity of sons with major modalities. The minor plot is not normally shaped, as the majority of the data lies below the median, making the plot slightly left-skewed. There appears to be two outliers in the minor plot, both of which fall below the median song popularity of songs with minor modalities. The major plot is also not normally shaped, as the majority of the data lies below the median, making it slightly left-skewed. There appears to be one outlier in the major data, which falls above the median popularity of songs with major modalities. 
+
+```{r plot-mode-popularity}
+ggplot(data = songs, mapping = aes(x = mode, y = popularity)) +
+  geom_boxplot() +
+  labs(title = "Mode v. Popularity of Songs", x = "Mode", y = "Popularity")
+```
+
+This boxplot visualizes the distribution of song popularity, based on the time-signature of each track. According to the visualization, the median song popularity is greatest when the time signature is 4/4 and the median song popularity is lowest when the time signature is 1/4. The 1/4, 3/4, and 5/4 plots are all relatively normally shaped, as the median song popularities fall in the center of the data plots. There do not appear to be any outliers in the 1/4, 3/4, and 5/4 data plots. The 4/4 data plot, however, is not normally shaped, as the majority of the data falls below the median song popularity, making it slightly left-skewed. There appears to be two outliers above the median song popularity of the 4/4 plot, and multiple outliers below the median song popularity of the 4/4 plot. 
+
+```{r timesignature-popularity}
+ggplot(data = songs, mapping = aes(x = time_signature, y = popularity)) +
+  geom_boxplot() +
+  labs(title = "Time Signature v. Popularity of Songs", x = "Time Signature", y = "Popularity")
+```
+
+This boxplot visualizes the distribution of song popularity based on the keys of songs. According to the data, the key with the highest median song popularity is F#. Since there is little variability between the median popularities of songs, based on the track's key, key does not appear to be a strong predictor of song popularity. 
+
+```{r plot-key-popularity}
+ggplot(data = songs, mapping = aes(x = key, y = popularity)) +
+  geom_boxplot() +
+  labs(title = "Key v. Popularity of Songs", x = "Key", y = "Popularity")
+```
+
+### Scatterplots for Continous Variables
+
+### Variables that Have a Positive Relationship with Popularity
+
+This scatterplot visualizes the relationship between the energy and popularity of Spotify songs. There appears to be a generally direct trend in the data. According to the visualization, as song  energy increases, song popularity increases as well. The relationship between energy and song popularity is non-linear. 
+
+```{r plot-energy-popularity}
+en <- ggplot(data = songs, mapping = aes(x = energy, y = popularity, alpha = 0.0005)) +
+  geom_point() +
+  geom_smooth() +
+  labs(title = "Energy v. Popularity of Songs", x = "Energy", y = "Popularity", alpha = "Transparency")
+en
+```
+
+This scatterplot visualizes the relationship between the how suitable a song is for dancing (danceability) and the popularity of Spotify songs. There appears to be a generally direct trend in the data. According to the visualization  as danceability increases, song popularity increases as well. The relationship between danceability and song popularity is non-linear.
+
+```{r plot-danceability-popularity}
+dan<-ggplot(data = songs, mapping = aes(x = danceability, y = popularity, alpha = 0.0005)) +
+  geom_point() + 
+  geom_smooth() +
+  labs(title = "Danceability v. Popularity of Songs", x = "Danceability", y = "Popularity", alpha = "Transparency")
+dan
+```
+
+Before creating this plot, we filtered the loudness variable to remove extreme outliers from the data and make heavily populated regions of the visualization easier to see. 
+This scatterplot visualizes the relationship between the loudness and popularity of songs. There appears to be a a generally direct trend in the data. According to the visualization, as  loudness increases,song popularity increases as well. The relationship between popularity and loudness is non-linear.
+
+```{r plot-loudness-popularity}
+songs_loudness <- songs %>%
+  filter(loudness >= -30)
+
+loud <-ggplot(data = songs_loudness, mapping = aes(x = loudness, y = popularity, alpha = 0.0005)) +
+  geom_point() + 
+  geom_smooth() +
+  labs(title = "Loudness v. Popularity of Songs", x = "Loudness", y = "Popularity", alpha = "Transparency")
+loud
+```
+
+### Variables that Have a Negative Relationship with Popularity
+
 This scatterplot visualizes the relationship between a confidence measure of whether songs are acoustic (acousticness) and the popularity of Spotify songs. There appears to be a generally indirect trend in the data. According to the data, as acousticness increases, song popularity decreases. The relationship between acousticness and song popularity is non-linear. 
 
 ```{r plot-acousticness-popularity}
@@ -57,23 +130,34 @@ ggplot(data = songs, mapping = aes(x = acousticness, y = popularity, alpha = 0.0
   labs(title = "Acousticness v. Popularity of Songs", x = "Acousticness", y = "Popularity", alpha = "Transparency")
 ```
 
-This scatterplot visualizes the relationship between the energy and popularity of Spotify songs. There appears to be a generally direct trend in the data. According to the visualization, as song  energy increases, song popularity increases as well. The relationship between energy and song popularity is non-linear. 
+This scatterplot visualizes the relationship between whether songs are predicted to be majority instrumental (instrumentalness) and the popularity of songs. There appears to be a generally indirect trend in the data. According to the visualization, as the intrumentalness of a song increases, the popularity of the song decreases. The relationship between instrumentalness and popularity is non-linear.
 
-```{r plot-energy-popularity}
-ggplot(data = songs, mapping = aes(x = energy, y = popularity, alpha = 0.0005)) +
-  geom_point() +
-  geom_smooth() +
-  labs(title = "Energy v. Popularity of Songs", x = "Energy", y = "Popularity", alpha = "Transparency")
-```
-
-This scatterplot visualizes the relationship between the how suitable a song is for dancing (danceability) and the popularity of Spotify songs. There appears to be a generally direct trend in the data. According to the visualization  as danceability increases, song popularity increases as well. The relationship between danceability and song popularity is non-linear.
-
-```{r plot-danceability-popularity}
-ggplot(data = songs, mapping = aes(x = danceability, y = popularity, alpha = 0.0005)) +
+```{r plot-instrumentalness-popularity}
+ggplot(data = songs, mapping = aes(x = instrumentalness, y = popularity, alpha = 0.0005)) +
   geom_point() + 
   geom_smooth() +
-  labs(title = "Danceability v. Popularity of Songs", x = "Danceability", y = "Popularity", alpha = "Transparency")
+  labs(title = "Instrumentalness v. Popularity of Songs", x = "Instrumentalness", y = "Popularity", alpha = "Transparency")
 ```
+
+This scatterplot visualizes the relationship between the likeliness that songs were preformed live (liveness) and the popularity of songs. There appears to be a generally indirect trend in the data. According to the visualization, as the liveness of a song increases, the song popularity decreases. The relationship between popularity and liveness is non-linear. 
+
+```{r plot-liveness-popularity}
+ggplot(data = songs, mapping = aes(x = liveness, y = popularity, alpha = 0.0005)) +
+  geom_point() + 
+  geom_smooth() +
+  labs(title = "Liveness v. Popularity of Songs", x = "Liveness", y = "Popularity", alpha = "Transparency")
+```
+
+This scatterplot visualizes the relationship between how exclusively speech-like songs are (speechiness) and the popularity of songs. There appears to be a generally indirect trend in the data. According to the visualization, as speechiness increases, song popularity decreases. The relationship between popularity and speechiess is non-linear. 
+
+```{r plot-speechiness-popularity}
+ggplot(data = songs, mapping = aes(x = speechiness, y = popularity, alpha = 0.0005)) +
+  geom_point() + 
+  geom_smooth() +
+  labs(title = "Speechiness v. Popularity of Songs", x = "Speechiness", y = "Popularity", alpha = "Transparency")
+```
+
+### Other Variables
 
 Before creating the plot, we used the mutate() function to create a new variable that measures the duration of songs in seconds. We also used the filter() function to remove extreme outliers from the data and make it easier to see observations in the heavily populated regions in the visualization.
 
@@ -90,63 +174,7 @@ ggplot(data = songs_duration, mapping = aes(x = duration_s, y = popularity, alph
   labs(title = "Duration v. Popularity of Songs", x = "Duration", y = "Popularity", alpha = "Transparency")
 ```
 
-This scatterplot visualizes the relationship between whether songs are predicted to be majority instrumental (instrumentalness) and the popularity of songs. There appears to be a generally indirect trend in the data. According to the visualization, as the intrumentalness of a song increases, the popularity of the song decreases. The relationship between instrumentalness and popularity is non-linear.
-
-```{r plot-instrumentalness-popularity}
-ggplot(data = songs, mapping = aes(x = instrumentalness, y = popularity, alpha = 0.0005)) +
-  geom_point() + 
-  geom_smooth() +
-  labs(title = "Instrumentalness v. Popularity of Songs", x = "Instrumentalness", y = "Popularity", alpha = "Transparency")
-```
-
-This boxplot visualizes the distribution of song popularity based on the keys of songs. According to the data, the key with the highest median song popularity is F#. Since there is little variability between the median popularities of songs, based on the track's key, key does not appear to be a strong predictor of song popularity. 
-
-```{r plot-key-popularity}
-ggplot(data = songs, mapping = aes(x = key, y = popularity)) +
-  geom_boxplot() +
-  labs(title = "Key v. Popularity of Songs", x = "Key", y = "Popularity")
-```
-
-This scatterplot visualizes the relationship between the likeliness that songs were preformed live (liveness) and the popularity of songs. There appears to be a generally indirect trend in the data. According to the visualization, as the liveness of a song increases, the song popularity decreases. The relationship between popularity and liveness is non-linear. 
-
-```{r plot-liveness-popularity}
-ggplot(data = songs, mapping = aes(x = liveness, y = popularity, alpha = 0.0005)) +
-  geom_point() + 
-  geom_smooth() +
-  labs(title = "Liveness v. Popularity of Songs", x = "Liveness", y = "Popularity", alpha = "Transparency")
-```
-
-Before creating this plot, we filtered the loudness variable to remove extreme outliers from the data and make heavily populated regions of the visualization easier to see. 
-This scatterplot visualizes the relationship between the loudness and popularity of songs. There appears to be a a generally direct trend in the data. According to the visualization, as  loudness increases,song popularity increases as well. The relationship between popularity and loudness is non-linear.
-
-```{r plot-loudness-popularity}
-songs_loudness <- songs %>%
-  filter(loudness >= -30)
-
-ggplot(data = songs_loudness, mapping = aes(x = loudness, y = popularity, alpha = 0.0005)) +
-  geom_point() + 
-  geom_smooth() +
-  labs(title = "Loudness v. Popularity of Songs", x = "Loudness", y = "Popularity", alpha = "Transparency")
-```
-
-This box plot visualizes the distribution of song popularity, based on the modality (mode) of the track. According to the visualization, the median popularity of songs with minor modalities is slightly higher than the median popularity of sons with major modalities. The minor plot is not normally shaped, as the majority of the data lies below the median, making the plot slightly left-skewed. There appears to be two outliers in the minor plot, both of which fall below the median song popularity of songs with minor modalities. The major plot is also not normally shaped, as the majority of the data lies below the median, making it slightly left-skewed. There appears to be one outlier in the major data, which falls above the median popularity of songs with major modalities. 
-
-```{r plot-mode-popularity}
-ggplot(data = songs, mapping = aes(x = mode, y = popularity)) +
-  geom_boxplot() +
-  labs(title = "Mode v. Popularity of Songs", x = "Mode", y = "Popularity")
-```
-
-This scatterplot visualizes the relationship between how exclusively speech-like songs are (speechiness) and the popularity of songs. There appears to be a generally indirect trend in the data. According to the visualization, as speechiness increases, song popularity decreases. The relationship between popularity and speechiess is non-linear. 
-
-```{r plot-speechiness-popularity}
-ggplot(data = songs, mapping = aes(x = speechiness, y = popularity, alpha = 0.0005)) +
-  geom_point() + 
-  geom_smooth() +
-  labs(title = "Speechiness v. Popularity of Songs", x = "Speechiness", y = "Popularity", alpha = "Transparency")
-```
-
-This scatterplot visualizes the relationship between the tempo and popularity of songs. There appears to be a generally direct trend in the data. According to the data, as tempo increases, popularity increases as well. The relationship between popularity and liveness is non-linear. 
+This scatterplot visualizes the relationship between the tempo and popularity of songs. There does not appear to be a clear relationship shown in the data.
 
 ```{r plot-tempo-popularity}
 ggplot(data = songs, mapping = aes(x = tempo, y = popularity, alpha = 0.0005)) +
@@ -155,15 +183,7 @@ ggplot(data = songs, mapping = aes(x = tempo, y = popularity, alpha = 0.0005)) +
   labs(title = "Tempo v. Popularity of Songs", x = "Tempo", y = "Popularity", alpha = "Transparency")
 ```
 
-This boxplot visualizes the distribution of song popularity, based on the time-signature of each track. According to the visualization, the median song popularity is greatest when the time signature is 4/4 and the median song popularity is lowest when the time signature is 1/4. The 1/4, 3/4, and 5/4 plots are all relatively normally shaped, as the median song popularities fall in the center of the data plots. There do not appear to be any outliers in the 1/4, 3/4, and 5/4 data plots. The 4/4 data plot, however, is not normally shaped, as the majority of the data falls below the median song popularity, making it slightly left-skewed. There appears to be two outliers above the median song popularity of the 4/4 plot, and multiple outliers below the median song popularity of the 4/4 plot. 
-
-```{r timesignature-popularity}
-ggplot(data = songs, mapping = aes(x = time_signature, y = popularity)) +
-  geom_boxplot() +
-  labs(title = "Time Signature v. Popularity of Songs", x = "Time Signature", y = "Popularity")
-```
-
-This scatterplot visualizes the relationship between the musical positiveness (valence) and the popularity of songs. Based on the visualization, while popularity appears to increase slightly as valence increases, there appears to be a generally constant relationship between the valence and popularity. The relationship between popularity and liveness is non-linear.
+This scatterplot visualizes the relationship between the musical positiveness (valence) and the popularity of songs. Based on the visualization, while popularity appears to increase slightly as valence increases, there appears to be a generally constant relationship between the valence and popularity.
 
 ```{r plot-valence-popularity}
 ggplot(data = songs, mapping = aes(x = valence, y = popularity, alpha = 0.0005)) +
@@ -229,7 +249,7 @@ Through experimenting with different multiple regression models, it is found tha
 
 When all variables have a value of 0, then it is expected that a song's populariy is 9.15. One example of how a variable influences the popularity is danceabiliy If a song's acoustic score increases by 1 then popularity will increases by 3.28 points. It can be seen that popularity is increased most when the genre is either pop or rap. Popularity is, on average, higher by 56.81 if a song is under the rap genre than any of the other genres, all else held constant. Popularity is, on average, 51.31 points higher if the song is a rap song as opposed to any other song, all else held constant. This makes sense because the two most popular genres are rap and pop. This is in contras to the movie genre where popularity is only 1.94 points higher on average if it is under the movie genre compared to any other genre, all else held constant. It is interesting to note that no genres cause the popularity to decrease. 
 
-The adjusted R squared value for this model is 0.71, which means that roughly 71.0% of the variability in a song's popularity can be explained by the different variables in the multiple regression model. This indicates that there is a strong positive overall realtionship between a song's popularity and the different variables related to a song. When looking at individual r-value models, it can be seen that genre is the variable that contributes to the high r-value. Without it, the selected model r-value is .30. 
+The adjusted R squared value for this model is 0.71, which means that roughly 71.0% of the variability in a song's popularity can be explained by the different variables in the multiple regression model. This indicates that there is a strong positive overall relationship between a song's popularity and the different variables related to a song. When looking at individual r-value models, it can be seen that genre is the variable that contributes to the high r-value. Without it, the selected model r-value is .30. 
 
 ### Bootstrapping
 ```{r nrep}
@@ -474,11 +494,12 @@ null_dist_mode %>%
 
 The p-value of the difference between major and minor is 0, which means we can reject the null hypothesis that there is not a difference between the mean popularities of songs that are in a major or minor mode. The data provides convincing evidence that there is a difference in mean popularities of songs that are in a major mode versus a minor mode.  
 
-### Bootstrapping to find confidence intervals
+### Bootstrapping to find Confidence Intervals
+### Confidence Intervals for Categorical Variables
 
 In this section, bootstrapping was used to determine the confidence intervals for the difference in mean popularity scores between different categories within variables. For example, the confidence interval for the difference in mean popularity scores between the Rap and Pop genres (the most popular 2 genres) were calculated. 
 
-### Genre 
+### Estimate of the Popularity Difference between Rap and Pop Genres 
 
 ```{r rap_pop}
 
@@ -503,9 +524,9 @@ upper_bound
 ```
 We are 95% certain that the difference in means between the popularity score of the rap and pop genres is between `r lower_bound` and `r upper_bound`. 
 
-### Time Signature
+### Estimate of the Popularity Difference between 4/4 Time Signature and Non-4/4 Time Signature
 
-From the boxplot in the visualizations section, we can see that the 4/4 time signature had a higher average population score than the rest of the time signatures. Thus, we decided to construct a confidence interval estimating the difference in popularity means between songs with a 4/4 time signature and songs that do not use a 4/4 time signature. 
+From the boxplot in the visualizations section, we can see that the 4/4 time signature had a higher average popularity score than the rest of the time signatures. Thus, we decided to construct a confidence interval estimating the difference in popularity means between songs with a 4/4 time signature and songs that do not use a 4/4 time signature. 
 
 ```{r time_signature_new}
    
@@ -541,9 +562,9 @@ upper_bound0
 ```
 We are 95% certain that the difference in popularity means between the songs with higher (highest 25%) time_signature and the lower (lowest 25%) time_signature is between `r lower_bound0` and `r upper_bound0`.
 
-### Confidence intervals for continous variables
+### Confidence Intervals for Continous Variables
 
-The following variables were selected because the visualizations showed that they had the strongest linear relationships with popularity scores. The variables that were chosen are: danceability, energy, liveness, loudness, and acousticness. 
+The following variables were selected because the scatterplot visualizations mapping them against popularity scores showed there was a clear relationship between the variables and the scores. The variables that were chosen are: danceability, energy, liveness, loudness, and acousticness. 
 
 For each of these variables, we took the highest 25% of the data ("High" danceability, energy, liveness etc.) and the lowest 25% of the data ("Low" danceability, energy, liveness etc.) and conducted a 95% confidence interval test for the difference in mean popularities between the two. 
 
@@ -755,50 +776,17 @@ upper_bound5
 ```
 We are 95% certain that the difference in popularity means between songs with high  acousticness and the low acousticness is between `r lower_bound5` and `r upper_bound5`.
 
-### Valence
-
-```{r valence_info}
-songs %>%
-   summarise(max = max(valence), min = min(valence), q1 = quantile(valence, probs = 0.25), q3 = quantile(valence, probs = 0.75))
-
-```
-
-```{r valence_new}
-   
-valence_songs <- songs %>%
-   mutate(valenceHL = case_when(
-    valence >= 0.642 ~ "High",
-    valence <= 0.23 ~ "Low")) %>%
-   filter(! is.na(valenceHL))
-
-valence_songs %>%
-   group_by(valenceHL) %>%
-   summarise(average = mean(popularity))
-```
-Songs with high valence have a mean popularity score that is around 5 higher compared songs with low valence. 
-
-```{r valence_boot}
-
-boot_valence <- valence_songs %>%
-   specify(response = popularity, explanatory = valenceHL) %>%
-   generate(reps = 1000, type = "bootstrap") %>%
-   calculate(stat = "diff in means", order = c("High", "Low"))
-
-ggplot(data = boot_valence, mapping = aes(x=stat)) + geom_histogram() + labs(title = "Bootstrap Distribution of Difference in Mean Popularity", subtitle = "High - Low", x = "Difference in Popularity")
-```
-
-```{r conf_valence}
-lower_bound6 <- boot_valence %>%
-  summarize(lower_bound = quantile(stat, 0.025))
-lower_bound6
-upper_bound6 <- boot_valence %>%
-  summarize(upper_bound = quantile(stat, 0.975))
-upper_bound6
-```
-We are 95% certain that the difference in means between songs with high  valence and low valence is between `r lower_bound6` and `r upper_bound6`.
-
 ### Conclusion
 
-Your project goes here! Before you submit, make sure your chunks are turned off with `echo = FALSE`. 
+Our initial visualizations showed us that continous variables energy, danceability, and loudness had a positive relationship with popularity, suggesting that spotify songs with high energy, danceability, and loudness are more likely to be popular. We also saw that the variables acousticness, instrumentalness, speechiness, and liveness tended to have a negative relationship with popularity scores, suggesting that songs with low acousticness, instrumentalness, speechiness and liveness are more likely to be popular on spotify. Variables that showed the strongest relationship with popularity scores were energy, danceability, loudness, and acousticness. For categorical variables, we saw that there seemed to be a strong relationship between genre and popularity scores, and time signatures and popularity scores. 
 
-You can add sections as you see fit. Make sure you have a section called Introduction at the beginning and a section called Conclusion at the end. The rest is up to you!
+The results of our model selection showed that genre is the strongest predictor of popularity scores. The best model with the highest R-squared value was the model containing genre, danceability, loudness, acousticness, liveness, speechiness, and valence. There were a few things that we found surprising in the result of the model selection. First, the selected model did not include energy, even though the visualizations showed a strong, positive relationship between energy and danceability. Second, the selected model included valence, which during our initial visualizations did not show a clear relationship with popularity scores. Third, the coefficient for acousticness in the model was positive, even though our initial visualizations showed that it had a negative overall relationship with popularity scores. The rest of the results were as expected by the visualizations we had produced. Variables that showed a positive relationship with popularity scores in the scatter plot had a positive coefficient, and variables that showed a negative relationship with popularity scores in the plot had a negative coefficient. 
+
+Our permutation and bootstrapping analyses were conducted in order to verify the trends noted in our initial visualizations and the model selection result. The permutation tests showed that there is indeed a significant difference in popularity scores between the variables in the selected model (danceability, speechiness, and valence). We also observed a significant difference in popularity scores between the rap and pop genres and the major and minor modes. 
+
+^^ lack consistency in the variables we investigated.. 
+
+acousticness??? <- The selected model coefficient indicates that acousticness has a positive relationship with song popularity, whereas our visualizations and confidence intervals show that low acousticness results in a lower popularity score. These inconsistencies in our results reveal that acousticness is most likely not a good predictor of spotify song popularity. 
+
+valence <- Even though the visualizations showed that there seemed to be no clear relationship between valence and song popularity, the model selection result revealed that valence is one of the better predictors of song popularity, and our permutation result shows that there is indeed a significant difference between the popularity scores of high and low valence songs. 
+
