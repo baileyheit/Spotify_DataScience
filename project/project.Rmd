@@ -38,7 +38,7 @@ songs_avg <- songs %>%
   arrange(desc(medianpop))
 
 ggplot(data = songs_avg, mapping = aes(x=reorder(genre, medianpop), y = medianpop))+
-   geom_bar(stat="identity", fill = "blue") + 
+   geom_bar(stat="identity", fill = "light green") + 
    labs(title = "Median Popularity Scores by Genre",
    x = "Genre", 
    y = "Median Popularity Score") + 
@@ -53,8 +53,8 @@ This boxplot visualizes the distribution of the genre with the highest median po
 songs_genre <- songs %>%
   filter(genre == "Pop"| genre == "Movie")
 
-ggplot(data = songs_genre, mapping = aes(x = genre, y = popularity, fill = genre)) +
-  geom_boxplot() +
+ggplot(data = songs_genre, mapping = aes(x = genre, y = popularity)) +
+  geom_boxplot(fill = "light green") +
   labs(title = "Comparing the Most Popular and Least Popular Genres", x = "Genres", y = "Popularity")+
   theme_light()
 ```

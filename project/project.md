@@ -666,16 +666,16 @@ the difference in mean popularity scores between the Rap and Pop genres
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1        3.81
+    ## 1        3.82
 
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1        6.94
+    ## 1        7.04
 
 We are 95% certain that the difference in means between the popularity
-score of the rap and pop genres is between 3.80924 and
-6.9385278.
+score of the rap and pop genres is between 3.8214262 and
+7.0390146.
 
 ### Estimate of the Popularity Difference between 4/4 Time Signature and Non-4/4 Time Signature
 
@@ -711,7 +711,7 @@ signature.
 
 We are 95% certain that the difference in popularity means between the
 songs with higher (highest 25%) time\_signature and the lower (lowest
-25%) time\_signature is between 10.434142 and 13.3032863.
+25%) time\_signature is between 10.4188576 and 13.2857593.
 
 ### Confidence Intervals for Continous Variables
 
@@ -751,16 +751,16 @@ Songs with high danceability have a mean popularity score that is around
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1        10.1
+    ## 1       10.00
 
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1        12.2
+    ## 1        12.3
 
 We are 95% certain that the difference in popularity means between the
-songs with high danceability and low danceability is between 10.0601294
-and 12.2313159.
+songs with high danceability and low danceability is between 9.9969454
+and 12.295439.
 
 ### Energy
 
@@ -791,10 +791,10 @@ higher compared songs with low
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1        14.0
+    ## 1        13.8
 
 We are 95% certain that the difference in means between songs with high
-energy and low energy is between 11.0983431 and 13.9722792.
+energy and low energy is between 11.0892523 and 13.8231666.
 
 ### Liveness
 
@@ -820,7 +820,7 @@ liveness.
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1       -7.48
+    ## 1       -7.49
 
     ## # A tibble: 1 x 1
     ##   upper_bound
@@ -828,7 +828,7 @@ liveness.
     ## 1       -4.59
 
 We are 95% certain that the difference in popularity means between songs
-with high liveness and low liveness is between-7.4772744 and -4.5902602.
+with high liveness and low liveness is between-7.4867366 and -4.5856276.
 
 ### Loudness
 
@@ -862,8 +862,8 @@ higher compared with songs with low
     ## 1        20.9
 
 We are 95% certain that the difference in mean popularity scores between
-songs with high loudness and the low loudness is between 18.39168 and
-20.9120526.
+songs with high loudness and the low loudness is between 18.4464466 and
+20.9211342.
 
 ### Acousticness
 
@@ -889,7 +889,7 @@ Songs with high acousticness have a mean popularity score that is around
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1       -20.7
+    ## 1       -20.8
 
     ## # A tibble: 1 x 1
     ##   upper_bound
@@ -897,8 +897,8 @@ Songs with high acousticness have a mean popularity score that is around
     ## 1       -18.4
 
 We are 95% certain that the difference in popularity means between songs
-with high acousticness and the low acousticness is between -20.7178315
-and -18.393906.
+with high acousticness and the low acousticness is between -20.8286344
+and -18.3915421.
 
 ### Conclusion
 
