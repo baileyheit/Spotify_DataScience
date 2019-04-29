@@ -242,16 +242,16 @@ the Rap and Pop genres (the most popular 2 genres) were
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1        3.91
+    ## 1        3.85
 
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1        6.98
+    ## 1        7.06
 
 We are 95% certain that the difference in means between the popularity
-score of the rap and pop genres is between 3.9103713 and
-6.9767954.
+score of the rap and pop genres is between 3.8508453 and
+7.0627042.
 
 ##### Estimate of the Popularity Difference between 4/4 Time Signature and Non-4/4 Time Signature
 
@@ -278,16 +278,16 @@ signature.
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1        10.5
+    ## 1        10.4
 
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1        13.3
+    ## 1        13.4
 
 We are 95% certain that the difference in popularity means between the
 songs with higher (highest 25%) time\_signature and the lower (lowest
-25%) time\_signature is between 10.481723 and 13.3173699.
+25%) time\_signature is between 10.4284512 and 13.3655711.
 
 #### Confidence Intervals for Continous Variables
 
@@ -327,16 +327,16 @@ Songs with high danceability have a mean popularity score that is around
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1        10.1
+    ## 1        10.0
 
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1        12.3
+    ## 1        12.2
 
 We are 95% certain that the difference in popularity means between the
-songs with high danceability and low danceability is between 10.0776533
-and 12.3168175.
+songs with high danceability and low danceability is between 10.0366084
+and 12.202372.
 
 ##### Energy
 
@@ -367,10 +367,10 @@ higher compared songs with low
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1        13.9
+    ## 1        13.8
 
 We are 95% certain that the difference in means between songs with high
-energy and low energy is between 11.2168506 and 13.9250608.
+energy and low energy is between 11.2184815 and 13.8136991.
 
 ##### Loudness
 
@@ -404,8 +404,8 @@ higher compared with songs with low
     ## 1        20.9
 
 We are 95% certain that the difference in mean popularity scores between
-songs with high loudness and the low loudness is between 18.377511 and
-20.9198295.
+songs with high loudness and the low loudness is between 18.3520663 and
+20.922551.
 
 ##### Acousticness
 
@@ -436,11 +436,11 @@ Songs with high acousticness have a mean popularity score that is around
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1       -18.3
+    ## 1       -18.4
 
 We are 95% certain that the difference in popularity means between songs
-with high acousticness and the low acousticness is between -20.8562053
-and -18.3364854.
+with high acousticness and the low acousticness is between -20.9084388
+and -18.4460568.
 
 ### Permutation Analysis
 
@@ -566,6 +566,11 @@ that have high speechiness and low speechiness
 The observed mean popularity difference between songs with high and low
 speechiness is 23.09.
 ![](project_files/figure-gfm/null-dist-speech-1.png)<!-- -->
+
+    ## # A tibble: 1 x 1
+    ##   pvalue
+    ##    <dbl>
+    ## 1      0
 
 The p-value of the difference between high and low speechiness is 0,
 which means we can reject the null hypothesis that there is not a
@@ -845,6 +850,14 @@ appeared to influence popularity the most, we used linear regression and
 bootstrapping to help verify which variables actually had a significant
 effect on popularity.
 
+Our permutation and bootstrapping analyses were conducted in order to
+verify the trends noted in our initial visualizations and the model
+selection result. The permutation tests showed that there is indeed a
+significant difference in popularity scores between the variables in the
+selected model (danceability, speechiness, and valence). We also
+observed a significant difference in popularity scores between the rap
+and pop genres and the major and minor modes.
+
 The results of our model selection showed that genre is the strongest
 predictor of popularity scores. The best model with the highest
 R-squared value was the model containing genre, danceability, loudness,
@@ -860,29 +873,17 @@ scores in the scatter plot had a positive coefficient, and variables
 that showed a negative relationship with popularity scores in the plot
 had a negative coefficient.
 
-Our permutation and bootstrapping analyses were conducted in order to
-verify the trends noted in our initial visualizations and the model
-selection result. The permutation tests showed that there is indeed a
-significant difference in popularity scores between the variables in the
-selected model (danceability, speechiness, and valence). We also
-observed a significant difference in popularity scores between the rap
-and pop genres and the major and minor modes.
-
-^^ lack consistency in the variables we investigated..
-
-acousticness??? \<- The selected model coefficient indicates that
-acousticness has a positive relationship with song popularity, whereas
-our visualizations and confidence intervals show that low acousticness
+In addition, the selected model coefficient indicates that acousticness
+has a positive relationship with song popularity, whereas our
+visualizations and confidence intervals show that low acousticness
 results in a lower popularity score. These inconsistencies in our
 results reveal that acousticness is most likely not a good predictor of
-spotify song popularity.
-
-valence \<- Even though the visualizations showed that there seemed to
-be no clear relationship between valence and song popularity, the model
-selection result revealed that valence is one of the better predictors
-of song popularity, and our permutation result shows that there is
-indeed a significant difference between the popularity scores of high
-and low valence songs.
+spotify song popularity. Aso, even though the visualizations showed that
+there seemed to be no clear relationship between valence and song
+popularity, the model selection result revealed that valence is one of
+the better predictors of song popularity, and our permutation result
+shows that there is indeed a significant difference between the
+popularity scores of high and low valence songs.
 
 Overall, genre is the strongest indicator of song popularity. This makes
 logical sense because Spotify’s largest listening population is
@@ -892,13 +893,18 @@ certain genres tend to have similar musical properties.
 
 In future research and implementations of this project, it would be
 important to find a data set that has a manageable amount of data
-points. Our group ran into trouble generating a random sample of 5000
-data points. It is possible that if we took a different sample then the
-results may have been differently. This may threatent the reliability of
-our research. Additionally, it would be important to focus on a few
-variables instead of surveying all of the variables to begin with. It
-was difficult to pull together a cohesive storyline when juggling such a
-large amount of variables. We tried to use every statistical method,
-instead of delving further into one or two. This contributed to the
-difficulty of focusing our research. Next time, linear regression models
-and visualizations may be sufficient for our analysis.
+points. Because our original data set had 100,000 data points, our group
+decided to generate a random sample of 5000 data points. However, with
+this, we ran into trouble saving a consistent set of 5000 data points,
+and our random selection may compromise the randomness and integrity of
+the original data set. It is possible that if we generated a new random
+sample from the same dataset, our results would be different, which may
+threaten the reliability of our research. Additionally, it would be
+important to focus on a few variables instead of surveying all of the
+variables to begin with. It was difficult to pull together a cohesive
+storyline when juggling such a large amount of variables. We tried to
+use every statistical method, instead of delving further into one or
+two. This contributed to the difficulty of focusing our research, as
+well as contridicting results from different methods of analysis. Next
+time, linear regression models and visualizations may be sufficient for
+our analysis.
