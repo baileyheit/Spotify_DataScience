@@ -5,7 +5,7 @@ date: "3/21/18"
 output: github_document
 ---
 
-```{r setup, include=FALSE, echo = FALSE}
+```{r setup, include=FALSE, echo = FALSE, message=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(infer)
@@ -13,7 +13,7 @@ library(broom)
 install.packages("cowplot", repos="http://cran.r-project.org/")
 ```
 
-```{r load-data, echo = FALSE}
+```{r load-data, echo = FALSE, message = FALSE}
 songs <- read_csv("/cloud/project/data/songs.csv")
 ```
 

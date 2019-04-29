@@ -3,28 +3,6 @@ Project Proposal: What Makes a Song Popular on Spotify?
 CCBK
 3/21/18
 
-    ## Parsed with column specification:
-    ## cols(
-    ##   genre = col_character(),
-    ##   artist_name = col_character(),
-    ##   track_name = col_character(),
-    ##   track_id = col_character(),
-    ##   popularity = col_double(),
-    ##   acousticness = col_double(),
-    ##   danceability = col_double(),
-    ##   duration_ms = col_double(),
-    ##   energy = col_double(),
-    ##   instrumentalness = col_double(),
-    ##   key = col_character(),
-    ##   liveness = col_double(),
-    ##   loudness = col_double(),
-    ##   mode = col_character(),
-    ##   speechiness = col_double(),
-    ##   tempo = col_double(),
-    ##   time_signature = col_character(),
-    ##   valence = col_double()
-    ## )
-
 ### Introduction
 
 The goal of our project is to determine the qualities of a song that
@@ -242,16 +220,16 @@ the Rap and Pop genres (the most popular 2 genres) were
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1        3.79
+    ## 1        3.74
 
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1        7.11
+    ## 1        7.06
 
 We are 95% certain that the difference in means between the popularity
-score of the rap and pop genres is between 3.7893877 and
-7.1095839.
+score of the rap and pop genres is between 3.7352927 and
+7.0617716.
 
 ##### Estimate of the Popularity Difference between 4/4 Time Signature and Non-4/4 Time Signature
 
@@ -283,11 +261,11 @@ signature.
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1        13.3
+    ## 1        13.4
 
 We are 95% certain that the difference in popularity means between the
 songs with higher (highest 25%) time\_signature and the lower (lowest
-25%) time\_signature is between 10.4625676 and 13.3066937.
+25%) time\_signature is between 10.4998313 and 13.3559074.
 
 #### Confidence Intervals for Continous Variables
 
@@ -327,16 +305,16 @@ Songs with high danceability have a mean popularity score that is around
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1        10.1
+    ## 1        10.0
 
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1        12.1
+    ## 1        12.2
 
 We are 95% certain that the difference in popularity means between the
-songs with high danceability and low danceability is between 10.055322
-and 12.1061423.
+songs with high danceability and low danceability is between 10.0226991
+and 12.2221103.
 
 ##### Energy
 
@@ -370,7 +348,7 @@ higher compared songs with low
     ## 1        14.0
 
 We are 95% certain that the difference in means between songs with high
-energy and low energy is between 11.2331271 and 14.0031044.
+energy and low energy is between 11.2036999 and 14.0499756.
 
 ##### Loudness
 
@@ -396,7 +374,7 @@ higher compared with songs with low
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1        18.4
+    ## 1        18.3
 
     ## # A tibble: 1 x 1
     ##   upper_bound
@@ -404,8 +382,8 @@ higher compared with songs with low
     ## 1        20.9
 
 We are 95% certain that the difference in mean popularity scores between
-songs with high loudness and the low loudness is between 18.420685 and
-20.8742337.
+songs with high loudness and the low loudness is between 18.3165483 and
+20.9230737.
 
 ##### Acousticness
 
@@ -431,16 +409,16 @@ Songs with high acousticness have a mean popularity score that is around
     ## # A tibble: 1 x 1
     ##   lower_bound
     ##         <dbl>
-    ## 1       -20.7
+    ## 1       -20.9
 
     ## # A tibble: 1 x 1
     ##   upper_bound
     ##         <dbl>
-    ## 1       -18.3
+    ## 1       -18.4
 
 We are 95% certain that the difference in popularity means between songs
-with high acousticness and the low acousticness is between -20.7497461
-and -18.3158881.
+with high acousticness and the low acousticness is between -20.8779025
+and -18.3932181.
 
 ### Permutation Analysis
 
