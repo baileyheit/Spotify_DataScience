@@ -33,15 +33,16 @@ $ duration_ms      Duration of song in miliseconds
 $ loudness         The overall loudness of the track in decibels.
 $ speechiness      A measure of how exclusively speech-like the track is from 0 to 1.0
 $ tempo            The overall estimate beats per minute of the track.
-
-Discrete Numerical Variables
-$ popularity       The popularity of the track from 0 to 100 based on recent stream counts
 $ acousticness     A confidence measure from 0 to 1.0 of whether the song is acoustic
 $ danceability     How suitable a song is for dancing from 0 to 1.0 
 $ liveness         The likelihood that the track was performed live from 0 to 1.0
 $ valence          A measure from 0.0 to 1.0 describing the musical positiveness 
 $ instrumentalness A confidence measure from 0 to 1.0 on whether song is instrumental
 $ energy           A song’s energy from 0.0 to 1.0 considering various factors
+
+Discrete Numerical Variables
+$ popularity       The popularity of the track from 0 to 100 based on recent stream counts
+
 
 
 
