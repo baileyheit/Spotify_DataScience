@@ -37,7 +37,7 @@ songs %>%
   arrange(desc(medianpop))
 ```
 
-This boxplot visualizes the distribution of the genre with the highest median popularity (Pop) and the genre with the lowest median popularity (Movie). The Pop plot is relatively normal shaped, as the median is located in the center of the data. There appears to be six outliers in the data set, three above the median song popularity and three below the median song popularity. The movie plot is not normally shaped, as the majority of the data lies above the median in the upper quartile, making the plot slightly-right skewed. There appears to be three outliers in the data set, all of which lie above the median song popularity.
+This boxplot visualizes the distribution of the genre with the highest median popularity (Pop) and the genre with the lowest median popularity (Movie). The Pop plot is relatively normal shaped, as the median is located in the center of the data. There appears to be three outliers in the data set, two above the median song popularity and one below the median song popularity. The movie plot is not normally shaped, as the majority of the data lies above the median in the upper quartile, making the plot slightly-right skewed. There appears to be four outliers in the data set, all of which lie above the median song popularity.
 
 ```{r plot-selectedgenres-popularity}
 songs_genre <- songs %>%
@@ -160,7 +160,7 @@ This boxplot visualizes the distribution of song popularity, based on the time-s
 ```{r timesignature-popularity}
 ggplot(data = songs, mapping = aes(x = time_signature, y = popularity)) +
   geom_boxplot() +
-  labs(title = "Time Signature v. Popularity of Songs", x = "Time Signature", y = "Popularity", alpha = "Transparency")
+  labs(title = "Time Signature v. Popularity of Songs", x = "Time Signature", y = "Popularity")
 ```
 
 This scatterplot visualizes the relationship between the musical positiveness (valence) and the popularity of songs. Based on the visualization, while popularity appears to increase slightly as valence increases, there appears to be a generally constant relationship between the valence and popularity. The relationship between popularity and liveness is non-linear.
