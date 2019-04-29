@@ -37,8 +37,7 @@ songs %>%
   arrange(desc(medianpop))
 ```
 
-This boxplot visualizes the distribution of the genre with the highest median popularity (Pop) and the genre with the lowest median popularity (Movie). The Pop plot is relatively normal shaped, as the median is located in the center of the data. There appears to be six outliers in the data set, three above the median song popularity and three below the median song popularity. The movie plot is not normally shaped, as the majority of the data lies above the median in the upper quartile, making the plot slightly-right skewed. There appears to be three outliers in the data set, all of which lie above the median song popularity.
-
+This boxplot visualizes the distribution of the genre with the highest median popularity (Pop) and the genre with the lowest median popularity (Movie). The Pop plot is relatively normal shaped, as the median is located in the center of the data. There appears to be six outliers in the data set, three above the median song popularity and three below the median song popularity. The movie plot is not normally shaped, as the majority of the data lies above the median in the upper quartile, making the plot slightly-right skewed. There appears to be three outliers in the data set, all of which lie above the median song popularity. 
 ```{r plot-selectedgenres-popularity}
 songs_genre <- songs %>%
   filter(genre == "Pop"| genre == "Movie")
@@ -51,52 +50,51 @@ ggplot(data = songs_genre, mapping = aes(x = genre, y = popularity)) +
 This scatterplot visualizes the relationship between a confidence measure of whether songs are acoustic (acousticness) and the popularity of Spotify songs. There appears to be a generally indirect trend in the data. According to the data, as acousticness increases, song popularity decreases. The relationship between acousticness and song popularity is non-linear. 
 
 ```{r plot-acousticness-popularity}
-ggplot(data = songs, mapping = aes(x = acousticness, y = popularity, alpha = 0.005)) +
-  geom_point() + 
+ggplot(data = songs, mapping = aes(x = acousticness, y = popularity)) +
+  geom_point(alpha = 0.7, color = "gray") + 
   geom_smooth() +
-  labs(title = "Acousticness v. Popularity of Songs", x = "Acousticness", y = "Popularity", alpha = "Transparency")
+  labs(title = "Relationship between Acousticness and Song Popularity", x = "Acousticness", y = "Popularity")
 ```
 
 This scatterplot visualizes the relationship between the energy and popularity of Spotify songs. There appears to be a generally direct trend in the data. According to the visualization, as song  energy increases, song popularity increases as well. The relationship between energy and song popularity is non-linear. 
-
 ```{r plot-energy-popularity}
-ggplot(data = songs, mapping = aes(x = energy, y = popularity, alpha = 0.0005)) +
-  geom_point() +
+ggplot(data = songs, mapping = aes(x = energy, y = popularity)) +
+  geom_point(color = "gray", alpha = 0.7) +
   geom_smooth() +
-  labs(title = "Energy v. Popularity of Songs", x = "Energy", y = "Popularity", alpha = "Transparency")
+  labs(title = "Relationship Between Energy and Song Popularity", x = "Energy", y = "Popularity") + 
+  theme_light()
 ```
 
-This scatterplot visualizes the relationship between the how suitable a song is for dancing (danceability) and the popularity of Spotify songs. There appears to be a generally direct trend in the data. According to the visualization  as danceability increases, song popularity increases as well. The relationship between danceability and song popularity is non-linear.
-
+This scatterplot visualizes the relationship between the how suitable a song is for dancing (danceability) and the popularity of Spotify songs. There appears to be a generally direct trend in the data. According to the visualization  as danceability increases, song popularity increases as well. The relationship between danceability and song popularity is non-linear. 
 ```{r plot-danceability-popularity}
-ggplot(data = songs, mapping = aes(x = danceability, y = popularity, alpha = 0.0005)) +
-  geom_point() + 
+ggplot(data = songs, mapping = aes(x = danceability, y = popularity)) +
+  geom_point(alpha = 0.7, color = "gray") + 
   geom_smooth() +
-  labs(title = "Danceability v. Popularity of Songs", x = "Danceability", y = "Popularity", alpha = "Transparency")
+  labs(title = "Relationship between Danceability and Song Popularity", x = "Danceability", y = "Popularity") +
+  theme_light()
 ```
 
 Before creating the plot, we used the mutate() function to create a new variable that measures the duration of songs in seconds. We also used the filter() function to remove extreme outliers from the data and make it easier to see observations in the heavily populated regions in the visualization.
 
 This scatterplot visualizes the relationship between the duration and popularity of songs on Spotify. According to the data, songs with durations of about 200 seconds (3.33 minutes) appear to have the highest average popularity. The relationship between song duration and popularity is non-linear. The majority of songs are under 600 seconds (10 minutes) long. Since the majority of Spotify songs are similar in length, duration does not appear to be a strong predictor of song popularity. 
-
 ```{r plotg-duration-popularity}
 songs_duration <- songs %>%
   mutate(duration_s = duration_ms/1000) %>%
   filter(duration_s <= 800)
 
-ggplot(data = songs_duration, mapping = aes(x = duration_s, y = popularity, alpha = 0.0005)) +
-  geom_point() + 
+ggplot(data = songs_duration, mapping = aes(x = duration_s, y = popularity)) +
+  geom_point(color = "dark gray", alpha = 0.7) + 
   geom_smooth() +
-  labs(title = "Duration v. Popularity of Songs", x = "Duration", y = "Popularity", alpha = "Transparency")
+  labs(title = "Relationship between Duration and Song Popularity", x = "Duration", y = "Popularity") +
+  theme_light()
 ```
 
 This scatterplot visualizes the relationship between whether songs are predicted to be majority instrumental (instrumentalness) and the popularity of songs. There appears to be a generally indirect trend in the data. According to the visualization, as the intrumentalness of a song increases, the popularity of the song decreases. The relationship between instrumentalness and popularity is non-linear.
-
 ```{r plot-instrumentalness-popularity}
-ggplot(data = songs, mapping = aes(x = instrumentalness, y = popularity, alpha = 0.0005)) +
-  geom_point() + 
+ggplot(data = songs, mapping = aes(x = instrumentalness, y = popularity )) +
+  geom_point(color = "gray", alpha = 0.3) + 
   geom_smooth() +
-  labs(title = "Instrumentalness v. Popularity of Songs", x = "Instrumentalness", y = "Popularity", alpha = "Transparency")
+  labs(title = "Relationship between Instrumentalness and Song Popularity", x = "Instrumentalness", y = "Popularity")
 ```
 
 This boxplot visualizes the distribution of song popularity based on the keys of songs. According to the data, the key with the highest median song popularity is F#. Since there is little variability between the median popularities of songs, based on the track's key, key does not appear to be a strong predictor of song popularity. 
